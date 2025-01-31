@@ -8,7 +8,8 @@ public class RGTMouseV2 : MonoBehaviour
 
 
     private bool isDragging = false;
-
+    public float torqueForce = 10f; // ÁÂ¿ì È¸Àü Èû
+    public float forwardForce = 15f; // ÀüÁø Èû
 
     private void GetMouseButton()
     {
@@ -23,11 +24,12 @@ public class RGTMouseV2 : MonoBehaviour
                 {
                     isDragging = true;
                 }
-                else
-                {
-                    isDragging = false;
-                }
+
             }
+        }
+        else
+        {
+            isDragging = false;
         }
 
     }
@@ -37,6 +39,8 @@ public class RGTMouseV2 : MonoBehaviour
         Rigidbody rb = _object.GetComponent<Rigidbody>();
         GameObject Object = _object;
 
+        rb.AddForce(Vector3.forward * forwardForce, ForceMode.Force);
+        rb.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
         GetMouseButton();
 
         if(isDragging)
