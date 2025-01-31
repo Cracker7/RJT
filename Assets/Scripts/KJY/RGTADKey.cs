@@ -26,20 +26,35 @@ public class RGTADKey : MonoBehaviour
         if (isAKeyPressed)
         {
             // A 키를 누를 때 왼쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+            //rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
+            //rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+            TurnLeft();
         }
         else if (isDKeyPressed)
         {
             // D 키를 누를 때 오른쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
+            //rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
+            //rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
+            TurnRight();
         }
         else
         {
             // 키 입력 없을 때 각속도 감속
             rollingRigidbody.angularVelocity *= 0.95f;
         }
+    }
+
+
+    public void TurnLeft()
+    {
+        rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
+        rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+    }
+
+    public void TurnRight()
+    {
+        rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
+        rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
     }
 
 }

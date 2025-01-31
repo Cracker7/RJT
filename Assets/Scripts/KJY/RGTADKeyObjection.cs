@@ -2,36 +2,39 @@ using UnityEngine;
 
 public class RGTADKeyObjection : MonoBehaviour
 {
-    //이동 속도
-    [SerializeField] private float MoveSpeed = 50f;
-    //부드러운 이동을 위한 시간
-    [SerializeField] private float smoothTime = 0.1f;
+    public Rigidbody rollingRigidbody; // 물체의 Rigidbody
+    public float torqueForce = 10f; // 좌우 회전 힘
+    public float forwardForce = 15f; // 전진 힘
+    public float maxAngularVelocity = 10f; // 최대 회전 속도 제한
 
-    //목표 위치
-    private Vector3 TargetPosition;
-    //현재 속도
-    private Vector3 velocity = Vector3.zero;
-
-
-    public void ADObjection(GameObject _object)
+    void Start()
     {
-        TargetPosition = _object.transform.position;
-        GameObject Object = _object;
-
-        // A키를 누르면 왼쪽으로 이동
-        if (Input.GetKey(KeyCode.A))
-        {
-            TargetPosition += Vector3.right * MoveSpeed * Time.deltaTime;
-        }
-
-        // D키를 누르면 오른쪽으로 이동
-        if (Input.GetKey(KeyCode.D))
-        {
-            TargetPosition += Vector3.left * MoveSpeed * Time.deltaTime;
-        }
-
-        // 부드럽게 이동
-        Object.transform.position = Vector3.SmoothDamp(Object.transform.position, TargetPosition, ref velocity, smoothTime);
+        // 최대 각속도 설정 (너무 빠르게 회전하지 않도록 제한)
+        rollingRigidbody.maxAngularVelocity = maxAngularVelocity;
     }
 
+    void FixedUpdate()
+    {
+        // A 키와 D 키 입력 받기
+        bool isAKeyPressed = Input.GetKey(KeyCode.A);
+        bool isDKeyPressed = Input.GetKey(KeyCode.D);
+
+        if (isAKeyPressed)
+        {
+            // A 키를 누를 때 왼쪽으로 힘과 토크 적용
+            rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
+            rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+        }
+        else if (isDKeyPressed)
+        {
+            // D 키를 누를 때 오른쪽으로 힘과 토크 적용
+            rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
+            rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
+        }
+        else
+        {
+            // 키 입력 없을 때 각속도 감속
+            rollingRigidbody.angularVelocity *= 0.95f;
+        }
+    }
 }
