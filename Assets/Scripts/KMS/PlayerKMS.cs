@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviour
+public class PlayerKMS: MonoBehaviour
 {
     public IInputHandler currentInput;
     public IMovementController currentMovement;
