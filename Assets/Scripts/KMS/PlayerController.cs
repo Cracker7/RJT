@@ -13,10 +13,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        // 기본적인 Movement, Input 초기화
-        currentInput = new ADInputHandler(5f);
-        // 플레이어에 기본적으로 AD 무브먼트가 달려있어야함
-        currentMovement = GetComponent<IMovementController>();
+        //// 기본적인 Movement, Input 초기화
+        //currentInput = new ADInputHandler(5f);
+        //// 플레이어에 기본적으로 AD 무브먼트가 달려있어야함
+        //currentMovement = GetComponent<IMovementController>();
     }
 
     private void Update()
@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
             transform.position = interactableObject.mountPoint.position;
             transform.rotation = interactableObject.mountPoint.rotation;
         }
+        // else문으로 물체를 못찾았을때의 모션 같은걸 보여주면 좋아보임
         ChangeMovement(interactableObject.movementController);
         ChangeInput(interactableObject.inputHandler);
 
@@ -107,4 +108,11 @@ public class PlayerController : MonoBehaviour
     {
         currentInput = newInputHandler;
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
+    }
+
 }
