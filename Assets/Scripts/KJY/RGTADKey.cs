@@ -3,7 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class RGTADKey : MonoBehaviour, IMovementController
+public class RGTADKey : MonoBehaviour, IMovement
 {
 
     public Rigidbody rollingRigidbody; // ¹°Ã¼ÀÇ Rigidbody
