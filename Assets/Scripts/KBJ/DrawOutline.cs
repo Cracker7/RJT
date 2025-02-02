@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class DrawOutline : MonoBehaviour
 {
     public float moveSpeed = 5f;  // 이동 속도
     public float detectionRadius = 5f; // 감지 범위
