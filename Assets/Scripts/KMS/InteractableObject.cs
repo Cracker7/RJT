@@ -29,7 +29,7 @@ public class InteractableObject : MonoBehaviour
     }
 
     // 플레이어가 상호작용 시 호출되는 함수
-    public virtual void Interact(PlayerController player)
+    public virtual void Interact(PlayerKMS player)
     {
         if (!isOccupied)
         {

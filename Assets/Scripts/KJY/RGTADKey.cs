@@ -3,7 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class RGTADKey : MonoBehaviour
+public class RGTADKey : MonoBehaviour, IMovementController
 {
 
     public Rigidbody rollingRigidbody; // 물체의 Rigidbody
@@ -17,31 +17,57 @@ public class RGTADKey : MonoBehaviour
         rollingRigidbody.maxAngularVelocity = maxAngularVelocity;
     }
 
-    void FixedUpdate()
+    //void FixedUpdate()
+    //{
+    //    // A 키와 D 키 입력 받기
+    //    bool isAKeyPressed = Input.GetKey(KeyCode.A);
+    //    bool isDKeyPressed = Input.GetKey(KeyCode.D);
+
+    //    if (isAKeyPressed)
+    //    {
+    //        // A 키를 누를 때 왼쪽으로 힘과 토크 적용
+    //        rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
+    //        rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+    //    }
+    //    else if (isDKeyPressed)
+    //    {
+    //        // D 키를 누를 때 오른쪽으로 힘과 토크 적용
+    //        rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
+    //        rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
+    //    }
+    //    else
+    //    {
+    //        // 키 입력 없을 때 각속도 감속
+    //        rollingRigidbody.angularVelocity *= 0.95f;
+    //    }
+    //}
+
+    public void Move(Vector3 input)
     {
-        // A 키와 D 키 입력 받기
-        bool isAKeyPressed = Input.GetKey(KeyCode.A);
-        bool isDKeyPressed = Input.GetKey(KeyCode.D);
+        //// A 키와 D 키 입력 받기
+        //bool isAKeyPressed = Input.GetKey(KeyCode.A);
+        //bool isDKeyPressed = Input.GetKey(KeyCode.D);
 
-        if (isAKeyPressed)
-        {
-            // A 키를 누를 때 왼쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
-        }
-        else if (isDKeyPressed)
-        {
-            // D 키를 누를 때 오른쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
-        }
-        else
-        {
-            // 키 입력 없을 때 각속도 감속
-            rollingRigidbody.angularVelocity *= 0.95f;
-        }
+        //if (isAKeyPressed)
+        //{
+        //    // A 키를 누를 때 왼쪽으로 힘과 토크 적용
+        //    rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
+        //    rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
+        //}
+        //else if (isDKeyPressed)
+        //{
+        //    // D 키를 누를 때 오른쪽으로 힘과 토크 적용
+        //    rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
+        //    rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
+        //}
+        //else
+        //{
+        //    // 키 입력 없을 때 각속도 감속
+        //    rollingRigidbody.angularVelocity *= 0.95f;
+        //}
+
+        rollingRigidbody.AddForce(input * forwardForce);
     }
-
 }
 
 
