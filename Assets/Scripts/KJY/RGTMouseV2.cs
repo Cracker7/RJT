@@ -7,9 +7,18 @@ public class RGTMouseV2 : MonoBehaviour
     //힘을 이용하여 이동해야 한다.
 
 
+    public GameObject hat;
     private bool isDragging = false;
     public float torqueForce = 10f; // 좌우 회전 힘
     public float forwardForce = 15f; // 전진 힘
+
+    [SerializeField] private Rigidbody[] ragdollLimbs;
+
+
+    private void Update()
+    {
+        FallowThePos(hat);
+    }
 
     private void GetMouseButton()
     {
@@ -59,6 +68,13 @@ public class RGTMouseV2 : MonoBehaviour
         }
     }
 
-    
+    //private void FlapRagdoll(Vector3 direction)
+    //{
+    //    foreach (Rigidbody limb in ragdollLimbs)
+    //    {
+    //        Vector3 randomForce = direction * -1 * ragdollFlapForce * Random.Range(0.8f, 1.2f);
+    //        limb.AddForce(randomForce, ForceMode.Impulse);  // 랜덤한 힘을 추가
+    //    }
+    //}
 
 }
