@@ -65,7 +65,7 @@ public class RGTADKey : MonoBehaviour, IMovement
         //    // 키 입력 없을 때 각속도 감속
         //    rollingRigidbody.angularVelocity *= 0.95f;
         //}
-
+ 
         rollingRigidbody.AddForce(input * forwardForce);
     }
 }

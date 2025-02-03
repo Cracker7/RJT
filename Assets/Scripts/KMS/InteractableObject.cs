@@ -57,4 +57,10 @@ public class InteractableObject : MonoBehaviour
         // 파괴 로직 구현
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        TakeDamage(collision.impulse.magnitude);
+        Debug.Log(collision.impulse.magnitude);
+    }
 }
