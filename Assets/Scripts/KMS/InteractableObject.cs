@@ -9,7 +9,7 @@ public class InteractableObject : MonoBehaviour
     public Transform mountPoint; // 탑승 위치
     public ObjectSpecificData objectData; // 물체의 고유 데이터
 
-    public IMovementController movementController; // 물체의 이동 컨트롤러
+    public IMovement movementController; // 물체의 이동 컨트롤러
     public IInputHandler inputHandler; // 탑승시 사용할 입력 방식
     
     //public string mountAnimationName; // 탑승 애니메이션 이름
@@ -24,12 +24,12 @@ public class InteractableObject : MonoBehaviour
 
     public void Init()
     {
-        movementController = GetComponent<IMovementController>();
+        movementController = GetComponent<IMovement>();
         inputHandler = GetComponent<IInputHandler>();
     }
 
     // 플레이어가 상호작용 시 호출되는 함수
-    public virtual void Interact(PlayerController player)
+    public virtual void Interact(PlayerKMS player)
     {
         if (!isOccupied)
         {

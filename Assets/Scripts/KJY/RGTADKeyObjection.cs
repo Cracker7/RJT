@@ -1,40 +1,46 @@
 using UnityEngine;
 
-public class RGTADKeyObjection : MonoBehaviour
+public class RGTADKeyObjection : MonoBehaviour, IMovement
 {
-    public Rigidbody rollingRigidbody; // 물체의 Rigidbody
-    public float torqueForce = 10f; // 좌우 회전 힘
-    public float forwardForce = 15f; // 전진 힘
-    public float maxAngularVelocity = 10f; // 최대 회전 속도 제한
+    //이동 속도
+    [SerializeField] private float moveSpeed = 50f;
+    //부드러운 이동을 위한 시간
+    [SerializeField] private float smoothTime = 0.1f;
 
-    void Start()
+    //목표 위치
+    private Vector3 TargetPosition;
+    //현재 속도
+    private Vector3 velocity = Vector3.zero;
+
+
+    //public void ADObjection(GameObject _object)
+    //{
+    //    TargetPosition = _object.transform.position;
+    //    GameObject Object = _object;
+
+    //    // A키를 누르면 왼쪽으로 이동
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        TargetPosition += Vector3.right * MoveSpeed * Time.deltaTime;
+    //    }
+
+    //    // D키를 누르면 오른쪽으로 이동
+    //    if (Input.GetKey(KeyCode.D))
+    //    {
+    //        TargetPosition += Vector3.left * MoveSpeed * Time.deltaTime;
+    //    }
+
+    //    // 부드럽게 이동
+    //    Object.transform.position = Vector3.SmoothDamp(Object.transform.position, TargetPosition, ref velocity, smoothTime);
+    //}
+
+    public void Move(Vector3 input)
     {
-        // 최대 각속도 설정 (너무 빠르게 회전하지 않도록 제한)
-        rollingRigidbody.maxAngularVelocity = maxAngularVelocity;
-    }
+        // 현재 위치를 기준으로 targetPosition을 계산합니다.
+        Vector3 currentPosition = transform.position;
+        Vector3 targetPosition = currentPosition + input * moveSpeed * Time.deltaTime;
 
-    void FixedUpdate()
-    {
-        // A 키와 D 키 입력 받기
-        bool isAKeyPressed = Input.GetKey(KeyCode.A);
-        bool isDKeyPressed = Input.GetKey(KeyCode.D);
-
-        if (isAKeyPressed)
-        {
-            // A 키를 누를 때 왼쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.right * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * -torqueForce, ForceMode.Force);
-        }
-        else if (isDKeyPressed)
-        {
-            // D 키를 누를 때 오른쪽으로 힘과 토크 적용
-            rollingRigidbody.AddForce(Vector3.left * forwardForce, ForceMode.Force);
-            rollingRigidbody.AddTorque(Vector3.up * torqueForce, ForceMode.Force);
-        }
-        else
-        {
-            // 키 입력 없을 때 각속도 감속
-            rollingRigidbody.angularVelocity *= 0.95f;
-        }
+        // SmoothDamp를 이용해 부드럽게 targetPosition으로 이동합니다.
+        transform.position = Vector3.SmoothDamp(currentPosition, targetPosition, ref velocity, smoothTime);
     }
 }
