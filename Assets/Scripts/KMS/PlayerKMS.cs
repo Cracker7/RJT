@@ -47,6 +47,7 @@ public class PlayerKMS : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             InteractableObject interactable = hitCollider.GetComponent<InteractableObject>();
+            //InteractableObject interactable = hitCollider.GetComponentInParent<InteractableObject>();
             if (interactable != null)
             {
                 float distance = Vector3.Distance(transform.position, hitCollider.transform.position);

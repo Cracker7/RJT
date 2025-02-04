@@ -26,10 +26,10 @@ public class RGTArrowKey : MonoBehaviour, IMovement
     //    Object.transform.position = Vector3.SmoothDamp(Object.transform.position, targetPosition, ref velocity, smoothTime);
     //}
 
-    public void Move(Vector3 input)
+    public void Move(float input)
     {
         Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = currentPosition + input * moveSpeed * Time.deltaTime;
+        //Vector3 targetPosition = currentPosition + input * moveSpeed * Time.deltaTime;
 
         // SmoothDamp를 이용해 부드럽게 목표 위치로 이동
         transform.position = Vector3.SmoothDamp(currentPosition, targetPosition, ref velocity, smoothTime);
