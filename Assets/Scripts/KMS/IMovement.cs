@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IMovement
 {
-    void Move(Vector3 input);
+    void Move(float input);
 }

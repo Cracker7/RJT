@@ -2,22 +2,19 @@ using UnityEngine;
 
 public class ADObjectionInputHandler : MonoBehaviour, IInputHandler
 {
-    public Vector3 HandleInput()
+    public float HandleInput()
     {
         Debug.Log("반대 AD키 입력 받는중");
         // A 키와 D 키 입력 받기
-        bool isAKeyPressed = Input.GetKey(KeyCode.A);
-        bool isDKeyPressed = Input.GetKey(KeyCode.D);
+        float isAKeyPressed = Input.GetAxis("Horizontal");
 
-        if (isAKeyPressed)
+        // 화살표 키가 눌렸을 경우 값을 0으로 만들기
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
-            return transform.right;
+            isAKeyPressed = 0f;
         }
-        else if (isDKeyPressed)
-        {
-            return -transform.right;
-        }
-        return Vector3.zero;
+
+        return -isAKeyPressed;
 
     }
 }
