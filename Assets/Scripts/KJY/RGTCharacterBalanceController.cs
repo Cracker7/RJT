@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class RGTCharacterBalanceController : MonoBehaviour
 {
+    //[SerializeField] private AnimationClip Anim;
+    [SerializeField] private Animator animator;
     [SerializeField] Transform TheBall;
     [SerializeField] Rigidbody CharacterRigidbody;
     [SerializeField] private float balanceSpeed = 100f;
@@ -13,6 +16,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
     private void Start()
     {
         CharacterRigidbody.isKinematic = true;
+        Animator animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -26,6 +30,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
     {
         Vector3 centerPosition = new Vector3(TheBall.position.x, TheBall.position.y + balanceHeight, TheBall.position.z);
         RanDomRotation();
+        //animator.SetBool("SetActive", true);
 
         //회전값을 조절하는 걸로 바꿔야 함
         if (Input.GetKey(KeyCode.LeftArrow))
