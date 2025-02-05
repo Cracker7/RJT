@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WheelController : MonoBehaviour
+public class WheelController : MonoBehaviour,IMovement
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentbreakForce;
@@ -12,6 +12,7 @@ public class WheelController : MonoBehaviour
     // Settings
     [SerializeField] private float motorForce, breakForce, maxSteerAngle;
     [SerializeField] private float maxSpeed = 60f;
+    [SerializeField] private float inputXSet = 3f;
 
     // Wheel Colliders
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
@@ -22,33 +23,33 @@ public class WheelController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    public void Move(Vector3 input)
     {
-        GetInput();
+        horizontalInput = input.x / inputXSet;
+        verticalInput = input.z;
         HandleMotor();
         HandleSteering();
-
-        time += Time.deltaTime;
-
-        if (time > 1f)
-        {
-            Debug.Log("리니어 속도 : " + rb.linearVelocity.magnitude);
-            Debug.Log("각 속도 : " + rb.angularVelocity.magnitude);
-            time = 0;
-        }
     }
+    //private void FixedUpdate()
+    //{
+    //    GetInput();
+    //    HandleMotor();
+    //    HandleSteering();
+    //    UpdateWheels();
+    //}
 
-    private void GetInput()
-    {
-        // Steering Input
-        horizontalInput = Input.GetAxis("Horizontal");
+    //private void GetInput()
+    //{
+    //    // Steering Input
+    //    horizontalInput = Input.GetAxis("Horizontal")/2;
+    //    horizontalInput = 
 
-        // Acceleration Input
-        verticalInput = Input.GetAxis("Vertical");
+    //    // Acceleration Input
+    //    verticalInput = Input.GetAxis("Vertical");
 
-        // Breaking Input
-        isBreaking = Input.GetKey(KeyCode.Space);
-    }
+    //    // Breaking Input
+    //    isBreaking = Input.GetKey(KeyCode.Space);
+    //}
 
     private void HandleMotor()
     {
@@ -80,5 +81,14 @@ public class WheelController : MonoBehaviour
         currentSteerAngle = maxSteerAngle * horizontalInput;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
+    }
+
+    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
+    {
+        Vector3 pos;
+        Quaternion rot;
+        wheelCollider.GetWorldPose(out pos, out rot);
+        wheelTransform.rotation = rot;
+        wheelTransform.position = pos;
     }
 }
