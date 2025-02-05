@@ -15,6 +15,7 @@ public class CarController : MonoBehaviour, IMovement
     // Settings
     [SerializeField] private float motorForce, breakForce, maxSteerAngle;
     [SerializeField] private float maxSpeed = 60f;
+    [SerializeField] private float inputXSet = 3f;
 
     // Wheel Colliders
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
@@ -31,7 +32,7 @@ public class CarController : MonoBehaviour, IMovement
 
     public void Move(Vector3 input)
     {
-        horizontalInput = input.x / 2;
+        horizontalInput = input.x / inputXSet;
         verticalInput = input.z;
         HandleMotor();
         HandleSteering();

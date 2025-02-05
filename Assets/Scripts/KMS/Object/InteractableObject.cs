@@ -28,18 +28,18 @@ public class InteractableObject : MonoBehaviour
         inputHandler = GetComponent<IInputHandler>();
     }
 
-    // 플레이어가 상호작용 시 호출되는 함수
-    public virtual void Interact(PlayerKMS player)
-    {
-        if (!isOccupied)
-        {
-            if (inputHandler != null)
-                player.ChangeInput(inputHandler); // 플레이어의 입력 방식을 변경
+    //// 플레이어가 상호작용 시 호출되는 함수
+    //public virtual void Interact(PlayerKMS player)
+    //{
+    //    if (!isOccupied)
+    //    {
+    //        if (inputHandler != null)
+    //            player.ChangeInput(inputHandler); // 플레이어의 입력 방식을 변경
             
-            player.EnterObject(this); // 플레이어를 물체에 탑승시킴
-            isOccupied = true; // 물체를 사용 중으로 표시
-        }
-    }
+    //        player.EnterObject(this); // 플레이어를 물체에 탑승시킴
+    //        isOccupied = true; // 물체를 사용 중으로 표시
+    //    }
+    //}
 
     // 물체가 데미지를 입었을 때 호출되는 함수
     public virtual void TakeDamage(float damage)
@@ -61,6 +61,6 @@ public class InteractableObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         TakeDamage(collision.impulse.magnitude);
-        Debug.Log(collision.impulse.magnitude);
+        Debug.Log("받은 충격량" + collision.impulse.magnitude);
     }
 }
