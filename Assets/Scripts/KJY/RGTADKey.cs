@@ -42,7 +42,7 @@ public class RGTADKey : MonoBehaviour, IMovement
     //    }
     //}
 
-    public void Move(float input)
+    public void Move(Vector3 input)
     {
         //// A 키와 D 키 입력 받기
         //bool isAKeyPressed = Input.GetKey(KeyCode.A);

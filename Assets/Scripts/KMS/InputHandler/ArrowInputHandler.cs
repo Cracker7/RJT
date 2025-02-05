@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ArrowInputHandler : MonoBehaviour, IInputHandler
 {
-    public float HandleInput()
+    public Vector3 HandleInput()
     {
         float isAKeyPressed = Input.GetAxis("Horizontal");
 
@@ -12,6 +12,6 @@ public class ArrowInputHandler : MonoBehaviour, IInputHandler
             isAKeyPressed = 0f;
         }
 
-        return isAKeyPressed;
+        return new Vector3(isAKeyPressed, 0, 0);
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ADObjectionInputHandler : MonoBehaviour, IInputHandler
 {
-    public float HandleInput()
+    public Vector3 HandleInput()
     {
         Debug.Log("반대 AD키 입력 받는중");
         // A 키와 D 키 입력 받기
@@ -14,7 +14,7 @@ public class ADObjectionInputHandler : MonoBehaviour, IInputHandler
             isAKeyPressed = 0f;
         }
 
-        return -isAKeyPressed;
+        return new Vector3(-isAKeyPressed, 0, 0);
 
     }
 }

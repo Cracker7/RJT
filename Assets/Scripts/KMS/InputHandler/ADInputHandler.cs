@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class ADInputHandler : MonoBehaviour, IInputHandler
 {
-    public Transform camTr;
-    public float HandleInput()
+    public Vector3 HandleInput()
     {
         Debug.Log("AD키 입력 받는중");
 
@@ -15,7 +14,6 @@ public class ADInputHandler : MonoBehaviour, IInputHandler
             isAKeyPressed = 0f;
         }
 
-        return isAKeyPressed;
-
+        return new Vector3(isAKeyPressed, 0, 0);
     }
 }
