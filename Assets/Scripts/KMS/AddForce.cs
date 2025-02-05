@@ -13,10 +13,12 @@ public class AddForce : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveInput = Input.GetAxis("Horizontal");
+        float moveInputX = Input.GetAxis("Horizontal");
+        float moveInputZ = Input.GetAxis("Vertical");
         {
             Debug.Log("스페이스 입력됨");
-            rb.AddForce(camTr.right * moveInput * angle, ForceMode.Acceleration);
+            rb.AddForce(transform.forward * moveInputZ * angle, ForceMode.Acceleration);
+            rb.AddForce(transform.right * moveInputX * angle, ForceMode.Acceleration);
             Debug.Log("힘 주기");
         }
 

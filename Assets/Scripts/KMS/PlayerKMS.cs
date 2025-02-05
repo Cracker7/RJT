@@ -19,7 +19,7 @@ public class PlayerKMS : MonoBehaviour
         //currentMovement = GetComponent<IMovementController>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (currentInput != null && currentMovement != null)
         {

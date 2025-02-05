@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class CarController : MonoBehaviour, IMovement
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentbreakForce;
@@ -29,34 +29,34 @@ public class CarController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    public void Move(Vector3 input)
     {
-        GetInput();
+        horizontalInput = input.x / 2;
+        verticalInput = input.z;
         HandleMotor();
         HandleSteering();
         UpdateWheels();
-
-        time += Time.deltaTime;
-
-        if (time > 1f)
-        {
-            Debug.Log("리니어 속도 : " + rb.linearVelocity.magnitude);
-            Debug.Log("각 속도 : " + rb.angularVelocity.magnitude);
-            time = 0;
-        }
     }
+    //private void FixedUpdate()
+    //{
+    //    GetInput();
+    //    HandleMotor();
+    //    HandleSteering();
+    //    UpdateWheels();
+    //}
 
-    private void GetInput()
-    {
-        // Steering Input
-        horizontalInput = Input.GetAxis("Horizontal");
+    //private void GetInput()
+    //{
+    //    // Steering Input
+    //    horizontalInput = Input.GetAxis("Horizontal")/2;
+    //    horizontalInput = 
 
-        // Acceleration Input
-        verticalInput = Input.GetAxis("Vertical");
+    //    // Acceleration Input
+    //    verticalInput = Input.GetAxis("Vertical");
 
-        // Breaking Input
-        isBreaking = Input.GetKey(KeyCode.Space);
-    }
+    //    // Breaking Input
+    //    isBreaking = Input.GetKey(KeyCode.Space);
+    //}
 
     private void HandleMotor()
     {
@@ -106,4 +106,5 @@ public class CarController : MonoBehaviour
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
+
 }

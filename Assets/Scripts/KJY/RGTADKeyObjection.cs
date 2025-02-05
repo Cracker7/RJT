@@ -34,7 +34,7 @@ public class RGTADKeyObjection : MonoBehaviour, IMovement
     //    Object.transform.position = Vector3.SmoothDamp(Object.transform.position, TargetPosition, ref velocity, smoothTime);
     //}
 
-    public void Move(float input)
+    public void Move(Vector3 input)
     {
         // 현재 위치를 기준으로 targetPosition을 계산합니다.
         Vector3 currentPosition = transform.position;
