@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Purchasing;
+
 
 public class RGTCharacterBalanceController : MonoBehaviour
 {
@@ -7,9 +7,10 @@ public class RGTCharacterBalanceController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] Transform TheBall;
     [SerializeField] Rigidbody CharacterRigidbody;
-    [SerializeField] private float balanceSpeed = 100f;
+    [SerializeField] Transform TheObject;
+    //[SerializeField] private float balanceSpeed = 100f;
     // 공 위에서 중심을 잡는 높이
-    public float balanceHeight = 3.5f; 
+    public float balanceHeight = 3.5f;
 
 
 
@@ -28,14 +29,11 @@ public class RGTCharacterBalanceController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 centerPosition = new Vector3(TheBall.position.x, TheBall.position.y + balanceHeight, TheBall.position.z);
-        
-        animator.SetBool("SetRightActive", true);
-        //animator.SetBool("SetLeftActive", true);
-        //animator.SetBool("SetUpActive", true);
-        //animator.SetBool("SetBackActive", true);
-        animator.SetBool("Activefalse",true);
 
+        animator.SetBool("SetLeftActive", true);
+
+        RotateZ(Thedir());
+        RotateX(Thedir());
         //회전값을 조절하는 걸로 바꿔야 함
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -47,7 +45,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            animator.SetBool("SetRightActive", false);
+            //animator.SetBool("SetRightActive", false);
             //transform.eulerAngles += Vector3.back * balanceSpeed * Time.deltaTime;
             RotateZ(-1);
         }
@@ -63,80 +61,71 @@ public class RGTCharacterBalanceController : MonoBehaviour
             //animator.SetBool("SetBackActive", false);
             RotateX(-1);
         }
-        //else
+
+        //Debug.Log("z : " + TheObject.transform.rotation.eulerAngles.z);
+        CheckRotation();
+
+
+    }
+
+    private float Thedir()
+    {
+
+        Vector3 center = transform.position;
+        Vector3 headPoint = transform.up + transform.position;
+
+        Vector3 dir = headPoint - center;
+        float a = 0;
+        float angle = Mathf.Atan2(dir.z, dir.y) * Mathf.Rad2Deg;
+
+        if (angle > 0)
         {
-
+            a = 0.3f;
         }
-
-        //CheckRotation();
-
-
+        else
+        {
+            a = -0.3f;
+        }
+        //Debug.DrawLine(center,headPoint,Color.green);
+        //Debug.Log("각도는 " + angle + "a :" + a);
+        return a;
     }
 
     private void RotateX(float _direction)
     {
-        float xRotation = _direction * balanceSpeed * Time.deltaTime;
-        //transform.Rotate(xRotation, 0f, 0f, Space.Self);
+        //float xRotation = _direction * balanceSpeed * Time.deltaTime;
+        ////transform.Rotate(xRotation, 0f, 0f, Space.Self);
 
-        float newXRotation = transform.eulerAngles.x + xRotation;
+        //float newXRotation = transform.eulerAngles.x + xRotation;
 
-        // 유니티의 EulerAngles는 0~360도로 표현되므로 -60~60도로 변환해야 함
-        if (newXRotation > 180f)
-            newXRotation -= 360f;
+        //// 유니티의 EulerAngles는 0~360도로 표현되므로 -60~60도로 변환해야 함
+        //if (newXRotation > 180f)
+        //    newXRotation -= 360f;
 
-        newXRotation = Mathf.Clamp(newXRotation, -60f, 60f);
+        //newXRotation = Mathf.Clamp(newXRotation, -60f, 60f);
 
-        transform.rotation = Quaternion.Euler(newXRotation, 0f, 0f);
+        //transform.rotation = Quaternion.Euler(newXRotation, 0f, 0f);
+        transform.Rotate(Vector3.right, _direction * Time.deltaTime * 50f);
     }
 
     private void RotateZ(float _direction)
     {
-        float zRotation = _direction * balanceSpeed * Time.deltaTime;
-        //transform.Rotate( 0f, 0f, zRotation, Space.Self);
-        float newZRotation = transform.eulerAngles.z + zRotation;
+        //float zRotation = _direction * balanceSpeed * Time.deltaTime;
+        ////transform.Rotate( 0f, 0f, zRotation, Space.Self);
+        //float newZRotation = transform.eulerAngles.z + zRotation;
 
-        // 유니티의 EulerAngles는 0~360도로 표현되므로 -60~60도로 변환해야 함
-        if (newZRotation > 180f)
-            newZRotation -= 360f;
+        //// 유니티의 EulerAngles는 0~360도로 표현되므로 -60~60도로 변환해야 함
+        //if (newZRotation > 180f)
+        //    newZRotation -= 360f;
 
-        newZRotation = Mathf.Clamp(newZRotation, -60f, 60f);
+        //newZRotation = Mathf.Clamp(newZRotation, -60f, 60f);
 
-        transform.rotation = Quaternion.Euler(0f, 0f, newZRotation);
+        //transform.rotation = Quaternion.Euler(0f, 0f, newZRotation);
+        transform.Rotate(Vector3.forward, _direction * Time.deltaTime * 50f);
     }
 
-    private void RanDomRotation()
-    {
 
-        float randomRotation = Random.Range(-90f, 90f) * Time.deltaTime;
-        transform.Rotate(0, randomRotation, randomRotation);
 
-    }
-
-    //private void RanDomRotation1()
-    //{
-    //    //transform.Translate(new Vector3(Random.Range(0f, 1.3f),0f, Random.Range(0f, 1.3f)));
-    //    //transform.rotation = transform.localRotation(Quaternion.Euler(Random.Range(1f, 90f), Random.Range(1f, 90f), Random.Range(1f, 90f)));
-
-    //    float randomRotation = Random.Range(-90f, 90f) * Time.deltaTime;
-    //    transform.Rotate(0, randomRotation, randomRotation);
-
-    //}
-    private void RanDomRotation1()
-    {
-        float randomX = Random.Range(-10f, 10f) * Time.deltaTime;
-        float randomZ = Random.Range(-10f, 10f) * Time.deltaTime;
-
-        float newXRotation = transform.eulerAngles.x + randomX;
-        float newZRotation = transform.eulerAngles.z + randomZ;
-
-        if (newXRotation > 180f) newXRotation -= 360f;
-        if (newZRotation > 180f) newZRotation -= 360f;
-
-        newXRotation = Mathf.Clamp(newXRotation, -60f, 60f);
-        newZRotation = Mathf.Clamp(newZRotation, -60f, 60f);
-
-        transform.rotation = Quaternion.Euler(newXRotation, 0f, newZRotation);
-    }
 
 
 
@@ -144,10 +133,24 @@ public class RGTCharacterBalanceController : MonoBehaviour
     private void CheckRotation()
     {
         //각도 체크하기 만약에 60보다 크면 
-        if(transform.rotation.eulerAngles.x > 60f)
+        float TheCheckPoint = 50f;
+        float zRotation = transform.eulerAngles.z;
+        float xRotation = transform.eulerAngles.x;
+        if (zRotation > 180f)
+        {
+            zRotation -= 360f; // 180°보다 크면 음수 변환
+        }
+        if (xRotation > 180f)
+        {
+            xRotation -= 360f; // 180°보다 크면 음수 변환
+        }
+        //Debug.Log("Z :" + zRotation);
+        //if (zRotation < -40f)
+        if (xRotation > TheCheckPoint || xRotation < -TheCheckPoint || zRotation > TheCheckPoint || zRotation < -TheCheckPoint)
         {
             CharacterRigidbody.useGravity = true;
             CharacterRigidbody.isKinematic = false;
+            animator.enabled = false;
             this.enabled = false;
         }
     }
