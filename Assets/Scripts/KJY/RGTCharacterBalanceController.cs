@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class RGTCharacterBalanceController : MonoBehaviour
 {
+    //[SerializeField] private AnimationClip Anim;
+    [SerializeField] private Animator animator;
     [SerializeField] Transform TheBall;
     [SerializeField] Rigidbody CharacterRigidbody;
     [SerializeField] private float balanceSpeed = 100f;
@@ -13,6 +16,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
     private void Start()
     {
         CharacterRigidbody.isKinematic = true;
+        Animator animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -25,28 +29,38 @@ public class RGTCharacterBalanceController : MonoBehaviour
     private void Update()
     {
         Vector3 centerPosition = new Vector3(TheBall.position.x, TheBall.position.y + balanceHeight, TheBall.position.z);
-        RanDomRotation();
+        
+        animator.SetBool("SetRightActive", true);
+        //animator.SetBool("SetLeftActive", true);
+        //animator.SetBool("SetUpActive", true);
+        //animator.SetBool("SetBackActive", true);
+        animator.SetBool("Activefalse",true);
 
         //회전값을 조절하는 걸로 바꿔야 함
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+
             //transform.eulerAngles += Vector3.forward * balanceSpeed * Time.deltaTime;
             //transform.Rotate(0f,0f,+RotationValue);
+            //animator.SetBool("SetLeftActive", false);
             RotateZ(1);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
+            animator.SetBool("SetRightActive", false);
             //transform.eulerAngles += Vector3.back * balanceSpeed * Time.deltaTime;
             RotateZ(-1);
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
             //transform.eulerAngles += Vector3.right * balanceSpeed * Time.deltaTime;
+            //animator.SetBool("SetUpActive", false);
             RotateX(1);
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
             //transform.eulerAngles += Vector3.up * balanceSpeed * Time.deltaTime;
+            //animator.SetBool("SetBackActive", false);
             RotateX(-1);
         }
         //else
