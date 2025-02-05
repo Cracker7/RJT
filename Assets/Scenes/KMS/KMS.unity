@@ -549,23 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &717180642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717180633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22a7a5129692e6443b13452456308730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vehicleData:
-    mountedPrefab: {fileID: 0}
-    vehicleType: 
-    mountPointOffset: {x: 0, y: 0, z: 0}
-  mountPoint: {fileID: 0}
 --- !u!1 &778940105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2795,9 +2778,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6380268455482447093, guid: 6c6153e26c9b1514b9dc9a32fb2740b1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 717180640}
-    - targetCorrespondingSourceObject: {fileID: 6380268455482447093, guid: 6c6153e26c9b1514b9dc9a32fb2740b1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 717180642}
   m_SourcePrefab: {fileID: 100100000, guid: 6c6153e26c9b1514b9dc9a32fb2740b1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

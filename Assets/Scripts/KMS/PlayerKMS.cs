@@ -103,7 +103,6 @@ public class PlayerKMS : MonoBehaviour
         currentInput = null;
         currentMovement = null;
 
-        cam.Follow = transform;
     }
 
     private void UpdateTransition()
