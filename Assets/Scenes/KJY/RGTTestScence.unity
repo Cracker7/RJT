@@ -1322,6 +1322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 941554344}
   - component: {fileID: 941554345}
+  - component: {fileID: 941554346}
   m_Layer: 0
   m_Name: CapP
   m_TagString: Untagged
@@ -1361,6 +1362,28 @@ MonoBehaviour:
   CharacterRigidbody: {fileID: 1341607324}
   balanceSpeed: 100
   balanceHeight: 2.6
+--- !u!95 &941554346
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941554343}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b90a1ecaeb432cb48a547008e262c4e7, type: 3}
+  m_Controller: {fileID: 9100000, guid: 77932f756978acc4fbb2ad34ed930543, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &956408521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,8 +2231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301f051ec07d53d43967359f5b0a97cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hat: {fileID: 0}
   torqueForce: 5
   forwardForce: 15
+  ragdollLimbs: []
 --- !u!1 &1600945955
 GameObject:
   m_ObjectHideFlags: 0
