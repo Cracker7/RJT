@@ -364,11 +364,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 532f398b513016f49aa1c90218022260, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.43
+      value: 3.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 532f398b513016f49aa1c90218022260, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.39
+      value: -0.89
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 532f398b513016f49aa1c90218022260, type: 3}
       propertyPath: m_LocalPosition.z
@@ -445,6 +445,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 532f398b513016f49aa1c90218022260, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2658773506315034978}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 532f398b513016f49aa1c90218022260, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6228499127969905736}
   m_SourcePrefab: {fileID: 100100000, guid: 532f398b513016f49aa1c90218022260, type: 3}
 --- !u!4 &961814973113332647 stripped
 Transform:
@@ -540,6 +543,7 @@ MonoBehaviour:
   breakForce: 5000
   maxSteerAngle: 20
   maxSpeed: 60
+  inputXSet: 3
   frontLeftWheelCollider: {fileID: 3764342688707061892}
   frontRightWheelCollider: {fileID: 5278305290651507089}
   rearLeftWheelCollider: {fileID: 6395192132791160836}
@@ -593,7 +597,7 @@ MonoBehaviour:
   currentDurability: 0
   isOccupied: 0
   mountPoint: {fileID: 7885581924015082104}
-  objectData: {fileID: 11400000, guid: 0c08b1fc28df7784c81eb5d37dd2acb1, type: 2}
+  objectData: {fileID: 11400000, guid: 6a911135919be894986bffa796e2a55f, type: 2}
 --- !u!114 &2658773506315034978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +610,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238ee5403e6045f4e9e220ce3abb7ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6228499127969905736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224261274270676632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a14c4a94424cef4ebe6c1ddd0bc3aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRollAngle: 10
+  rotationLerpFactor: 0.1
+  minPitchAngle: -60
+  maxPitchAngle: 60
 --- !u!4 &8748702570133318690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 532f398b513016f49aa1c90218022260, type: 3}

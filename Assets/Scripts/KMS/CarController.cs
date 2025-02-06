@@ -61,17 +61,17 @@ public class CarController : MonoBehaviour, IMovement
 
     private void HandleMotor()
     {
-        if (rb.linearVelocity.magnitude < maxSpeed) // 현재 속도가 최대 속력보다 작을 때만 가속
+        if (rb.linearVelocity.magnitude*3.6f < maxSpeed) // 현재 속도가 최대 속력보다 작을 때만 가속
         {
             frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
             frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         }
-        else
-        {
-            //frontLeftWheelCollider.motorTorque = 0; // 최대 속도 도달 시 추가적인 힘을 주지 않음
-            //frontRightWheelCollider.motorTorque = 0;
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
+        //else
+        //{
+        //    //frontLeftWheelCollider.motorTorque = 0; // 최대 속도 도달 시 추가적인 힘을 주지 않음
+        //    //frontRightWheelCollider.motorTorque = 0;
+        //    rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        //}
         currentbreakForce = isBreaking ? breakForce : 0f;
         ApplyBreaking();
     }
