@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: b9c14b320122db54f928119ed33feac8
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213197
+  packageName: Unity Terrain - URP Demo Scene
+  packageVersion: 1.0.3
+  assetPath: Assets/TerrainSampleAssets/Prefabs/Trees/Cypress/Cypress_Forest_Desktop.st
+  uploadId: 727820
 SpeedTreeImporter:
   externalObjects:
   - first:
@@ -37,14 +44,23 @@ SpeedTreeImporter:
       assembly: UnityEngine.CoreModule
       name: Cypress_Forest_Desktop_LOD2
     second: {fileID: 2100000, guid: 13209affabf96cd4ca2d4ca465caac92, type: 2}
-  serializedVersion: 6
+  serializedVersion: 7
   mainColor: {r: 1, g: 1, b: 1, a: 1}
   hueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
   alphaTestRef: 0.33
+  enableHueVariation: 0
+  enableBumpMapping: 1
+  enableSubsurfaceScattering: 1
   bestWindQuality: 4
+  selectedWindQuality: 0
+  enableShadowCasting: 1
+  enableShadowReceiving: 1
+  enableLightProbes: 1
+  reflectionProbeEnumValue: 1
   hasBillboard: 1
   lODSettings:
-  - height: 0.7094526
+  - enableSettingOverride: 1
+    height: 0.7094526
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 1
@@ -53,7 +69,8 @@ SpeedTreeImporter:
     enableHue: 1
     enableSubsurface: 1
     windQuality: 2
-  - height: 0.37787324
+  - enableSettingOverride: 1
+    height: 0.37787324
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 1
@@ -62,7 +79,8 @@ SpeedTreeImporter:
     enableHue: 1
     enableSubsurface: 1
     windQuality: 4
-  - height: 0.048200324
+  - enableSettingOverride: 1
+    height: 0.048200324
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 1
@@ -71,7 +89,8 @@ SpeedTreeImporter:
     enableHue: 1
     enableSubsurface: 1
     windQuality: 4
-  - height: 0.01
+  - enableSettingOverride: 1
+    height: 0.01
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 0
@@ -85,16 +104,13 @@ SpeedTreeImporter:
   billboardTransitionCrossFadeWidth: 0.25
   fadeOutWidth: 0.25
   scaleFactor: 0.3048
+  unitConversionEnumValue: 1
+  motionVectorModeEnumValue: 1
+  generateColliders: 1
+  generateRigidbody: 1
   materialVersion: 3
   materialLocation: 1
   fileIDType: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 213197
-  packageName: Unity Terrain - URP Demo Scene
-  packageVersion: 1.0.3
-  assetPath: Assets/TerrainSampleAssets/Prefabs/Trees/Cypress/Cypress_Forest_Desktop.st
-  uploadId: 727820
