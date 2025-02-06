@@ -1,6 +1,3 @@
-using EasyRoads3Dv3;
-using Unity.Cinemachine;
-using Unity.Cinemachine.TargetTracking;
 using UnityEngine;
 
 public class PlayerKMS : MonoBehaviour
