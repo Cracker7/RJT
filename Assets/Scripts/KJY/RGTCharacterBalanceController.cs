@@ -150,6 +150,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
         {
             CharacterRigidbody.useGravity = true;
             CharacterRigidbody.isKinematic = false;
+
             animator.enabled = false;
             this.enabled = false;
         }
