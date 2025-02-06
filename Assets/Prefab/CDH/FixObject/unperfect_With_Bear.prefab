@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 6461796894143711981}
   - component: {fileID: 3217397057168216573}
   - component: {fileID: 3812387067103856463}
-  - component: {fileID: 388662855261711990}
   - component: {fileID: 3986795528980162163}
   - component: {fileID: 3204884709208755408}
+  - component: {fileID: 8874014252152426507}
   m_Layer: 0
   m_Name: unperfect_With_Bear
   m_TagString: Untagged
@@ -159,18 +159,6 @@ MonoBehaviour:
   isOccupied: 0
   mountPoint: {fileID: 8165406802447131550}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
---- !u!114 &388662855261711990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033370682743481304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3986795528980162163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +187,18 @@ MonoBehaviour:
   rotationLerpFactor: 0.1
   minPitchAngle: -60
   maxPitchAngle: 60
+--- !u!114 &8874014252152426507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033370682743481304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1792866320180498677
 GameObject:
   m_ObjectHideFlags: 0
