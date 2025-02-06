@@ -1,24 +1,36 @@
 using UnityEngine;
+using System; // Enum 관련 기능 사용
 
 public class sliderM : MonoBehaviour
 {
-    public RectTransform handle; 
-    private float moveSpot; // 핸들의 이동 위치를 저장하는 변수
-    private bool movingRight = true; // 핸들이 오른쪽으로 이동 중인지 여부를 나타내는 변수
-    private bool isPaused = false; // 핸들의 이동이 일시 중지되었는지 여부를 나타내는 변수
+    // 상태를 나타내는 enum 선언 (태그 이름은 소문자로 사용하므로 ToLower()로 변환)
+    public enum CollisionState
+    {
+        Win,
+        Fail,
+        Pass
+    }
+
+    public RectTransform handle;
+    private float moveSpot;            // 핸들의 이동 위치를 저장하는 변수
+    private bool movingRight = true;   // 핸들이 오른쪽으로 이동 중인지 여부
+    private bool isPaused = false;     // 핸들의 이동이 일시 중지되었는지 여부
     public Canvas canvas;
+
+    public CollisionState lastCollisionState;
+    public static event Action OnShutdown;
 
     private void Start()
     {
-        moveSpot = handle.anchoredPosition.x; // 핸들의 초기 위치를 moveSpot 변수에 저장
+        moveSpot = handle.anchoredPosition.x; // 핸들의 초기 위치 저장
     }
 
     private void Update()
     {
-        HandleInput(); // 사용자 입력을 처리
-        if (!isPaused) // 이동이 일시 중지되지 않은 경우
+        HandleInput(); // 사용자 입력 처리
+        if (!isPaused) // 이동이 일시 중지가 아닐 때
         {
-            MoveHandle(); // 핸들을 이동
+            MoveHandle(); // 핸들 이동
         }
     }
 
@@ -26,34 +38,40 @@ public class sliderM : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isPaused = !isPaused; // 이동 상태를 토글
-            if (isPaused) // 이동이 일시 중지된 경우
+            isPaused = !isPaused; // 이동 상태 토글
+            if (isPaused) // 이동이 일시 중지되었을 때
             {
-                CheckCollision(); // 충돌을 확인
-                Invoke("ShutDown", 1f); // canvas 끄기
+                lastCollisionState = CheckCollision();  // 충돌 체크 (내부에서 상태에 따라 처리)
+                //Invoke("ShutDown"); // 1초 후에 canvas 끄기
+                ShutDown();
             }
-
         }
     }
 
     private void MoveHandle()
     {
-        float moveSpeed = Time.deltaTime * 60; // 이동 속도를 설정
-        moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 moveSpot을 증가 또는 감소
+        // Time.deltaTime과 Time.timeScale을 이용하여 이동 속도 결정
+        float moveSpeed = Time.deltaTime * 60 / Time.timeScale;
+        moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
 
-        if (moveSpot >= 140) // moveSpot이 140 이상이면
+        // 좌우 한계점 체크 (0 ~ 140)
+        if (moveSpot >= 140)
         {
-            movingRight = false; // 이동 방향을 왼쪽으로 변경
+            movingRight = false;
         }
-        else if (moveSpot <= 0) // moveSpot이 0 이하이면
+        else if (moveSpot <= 0)
         {
-            movingRight = true; // 이동 방향을 오른쪽으로 변경
+            movingRight = true;
         }
 
-        handle.anchoredPosition = new Vector2(moveSpot, handle.anchoredPosition.y); // 핸들의 위치를 업데이트
+        // 핸들의 위치 업데이트
+        handle.anchoredPosition = new Vector2(moveSpot, handle.anchoredPosition.y);
     }
 
-    private void CheckCollision()
+    /// <summary>
+    /// 충돌을 체크하고, 충돌한 상태에 따라 로그를 출력합니다.
+    /// </summary>
+    public CollisionState CheckCollision()
     {
         string[] tags = { "win", "fail", "pass" };
         foreach (string tag in tags)
@@ -65,36 +83,37 @@ public class sliderM : MonoBehaviour
                 if (RectTransformUtility.RectangleContainsScreenPoint(rt, handle.position)) // 핸들이 객체 위에 있는지 확인
                 {
                     // Debug.Log($"Handle is on {tag} "); // 핸들이 해당 태그 위에 있음을 로그에 출력
-                    switch(tag)
+                    switch (tag)
                     {
                         case "win":
                             Debug.Log("win");
-                            break;
+                            return CollisionState.Win;
                         case "fail":
-                            Debug.Log("win");
-                            break;
+                            Debug.Log("fail");
+                            return CollisionState.Fail;
                         case "pass":
                             Debug.Log("pass");
-                            break;
+                            return CollisionState.Pass;
 
                     }
 
                 }
             }
         }
+        return CollisionState.Fail;
     }
 
     private void ShutDown()
     {
         canvas.gameObject.SetActive(false);
+
+        OnShutdown?.Invoke();
     }
 
-   
-    // 나중에 다시 시작할때 사용할 함수
+    // 나중에 다시 시작할 때 사용할 함수
     public void OpenCanvas()
     {
         canvas.gameObject.SetActive(true);
         isPaused = false;
     }
-
 }
