@@ -280,7 +280,7 @@ public class PlayerKMS : MonoBehaviour
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라야함
         currentObjectPrefab = Instantiate(SelectPrefab(target),
-                                         spawnPosition + new Vector3(0,0.1f,0),
+                                         spawnPosition + new Vector3(0,1f,0),
                                          spawnRotation);
     }
 
