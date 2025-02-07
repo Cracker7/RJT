@@ -1,5 +1,7 @@
 using UnityEngine;
 using System; // Enum 관련 기능 사용
+using TMPro;
+
 
 public class sliderM : MonoBehaviour
 {
@@ -16,29 +18,56 @@ public class sliderM : MonoBehaviour
     private bool movingRight = true;   // 핸들이 오른쪽으로 이동 중인지 여부
     private bool isPaused = false;     // 핸들의 이동이 일시 중지되었는지 여부
     public Canvas canvas;
-
     public CollisionState lastCollisionState;
     public static event Action OnShutdown;
+    int seconds;
+    int milliseconds;
+
+    public TextMeshProUGUI stopwatchText; // UI Text에 시간을 표시할 변수
+    private float elapsedTime; // 경과 시간
 
     private void Start()
     {
         moveSpot = handle.anchoredPosition.x; // 핸들의 초기 위치 저장
+        elapsedTime = 0f;
     }
 
     private void Update()
     {
+        if (!isPaused) elapsedTime += Time.deltaTime;
+         UpdateStopwatchDisplay();
+        
+
         HandleInput(); // 사용자 입력 처리
-        if (!isPaused) // 이동이 일시 중지가 아닐 때
+        if (!isPaused) // 이동이 일시 중지가 아닐 때 , isPaused = false;
         {
             MoveHandle(); // 핸들 이동
         }
+
+        // 5초 경과 시 닫힘
+        if(elapsedTime >= 2f)
+        {
+            ShutDown();
+            // 여기에 실패 결과
+            elapsedTime = 0f;
+        }
     }
+
+ 
+    // 스톱워치 시간 표시 업데이트
+    private void UpdateStopwatchDisplay()
+    {
+        seconds = Mathf.FloorToInt(elapsedTime % 60);
+        milliseconds = Mathf.FloorToInt((elapsedTime * 100) % 100); 
+        stopwatchText.text = seconds.ToString() + ":" + milliseconds.ToString();
+    }
+
 
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isPaused = !isPaused; // 이동 상태 토글
+            isPaused = true;
             if (isPaused) // 이동이 일시 중지되었을 때
             {
                 lastCollisionState = CheckCollision();  // 충돌 체크 (내부에서 상태에 따라 처리)
@@ -51,7 +80,7 @@ public class sliderM : MonoBehaviour
     private void MoveHandle()
     {
         // Time.deltaTime과 Time.timeScale을 이용하여 이동 속도 결정
-        float moveSpeed = Time.deltaTime * 60 / Time.timeScale;
+        float moveSpeed = Time.deltaTime * 500 / Time.timeScale;
         moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
 
         // 좌우 한계점 체크 (0 ~ 140)
@@ -105,15 +134,20 @@ public class sliderM : MonoBehaviour
 
     private void ShutDown()
     {
+        elapsedTime = 0f;
+        isPaused = true;
+        moveSpot = 0f;
         canvas.gameObject.SetActive(false);
-
         OnShutdown?.Invoke();
     }
 
     // 나중에 다시 시작할 때 사용할 함수
     public void OpenCanvas()
     {
+        elapsedTime = 0f;
         canvas.gameObject.SetActive(true);
         isPaused = false;
+
     }
+   
 }
