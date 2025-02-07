@@ -4,12 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - hat
+  - win
   - fail
   - pass
-  - win
-  - lb_bird
-  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
@@ -17,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
-  - noselfcollision
-  - 
-  - detect
+  - drivable
+  - carbody
+  - SphereRB
   - 
   - 
   - 
@@ -49,10 +46,3 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
