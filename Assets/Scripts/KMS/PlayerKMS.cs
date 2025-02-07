@@ -10,12 +10,15 @@ public class PlayerKMS : MonoBehaviour
     private MeshRenderer meshRenderer;
     public IInputHandler currentInput;
     public IMovement currentMovement;
+    private Rigidbody rb;
 
     // 상호 작용 관련
     private InteractableObject currentInteractableObject;
     [Header("상호작용 설정")]
     public float interactionRange = 2f;
     public KeyCode interactKeyCode = KeyCode.G;
+    public float maxRange = 10f;
+    public float minRange = 2f;
 
     // 포물선 이동 관련
     [Header("포물선 이동 설정")]
@@ -41,6 +44,7 @@ public class PlayerKMS : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
+        //rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -55,6 +59,9 @@ public class PlayerKMS : MonoBehaviour
 
     private void Update()
     {
+        //float speed = rb.linearVelocity.magnitude; // 현재 속도 계산
+        //interactionRange = Mathf.Lerp(minRange, maxRange, Mathf.Clamp01(speed / 60f));
+
         // Transitioning 상태일 때는 입력을 무시한다.
         if (currentState == PlayerState.Transitioning)
         {
@@ -79,8 +86,6 @@ public class PlayerKMS : MonoBehaviour
     {
         if (currentState == PlayerState.Riding && currentObjectPrefab != null)
         {
-            //transform.position = targetObject.mountPoint.position;
-            //transform.rotation = currentInteractableObject.transform.rotation;
             HandleRidingMovement();
         }
         else if (currentState == PlayerState.Idle)

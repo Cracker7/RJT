@@ -1358,9 +1358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3161cab04da9bcb4a907b179d0199ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   TheBall: {fileID: 1061903806}
   CharacterRigidbody: {fileID: 1341607324}
-  balanceSpeed: 100
+  TheObject: {fileID: 0}
   balanceHeight: 2.6
 --- !u!95 &941554346
 Animator:
@@ -1970,9 +1971,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3161cab04da9bcb4a907b179d0199ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   TheBall: {fileID: 1061903806}
   CharacterRigidbody: {fileID: 1341607324}
-  balanceSpeed: 100
+  TheObject: {fileID: 0}
   balanceHeight: 3.5
 --- !u!1 &1461550926
 GameObject:
