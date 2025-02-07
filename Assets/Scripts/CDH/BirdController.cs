@@ -145,7 +145,7 @@
 
 using UnityEngine;
 
-public class BirdController : MonoBehaviour
+public class BirdController : MonoBehaviour,IMovement
 {
     [SerializeField] private float moveSpeed = 10f;  // 앞으로 가는 속도
     [SerializeField] private float turnSpeed = 50f;  // 회전 속도
@@ -165,32 +165,32 @@ public class BirdController : MonoBehaviour
         rb.useGravity = true;  // 중력 적용
     }
 
-    private void FixedUpdate()
-    {
-        rb.linearVelocity = transform.forward * moveSpeed;
+    //private void FixedUpdate()
+    //{
+    //    rb.linearVelocity = transform.forward * moveSpeed;
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddTorque(Vector3.up * -turnSpeed);
-            targetTilt = tiltAmount;
-            rb.linearVelocity += Vector3.left * sideMoveFactor * Time.deltaTime;
-            FlapRagdoll(Vector3.left);  // 래그돌 흔들기 (왼쪽)
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddTorque(Vector3.up * turnSpeed);
-            targetTilt = -tiltAmount;
-            rb.linearVelocity += Vector3.right * sideMoveFactor * Time.deltaTime;
-            FlapRagdoll(Vector3.right);  // 래그돌 흔들기 (오른쪽)
-        }
-        else
-        {
-            targetTilt = 0;
-        }
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        rb.AddTorque(Vector3.up * -turnSpeed);
+    //        targetTilt = tiltAmount;
+    //        rb.linearVelocity += Vector3.left * sideMoveFactor * Time.deltaTime;
+    //        FlapRagdoll(Vector3.left);  // 래그돌 흔들기 (왼쪽)
+    //    }
+    //    else if (Input.GetKey(KeyCode.D))
+    //    {
+    //        rb.AddTorque(Vector3.up * turnSpeed);
+    //        targetTilt = -tiltAmount;
+    //        rb.linearVelocity += Vector3.right * sideMoveFactor * Time.deltaTime;
+    //        FlapRagdoll(Vector3.right);  // 래그돌 흔들기 (오른쪽)
+    //    }
+    //    else
+    //    {
+    //        targetTilt = 0;
+    //    }
 
-        float newZRotation = Mathf.SmoothDampAngle(transform.eulerAngles.z, targetTilt, ref currentVelocity, smoothTime);
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, newZRotation);
-    }
+    //    float newZRotation = Mathf.SmoothDampAngle(transform.eulerAngles.z, targetTilt, ref currentVelocity, smoothTime);
+    //    transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, newZRotation);
+    //}
 
     private void FlapRagdoll(Vector3 direction)
     {
@@ -199,6 +199,34 @@ public class BirdController : MonoBehaviour
             Vector3 randomForce = direction* -1 * ragdollFlapForce * Random.Range(0.8f, 1.2f);
             limb.AddForce(randomForce, ForceMode.Impulse);  // 랜덤한 힘을 추가
         }
+    }
+
+    public void Move(Vector3 input)
+    {
+        Debug.Log(input);
+        rb.linearVelocity = transform.forward * moveSpeed;
+
+        if (input.x < 0)
+        {
+            rb.AddTorque(transform.up * -turnSpeed);
+            targetTilt = tiltAmount;
+            rb.linearVelocity += -transform.right * sideMoveFactor * Time.deltaTime;
+            FlapRagdoll(-transform.right);  // 래그돌 흔들기 (왼쪽)
+        }
+        else if (input.x > 0)
+        {
+            rb.AddTorque(transform.up * turnSpeed);
+            targetTilt = -tiltAmount;
+            rb.linearVelocity += transform.right * sideMoveFactor * Time.deltaTime;
+            FlapRagdoll(transform.right);  // 래그돌 흔들기 (오른쪽)
+        }
+        else
+        {
+            targetTilt = 0;
+        }
+
+        float newZRotation = Mathf.SmoothDampAngle(transform.eulerAngles.z, targetTilt, ref currentVelocity, smoothTime);
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, newZRotation);
     }
 }
 

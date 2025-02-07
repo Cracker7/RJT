@@ -58,12 +58,12 @@ public class WheelController : MonoBehaviour,IMovement
             frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
             frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         }
-        else
-        {
-            //frontLeftWheelCollider.motorTorque = 0; // 최대 속도 도달 시 추가적인 힘을 주지 않음
-            //frontRightWheelCollider.motorTorque = 0;
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
+        //else
+        //{
+        //    //frontLeftWheelCollider.motorTorque = 0; // 최대 속도 도달 시 추가적인 힘을 주지 않음
+        //    //frontRightWheelCollider.motorTorque = 0;
+        //    rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        //}
         currentbreakForce = isBreaking ? breakForce : 0f;
         ApplyBreaking();
     }

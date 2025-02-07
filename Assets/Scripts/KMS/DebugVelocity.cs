@@ -17,8 +17,8 @@ public class DebugVelocity : MonoBehaviour
 
         if (time > 1f)
         {
-            Debug.Log("리니어 속도 : " + rb.linearVelocity.magnitude);
-            Debug.Log("각 속도 : " + rb.angularVelocity.magnitude);
+            Debug.Log("km/h : " + rb.linearVelocity.magnitude * 3.6f);
+            //Debug.Log("각 속도 : " + rb.angularVelocity.magnitude);
             time = 0;
         }
     }
