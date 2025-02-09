@@ -59,7 +59,7 @@ public class sliderM : MonoBehaviour
     {
         seconds = Mathf.FloorToInt(elapsedTime % 60);
         milliseconds = Mathf.FloorToInt((elapsedTime * 100) % 100); 
-        stopwatchText.text = seconds.ToString() + ":" + milliseconds.ToString();
+        //stopwatchText.text = seconds.ToString() + ":" + milliseconds.ToString();
     }
 
 

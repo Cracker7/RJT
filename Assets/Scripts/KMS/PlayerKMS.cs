@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerKMS : MonoBehaviour
 {
@@ -7,10 +9,21 @@ public class PlayerKMS : MonoBehaviour
     private PlayerState currentState = PlayerState.Idle;
 
     // 컴포넌트 캐싱
-    private MeshRenderer meshRenderer;
+    //private MeshRenderer meshRenderer;
+    private List<SkinnedMeshRenderer> skinRenderer;
     public IInputHandler currentInput;
     public IMovement currentMovement;
-    private Rigidbody rb;
+
+    // 래그돌 물리 컴포넌트 캐싱
+    private List<Rigidbody> ragdollRigidbodies;
+    private List<Collider> ragdollColliders;
+    private Rigidbody mainRigidbody;  // 루트 오브젝트의 리지드바디
+    private Collider mainCollider;     // 루트 오브젝트의 콜라이더
+
+    // 물리 설정
+    [Header("물리 설정")]
+    public bool useGravity = true;
+    public bool isKinematic = false;
 
     // 상호 작용 관련
     private InteractableObject currentInteractableObject;
@@ -40,11 +53,38 @@ public class PlayerKMS : MonoBehaviour
 
     private void Awake()
     {
-        // 컴포넌트 캐싱
-        meshRenderer = GetComponent<MeshRenderer>();
+        // 기본 컴포넌트 캐싱
+        skinRenderer = new List<SkinnedMeshRenderer>(GetComponentsInChildren<SkinnedMeshRenderer>());
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
-        //rb = GetComponent<Rigidbody>();
+
+        // 래그돌 컴포넌트 캐싱
+        CacheRagdollComponents();
+
+        // 초기 물리 상태 설정
+        SetPhysicsState(true, false, false);
+    }
+
+    // 래그돌 컴포넌트들을 캐시하는 메서드
+    private void CacheRagdollComponents()
+    {
+        // 메인 컴포넌트 캐시
+        mainRigidbody = GetComponent<Rigidbody>();
+        mainCollider = GetComponent<Collider>();
+
+        // 자식 컴포넌트들 캐시
+        ragdollRigidbodies = new List<Rigidbody>(GetComponentsInChildren<Rigidbody>());
+        ragdollColliders = new List<Collider>(GetComponentsInChildren<Collider>());
+
+        // 메인 컴포넌트가 리스트에 포함되어 있다면 제거
+        if (mainRigidbody != null && ragdollRigidbodies.Contains(mainRigidbody))
+        {
+            ragdollRigidbodies.Remove(mainRigidbody);
+        }
+        if (mainCollider != null && ragdollColliders.Contains(mainCollider))
+        {
+            ragdollColliders.Remove(mainCollider);
+        }
     }
 
     private void OnEnable()
@@ -94,10 +134,104 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
+    // 물리 상태 설정을 위한 헬퍼 메서드
+    private void SetPhysicsState(bool enablePhysics, bool isKinematic, bool isTrigger)
+    {
+        // 메인 컴포넌트 설정
+        if (mainRigidbody != null)
+        {
+            mainRigidbody.useGravity = enablePhysics;
+            mainRigidbody.isKinematic = isKinematic;
+        }
+
+        if (mainCollider != null)
+        {
+            mainCollider.isTrigger = isTrigger;
+            mainCollider.enabled = true;
+        }
+
+        // 모든 래그돌 리지드바디 설정
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            if (rb != null)
+            {
+                rb.useGravity = enablePhysics;
+                rb.isKinematic = isKinematic;
+            }
+        }
+
+        // 모든 래그돌 콜라이더 설정
+        foreach (Collider col in ragdollColliders)
+        {
+            if (col != null)
+            {
+                col.isTrigger = isTrigger;
+                col.enabled = true;
+            }
+        }
+    }
+
+    private void UpdatePlayerState(PlayerState newState)
+    {
+        currentState = newState;
+
+        switch (newState)
+        {
+            case PlayerState.Idle:
+                // 일반 상태: 모든 물리 활성화
+                SetPhysicsState(true, false, false);
+                break;
+
+            case PlayerState.Transitioning:
+                // 전환 상태: 모든 물리 비활성화, 키네마틱 활성화
+                SetPhysicsState(false, true, true);
+                break;
+
+            case PlayerState.Riding:
+                // 탑승 상태: 모든 콜라이더 비활성화
+                DisableAllPhysics();
+                break;
+        }
+    }
+
+    // 모든 물리 컴포넌트 비활성화
+    private void DisableAllPhysics()
+    {
+        // 메인 컴포넌트 비활성화
+        if (mainRigidbody != null)
+        {
+            mainRigidbody.isKinematic = true;
+            mainRigidbody.useGravity = false;
+        }
+        if (mainCollider != null)
+        {
+            mainCollider.enabled = false;
+        }
+
+        // 모든 래그돌 컴포넌트 비활성화
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
+        }
+
+        foreach (Collider col in ragdollColliders)
+        {
+            if (col != null)
+            {
+                col.enabled = false;
+            }
+        }
+    }
+
     private void HandleInput()
     {
         if (Input.GetKey(interactKeyCode))
         {
+            Debug.Log("상호 작용 키가 눌림");
             HandleInteraction();
         }
     }
@@ -109,6 +243,7 @@ public class PlayerKMS : MonoBehaviour
         if ((currentInteractableObject != null && nearestObject != null && nearestObject != currentInteractableObject) ||
             (currentInteractableObject == null && nearestObject != null))
         {
+            Debug.Log("주변 오브젝트를 찾음");
             StartTransition(nearestObject);
         }
     }
@@ -117,7 +252,7 @@ public class PlayerKMS : MonoBehaviour
     {
         ExitObject(); // 기존 오브젝트에서 내리기
 
-        currentState = PlayerState.Transitioning;
+        UpdatePlayerState(PlayerState.Transitioning);
         targetObject = target;
         startPosition = transform.position;
         transitionTime = 0f;
@@ -126,7 +261,6 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
-
     }
 
     private void UpdateTransition()
@@ -189,11 +323,9 @@ public class PlayerKMS : MonoBehaviour
         {
             transform.position = lastKnownMountPoint;
             transform.rotation = targetObject.mountPoint.rotation;
-
             EnterObject(targetObject);
         }
 
-        //currentState = PlayerState.Idle;
         targetObject = null;
     }
 
@@ -207,7 +339,11 @@ public class PlayerKMS : MonoBehaviour
         }
 
         // 2. 플레이어 메쉬 렌더러 비활성화
-        meshRenderer.enabled = false;
+        //meshRenderer.enabled = false;
+        foreach(SkinnedMeshRenderer skin in skinRenderer)
+        {
+            skin.enabled = false;
+        }
 
         // 기존에 타고 있던 오브젝트에서 내리는 처리
         if (currentInteractableObject != null)
@@ -226,8 +362,9 @@ public class PlayerKMS : MonoBehaviour
         currentInput = currentObjectPrefab.GetComponentInChildren<IInputHandler>();
 
         // 6. 상태 업데이트
-        currentState = PlayerState.Riding;
+        //currentState = PlayerState.Riding;
 
+        UpdatePlayerState(PlayerState.Riding);
         transform.SetParent(currentObjectPrefab.transform);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
@@ -236,8 +373,14 @@ public class PlayerKMS : MonoBehaviour
     private void ExitObject()
     {
         transform.SetParent(null);
+        UpdatePlayerState(PlayerState.Idle);
 
-        meshRenderer.enabled = true;
+        //meshRenderer.enabled = true;
+        foreach (SkinnedMeshRenderer skin in skinRenderer)
+        {
+            skin.enabled = true;
+        }
+
         // 타고 있는 오브젝트가 있다면, 해당 오브젝트에서 내림
         if (currentInteractableObject != null)
         {
@@ -284,6 +427,7 @@ public class PlayerKMS : MonoBehaviour
                                          spawnRotation);
     }
 
+    // 탈 수 있는 오브젝트 찾는 함수
     private InteractableObject CheckForInteractableObjects()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactionRange);

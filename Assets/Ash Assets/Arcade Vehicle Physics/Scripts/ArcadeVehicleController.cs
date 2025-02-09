@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.LightTransport.InputExtraction;
 
 namespace ArcadeVP
 {
-    public class ArcadeVehicleController : MonoBehaviour
+    public class ArcadeVehicleController : MonoBehaviour, IMovement
     {
         public enum groundCheck { rayCast, sphereCaste };
         public enum MovementMode { Velocity, AngularVelocity };
@@ -66,12 +67,12 @@ namespace ArcadeVP
             AudioManager();
         }
 
-        public void ProvideInputs(float _steeringInput, float _accelarationInput, float _brakeInput)
-        {
-            steeringInput = _steeringInput;
-            accelerationInput = _accelarationInput;
-            brakeInput = _brakeInput;
-        }
+        //public void ProvideInputs(float _steeringInput, float _accelarationInput, float _brakeInput)
+        //{
+        //    steeringInput = _steeringInput;
+        //    accelerationInput = _accelarationInput;
+        //    brakeInput = _brakeInput;
+        //}
 
         public void AudioManager()
         {
@@ -86,9 +87,12 @@ namespace ArcadeVP
             }
         }
 
-
-        void FixedUpdate()
+        public void Move(Vector3 input)
         {
+            steeringInput = input.x;
+            brakeInput = input.y;
+            accelerationInput = input.z;
+
             carVelocity = carBody.transform.InverseTransformDirection(carBody.linearVelocity);
 
             if (Mathf.Abs(carVelocity.x) > 0)
@@ -270,6 +274,5 @@ namespace ArcadeVP
             }
 
         }
-
     }
 }
