@@ -5621,6 +5621,7 @@ GameObject:
   - component: {fileID: 4522297514277781518}
   - component: {fileID: 3144237680647006154}
   - component: {fileID: 5899208111343513600}
+  - component: {fileID: 3800449467234688837}
   m_Layer: 7
   m_Name: Arcade_Military combat Jeep Variant
   m_TagString: Untagged
@@ -5674,7 +5675,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4264980800788272180}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da3f11c6be0a9a45836cbfe050297fc, type: 3}
   m_Name: 
@@ -6012,6 +6013,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3800449467234688837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264980800788272180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4282939568845089731
 GameObject:
   m_ObjectHideFlags: 0

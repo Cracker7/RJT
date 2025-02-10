@@ -48,6 +48,10 @@ public class InteractableObject : MonoBehaviour
         if (currentDurability <= 0)
         {
             DestroyObject(); // 내구도가 0 이하가 되면 물체를 파괴
+
+            //var player = FindObjectsByType<PlayerKMS>();
+            var player = FindFirstObjectByType<PlayerKMS>();
+            player.durabilityZero();
         }
     }
 
