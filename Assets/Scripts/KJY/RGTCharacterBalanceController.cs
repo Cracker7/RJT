@@ -7,17 +7,19 @@ public class RGTCharacterBalanceController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] Transform TheBall;
     [SerializeField] Rigidbody CharacterRigidbody;
-    [SerializeField] Transform TheObject;
+    //[SerializeField] private RGTHpBar hp;
+    //[SerializeField] Transform TheObject;
     //[SerializeField] private float balanceSpeed = 100f;
     // 공 위에서 중심을 잡는 높이
     public float balanceHeight = 3.5f;
 
-
+    //private Vector3 Pos;
 
     private void Start()
     {
         CharacterRigidbody.isKinematic = true;
         Animator animator = GetComponent<Animator>();
+        //hp.UpdatePosition(transform.position);
     }
 
     private void FixedUpdate()
