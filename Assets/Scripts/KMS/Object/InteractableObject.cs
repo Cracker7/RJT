@@ -65,6 +65,6 @@ public class InteractableObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         TakeDamage(collision.impulse.magnitude);
-        Debug.Log("받은 충격량" + collision.impulse.magnitude);
+        //Debug.Log("받은 충격량" + collision.impulse.magnitude);
     }
 }
