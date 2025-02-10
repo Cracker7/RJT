@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerKMS : MonoBehaviour
 {
     // 상태 머신
-    private enum PlayerState { Idle, Transitioning, Riding }
+    private enum PlayerState { Idle, Transitioning, Riding, Dead }
     private PlayerState currentState = PlayerState.Idle;
 
     // 컴포넌트 캐싱
@@ -107,6 +106,26 @@ public class PlayerKMS : MonoBehaviour
         {
             UpdateTransition();
         }
+        else if(currentState == PlayerState.Dead)
+        {
+            // 플레이어가 죽었을때 실행하는 함수
+
+            // 부모 관계 해제
+            if(currentObjectPrefab != null)
+                transform.SetParent(null);
+
+            // 메시 렌더러 활성화
+            foreach (SkinnedMeshRenderer skin in skinRenderer)
+            {
+                skin.enabled = true;
+            }
+            
+            // 현재 플레이어와 탑승한 물체와 낑겨있을 경우에 나올 방법 + 힘을 주는 방법이 필요함
+
+            // 미니게임을 실패 했을 경우
+
+            // 내구도가 다 닳았을 경우
+        }
         else
         {
             // Idle이나 Riding 상태일 때는 항상 인터렉션 입력을 처리하도록 함
@@ -187,6 +206,11 @@ public class PlayerKMS : MonoBehaviour
                 SetPhysicsState(false, true, true);
                 break;
 
+            case PlayerState.Dead:
+                // 죽은 상태 : 일반 상태와 같음
+                SetPhysicsState(true, false, false);
+                break;
+
             case PlayerState.Riding:
                 // 탑승 상태: 모든 콜라이더 비활성화
                 DisableAllPhysics();
@@ -250,6 +274,9 @@ public class PlayerKMS : MonoBehaviour
 
     private void StartTransition(InteractableObject target)
     {
+        // 현재 속도 받아오기
+        //float currentSpeed = 
+
         ExitObject(); // 기존 오브젝트에서 내리기
 
         UpdatePlayerState(PlayerState.Transitioning);
@@ -508,9 +535,15 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("미니게임 실패");
 
             // 게임 오버? 떨어지기
+            UpdatePlayerState(PlayerState.Dead);
         }
 
         return Prefab;
+    }
+
+    public void durabilityZero()
+    {
+        UpdatePlayerState(PlayerState.Dead);
     }
 
     void OnDrawGizmos()
