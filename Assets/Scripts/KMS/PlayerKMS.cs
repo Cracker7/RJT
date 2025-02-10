@@ -330,21 +330,21 @@ public class PlayerKMS : MonoBehaviour
 
         // 최대 높이에 도달했을 때 타임스케일을 느리게 설정 (여기서는 normalizedTime이 0.5 근처일 때)
         // 0.05f의 허용 오차를 두어 0.45 ~ 0.55 구간에서 적용
-        if (!hasSlowedTime && Mathf.Abs(normalizedTime - 0.5f) < 0.05f)
-        {
-            //Time.timeScale = timeScale;
-            //hasSlowedTime = true;
-            // 미니게임 시작
-            miniGame.OpenCanvas();
-            // 이벤트로 미니게임이 끝나면 타임스케일이 되돌아옴.
-        }
+        // if (!hasSlowedTime && Mathf.Abs(normalizedTime - 0.5f) < 0.05f)
+        // {
+        //     //Time.timeScale = timeScale;
+        //     //hasSlowedTime = true;
+        //     // 미니게임 시작
+        //     miniGame.OpenCanvas();
+        //     // 이벤트로 미니게임이 끝나면 타임스케일이 되돌아옴.
+        // }
 
         // 전환 진행이 완료되었거나 (normalizedTime >= 1.0f)
         // 목표에 충분히 가까워졌으면 (distanceToTarget < mountThreshold) 전환 완료 처리
         if (normalizedTime >= 1.0f || distanceToTarget < mountThreshold)
         {
             CompleteTransition();
-            hasSlowedTime = false;
+            //hasSlowedTime = false;
         }
     }
 
@@ -456,9 +456,14 @@ public class PlayerKMS : MonoBehaviour
         Quaternion spawnRotation = target.transform.rotation;
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라야함
-        currentObjectPrefab = Instantiate(SelectPrefab(target),
+        // currentObjectPrefab = Instantiate(SelectPrefab(target),
+        //                                  spawnPosition + new Vector3(0,1f,0),
+        //                                  spawnRotation);
+                                         
+        currentObjectPrefab = Instantiate(target.objectData.winPrefab,
                                          spawnPosition + new Vector3(0,1f,0),
                                          spawnRotation);
+                                         
     }
 
     // 탈 수 있는 오브젝트 찾는 함수
