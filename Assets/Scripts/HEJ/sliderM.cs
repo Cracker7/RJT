@@ -35,7 +35,7 @@ public class sliderM : MonoBehaviour
     private void Update()
     {
         if (!isPaused) elapsedTime += Time.deltaTime;
-         UpdateStopwatchDisplay();
+        UpdateStopwatchDisplay();
         
 
         HandleInput(); // 사용자 입력 처리
@@ -45,7 +45,7 @@ public class sliderM : MonoBehaviour
         }
 
         // 5초 경과 시 닫힘
-        if(elapsedTime >= 2f)
+        if(elapsedTime >= 1f)
         {
             ShutDown();
             // 여기에 실패 결과
@@ -80,7 +80,7 @@ public class sliderM : MonoBehaviour
     private void MoveHandle()
     {
         // Time.deltaTime과 Time.timeScale을 이용하여 이동 속도 결정
-        float moveSpeed = Time.deltaTime * 500 / Time.timeScale;
+        float moveSpeed = Time.deltaTime * 300 / Time.timeScale;
         moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
 
         // 좌우 한계점 체크 (0 ~ 140)

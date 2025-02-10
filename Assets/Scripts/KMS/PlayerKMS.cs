@@ -50,6 +50,11 @@ public class PlayerKMS : MonoBehaviour
     public sliderM miniGame;
     public GameObject currentObjectPrefab;
 
+    //속도 전달 관련
+    private Vector3 savedVelocity;
+    private Vector3 savedAngularVelocity;
+    private bool hasSavedVelocity = false;
+
     private void Awake()
     {
         // 기본 컴포넌트 캐싱
@@ -88,12 +93,12 @@ public class PlayerKMS : MonoBehaviour
 
     private void OnEnable()
     {
-        sliderM.OnShutdown += ResetTimeScale;
+        //sliderM.OnShutdown += ResetTimeScale;
     }
 
     private void OnDisable()
     {
-        sliderM.OnShutdown -= ResetTimeScale;
+        //sliderM.OnShutdown -= ResetTimeScale;
     }
 
     private void Update()
@@ -137,7 +142,7 @@ public class PlayerKMS : MonoBehaviour
                 HandleRiding();
             }
         }
-        Debug.Log("라이딩 상태 : " + PlayerState.Riding);
+        Debug.Log("라이딩 상태 : " + currentState);
         Debug.Log("선택된 프리팹 : " + currentObjectPrefab);
     }
 
@@ -274,8 +279,7 @@ public class PlayerKMS : MonoBehaviour
 
     private void StartTransition(InteractableObject target)
     {
-        // 현재 속도 받아오기
-        //float currentSpeed = 
+        SaveCurrentVelocity(); // 전환 시작 전에 현재 속도 저장
 
         ExitObject(); // 기존 오브젝트에서 내리기
 
@@ -328,8 +332,8 @@ public class PlayerKMS : MonoBehaviour
         // 0.05f의 허용 오차를 두어 0.45 ~ 0.55 구간에서 적용
         if (!hasSlowedTime && Mathf.Abs(normalizedTime - 0.5f) < 0.05f)
         {
-            Time.timeScale = timeScale;
-            hasSlowedTime = true;
+            //Time.timeScale = timeScale;
+            //hasSlowedTime = true;
             // 미니게임 시작
             miniGame.OpenCanvas();
             // 이벤트로 미니게임이 끝나면 타임스케일이 되돌아옴.
@@ -383,6 +387,9 @@ public class PlayerKMS : MonoBehaviour
 
         // 4. 새로운 오브젝트 타기 (프리팹 생성)
         Ride(currentInteractableObject);
+
+        // 프리팹이 생성된 후에 저장된 속도 적용
+        ApplySavedVelocity();
 
         // 5. currentMovement와 currentInput을 프리팹에서 가져오기
         currentMovement = currentObjectPrefab.GetComponentInChildren<IMovement>();
@@ -544,6 +551,36 @@ public class PlayerKMS : MonoBehaviour
     public void durabilityZero()
     {
         UpdatePlayerState(PlayerState.Dead);
+    }
+
+        private void SaveCurrentVelocity()
+    {
+        if (currentObjectPrefab != null)
+        {
+            Rigidbody rb = currentObjectPrefab.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                savedVelocity = rb.linearVelocity;
+                savedAngularVelocity = rb.angularVelocity;
+                hasSavedVelocity = true;
+                Debug.Log($"Saved velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+            }
+        }
+    }
+
+    private void ApplySavedVelocity()
+    {
+        if (hasSavedVelocity && currentObjectPrefab != null)
+        {
+            Rigidbody rb = currentObjectPrefab.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = savedVelocity;
+                rb.angularVelocity = savedAngularVelocity;
+                Debug.Log($"Applied velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+            }
+            hasSavedVelocity = false;
+        }
     }
 
     void OnDrawGizmos()
