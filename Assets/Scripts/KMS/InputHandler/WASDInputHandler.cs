@@ -8,6 +8,7 @@ public class WASDInputHandler : MonoBehaviour, IInputHandler
 
         float XAxis = Input.GetAxis("Horizontal");
         float ZAxis = Input.GetAxis("Vertical");
+        float YAxis = Input.GetAxis("Jump");
 
         // 화살표 키가 눌렸을 경우 값을 0으로 만들기
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
@@ -16,7 +17,7 @@ public class WASDInputHandler : MonoBehaviour, IInputHandler
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
             ZAxis = 0f;
 
-        return new Vector3(XAxis, 0, ZAxis);
+        return new Vector3(XAxis, YAxis, ZAxis);
 
     }
 }

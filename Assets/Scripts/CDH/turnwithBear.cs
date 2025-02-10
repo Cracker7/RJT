@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ContinuousRotation : MonoBehaviour
+public class turnwithBear : MonoBehaviour
 {
     public Transform tr;
     // 회전 속도를 설정합니다 (단위: 도/초).
