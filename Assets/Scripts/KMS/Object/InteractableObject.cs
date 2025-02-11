@@ -1,70 +1,111 @@
 using UnityEngine;
+using System.Collections;
+using System;
 
 public class InteractableObject : MonoBehaviour
 {
-    public float maxDurability; // 물체의 최대 내구도
-    public float currentDurability; // 물체의 현재 내구도
-    public bool isOccupied = false; // 현재 사용 중인지 여부
+    public float maxDurability;
+    public float currentDurability;
 
-    public Transform mountPoint; // 탑승 위치
-    public ObjectSpecificData objectData; // 물체의 고유 데이터
+    public Transform mountPoint;
+    public ObjectSpecificData objectData;
 
-    public IMovement movementController; // 물체의 이동 컨트롤러
-    public IInputHandler inputHandler; // 탑승시 사용할 입력 방식
+    public IMovement movementController;
+    public IInputHandler inputHandler;
+    public RGTHpBar hpBar;
     
-    //public string mountAnimationName; // 탑승 애니메이션 이름
-    //public MountType mountType; // 탑승 유형
+    // HP 업데이트를 위한 델리게이트 선언
+    public delegate void OnHPUpdateDelegate();
+    public OnHPUpdateDelegate onHPUpdate;
 
-    private void Awake()
+    public event Action OnDestroyCalled;
+
+    public virtual void Awake()
     {
         Init();
         currentDurability = objectData.durability;
         maxDurability = objectData.durability;
+        
+        if (hpBar != null)
+        {
+            hpBar.UpdateHpBar(maxDurability, maxDurability);
+        }
     }
 
     public void Init()
     {
         movementController = GetComponent<IMovement>();
         inputHandler = GetComponent<IInputHandler>();
-    }
-
-    //// 플레이어가 상호작용 시 호출되는 함수
-    //public virtual void Interact(PlayerKMS player)
-    //{
-    //    if (!isOccupied)
-    //    {
-    //        if (inputHandler != null)
-    //            player.ChangeInput(inputHandler); // 플레이어의 입력 방식을 변경
-            
-    //        player.EnterObject(this); // 플레이어를 물체에 탑승시킴
-    //        isOccupied = true; // 물체를 사용 중으로 표시
-    //    }
-    //}
-
-    // 물체가 데미지를 입었을 때 호출되는 함수
-    public virtual void TakeDamage(float damage)
-    {
-        currentDurability -= damage; // 내구도 감소
-        if (currentDurability <= 0)
+        hpBar = FindFirstObjectByType<RGTHpBar>();
+        if(mountPoint == null)
         {
-            DestroyObject(); // 내구도가 0 이하가 되면 물체를 파괴
-
-            //var player = FindObjectsByType<PlayerKMS>();
-            // var player = FindFirstObjectByType<PlayerKMS>();
-            // player.durabilityZero();
+            mountPoint = transform;
         }
     }
 
-    // 물체가 파괴될 때 호출되는 함수
-    private void DestroyObject()
+    // 외부에서 호출하면 코루틴을 통해 HP를 부드럽게 감소시킵니다.
+    public void StartHpDecrease()
     {
-        // 파괴 로직 구현
+        // Debug.Log("체력 함수 실행됨");
+        // currentDurability -= 1f;
+        // hpBar.UpdateHpBar(currentDurability, maxDurability);
+        StartCoroutine(DecreaseHpCoroutine());
+    }
+
+    // 1초 동안 5만큼 HP를 부드럽게 감소시키는 코루틴
+    private IEnumerator DecreaseHpCoroutine()
+    {
+        // // 감소할 양 및 코루틴 지속 시간 (1초)
+        // float decreaseAmount = 5f;
+        // float duration = 1f;
+        // float elapsed = 0f;
+        
+        // // 시작 HP와 최종 HP 값 계산
+        // float startHP = currentDurability;
+        // float targetHP = Mathf.Max(currentDurability - decreaseAmount, 0f);
+
+        // // 1초 동안 매 프레임마다 선형 보간(Lerp)로 HP 감소
+        // while (elapsed < duration)
+        // {
+        //     elapsed += Time.deltaTime;
+        //     currentDurability = Mathf.Lerp(startHP, targetHP, elapsed / duration);
+        //     hpBar.UpdateHpBar(currentDurability, maxDurability);
+        //     yield return null;
+        // }
+
+        // // 코루틴 종료 시 확실히 targetHP로 설정
+        // currentDurability = targetHP;
+        while(currentDurability > 0){
+        Debug.Log("체력 함수 실행됨");
+
+        currentDurability -= 1f;
+
+        Debug.Log("현재 체력" + currentDurability);
+
+        hpBar.UpdateHpBar(maxDurability, currentDurability);
+
+        yield return new WaitForSeconds(1f);
+        }
+        
+        if (currentDurability <= 0)
+        {
+            DestroyObject();
+        }
+    }
+
+    // 체력이 0이 되면 파괴되는 함수 실행 후 오브젝트 삭제
+    public void DestroyObject()
+    {
+        Debug.Log("오브젝트 파괴됨");
+
+        OnDestroyCalled?.Invoke();
+
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnDestroy()
     {
-        TakeDamage(collision.impulse.magnitude);
-        //Debug.Log("받은 충격량" + collision.impulse.magnitude);
+        // 델리게이트 정리
+        onHPUpdate = null;
     }
 }
