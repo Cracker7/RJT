@@ -50,6 +50,11 @@ public class PlayerKMS : MonoBehaviour
     public sliderM miniGame;
     public GameObject currentObjectPrefab;
 
+    //속도 전달 관련
+    private Vector3 savedVelocity;
+    private Vector3 savedAngularVelocity;
+    private bool hasSavedVelocity = false;
+
     private void Awake()
     {
         // 기본 컴포넌트 캐싱
@@ -88,12 +93,12 @@ public class PlayerKMS : MonoBehaviour
 
     private void OnEnable()
     {
-        sliderM.OnShutdown += ResetTimeScale;
+        //sliderM.OnShutdown += ResetTimeScale;
     }
 
     private void OnDisable()
     {
-        sliderM.OnShutdown -= ResetTimeScale;
+        //sliderM.OnShutdown -= ResetTimeScale;
     }
 
     private void Update()
@@ -137,7 +142,7 @@ public class PlayerKMS : MonoBehaviour
                 HandleRiding();
             }
         }
-        Debug.Log("라이딩 상태 : " + PlayerState.Riding);
+        Debug.Log("라이딩 상태 : " + currentState);
         Debug.Log("선택된 프리팹 : " + currentObjectPrefab);
     }
 
@@ -274,8 +279,7 @@ public class PlayerKMS : MonoBehaviour
 
     private void StartTransition(InteractableObject target)
     {
-        // 현재 속도 받아오기
-        //float currentSpeed = 
+        SaveCurrentVelocity(); // 전환 시작 전에 현재 속도 저장
 
         ExitObject(); // 기존 오브젝트에서 내리기
 
@@ -326,21 +330,21 @@ public class PlayerKMS : MonoBehaviour
 
         // 최대 높이에 도달했을 때 타임스케일을 느리게 설정 (여기서는 normalizedTime이 0.5 근처일 때)
         // 0.05f의 허용 오차를 두어 0.45 ~ 0.55 구간에서 적용
-        if (!hasSlowedTime && Mathf.Abs(normalizedTime - 0.5f) < 0.05f)
-        {
-            Time.timeScale = timeScale;
-            hasSlowedTime = true;
-            // 미니게임 시작
-            miniGame.OpenCanvas();
-            // 이벤트로 미니게임이 끝나면 타임스케일이 되돌아옴.
-        }
+        // if (!hasSlowedTime && Mathf.Abs(normalizedTime - 0.5f) < 0.05f)
+        // {
+        //     //Time.timeScale = timeScale;
+        //     //hasSlowedTime = true;
+        //     // 미니게임 시작
+        //     miniGame.OpenCanvas();
+        //     // 이벤트로 미니게임이 끝나면 타임스케일이 되돌아옴.
+        // }
 
         // 전환 진행이 완료되었거나 (normalizedTime >= 1.0f)
         // 목표에 충분히 가까워졌으면 (distanceToTarget < mountThreshold) 전환 완료 처리
         if (normalizedTime >= 1.0f || distanceToTarget < mountThreshold)
         {
             CompleteTransition();
-            hasSlowedTime = false;
+            //hasSlowedTime = false;
         }
     }
 
@@ -383,6 +387,9 @@ public class PlayerKMS : MonoBehaviour
 
         // 4. 새로운 오브젝트 타기 (프리팹 생성)
         Ride(currentInteractableObject);
+
+        // 프리팹이 생성된 후에 저장된 속도 적용
+        ApplySavedVelocity();
 
         // 5. currentMovement와 currentInput을 프리팹에서 가져오기
         currentMovement = currentObjectPrefab.GetComponentInChildren<IMovement>();
@@ -449,9 +456,14 @@ public class PlayerKMS : MonoBehaviour
         Quaternion spawnRotation = target.transform.rotation;
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라야함
-        currentObjectPrefab = Instantiate(SelectPrefab(target),
+        // currentObjectPrefab = Instantiate(SelectPrefab(target),
+        //                                  spawnPosition + new Vector3(0,1f,0),
+        //                                  spawnRotation);
+                                         
+        currentObjectPrefab = Instantiate(target.objectData.winPrefab,
                                          spawnPosition + new Vector3(0,1f,0),
                                          spawnRotation);
+                                         
     }
 
     // 탈 수 있는 오브젝트 찾는 함수
@@ -544,6 +556,36 @@ public class PlayerKMS : MonoBehaviour
     public void durabilityZero()
     {
         UpdatePlayerState(PlayerState.Dead);
+    }
+
+        private void SaveCurrentVelocity()
+    {
+        if (currentObjectPrefab != null)
+        {
+            Rigidbody rb = currentObjectPrefab.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                savedVelocity = rb.linearVelocity;
+                savedAngularVelocity = rb.angularVelocity;
+                hasSavedVelocity = true;
+                Debug.Log($"Saved velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+            }
+        }
+    }
+
+    private void ApplySavedVelocity()
+    {
+        if (hasSavedVelocity && currentObjectPrefab != null)
+        {
+            Rigidbody rb = currentObjectPrefab.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = savedVelocity;
+                rb.angularVelocity = savedAngularVelocity;
+                Debug.Log($"Applied velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+            }
+            hasSavedVelocity = false;
+        }
     }
 
     void OnDrawGizmos()
