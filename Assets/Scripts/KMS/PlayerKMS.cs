@@ -11,6 +11,7 @@ public class PlayerKMS : MonoBehaviour
     private List<SkinnedMeshRenderer> skinRenderer;
     public IInputHandler currentInput;
     public IMovement currentMovement;
+    private InteractableObject currentInteractable;
 
     // 래그돌 물리 컴포넌트 캐싱
     private List<Rigidbody> ragdollRigidbodies;
@@ -127,6 +128,7 @@ public class PlayerKMS : MonoBehaviour
         {
             // 이전에는 Idle이나 Riding 상태에서 상호작용 키 입력을 처리했으나,
             // 이제 탑승은 충돌 시(OnCollisionEnter) 처리하므로 입력 관련 코드는 제거합니다.
+            HandleInput();
 
             // Riding 상태라면 Riding 관련 추가 로직도 처리
             if (currentState == PlayerState.Riding)
@@ -249,14 +251,26 @@ public class PlayerKMS : MonoBehaviour
     }
 
     // 기존의 키 입력 기반 상호작용 함수는 더 이상 사용하지 않습니다.
-    // private void HandleInput()
-    // {
-    //     if (Input.GetKey(interactKeyCode))
-    //     {
-    //         Debug.Log("상호 작용 키가 눌림");
-    //         HandleInteraction();
-    //     }
-    // }
+    private void HandleInput()
+    {
+        if (Input.GetKey(interactKeyCode))
+        {
+            Debug.Log("상호 작용 키가 눌림");
+            HandleInteraction();
+        }
+    }
+
+     private void HandleInteraction()
+    {
+        InteractableObject nearestObject = CheckForInteractableObjects();
+
+        if ((currentInteractableObject != null && nearestObject != null && nearestObject != currentInteractableObject) ||
+            (currentInteractableObject == null && nearestObject != null))
+        {
+            Debug.Log("주변 오브젝트를 찾음");
+            StartTransition(nearestObject);
+        }
+    }
 
     // 기존 HandleInteraction()도 사용하지 않으므로 제거 가능함.
     // 필요한 경우 추후 다른 입력 처리로 활용하세요.
@@ -289,7 +303,7 @@ public class PlayerKMS : MonoBehaviour
         targetObject = target;
         startPosition = transform.position;
         transitionTime = 0f;
-        lastKnownMountPoint = target.mountPoint.position;
+        //lastKnownMountPoint = target.mountPoint.position;
 
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
@@ -310,17 +324,17 @@ public class PlayerKMS : MonoBehaviour
         float normalizedTime = transitionTime / transitionDuration;
 
         // 목표 위치 (mountPoint) 가져오기
-        Vector3 targetPosition = targetObject.mountPoint.position;
-        lastKnownMountPoint = targetPosition;
+        //Vector3 targetPosition = targetObject.mountPoint.position;
+        lastKnownMountPoint = targetObject.mountPoint.position;
 
         // 진행 비율에 따라 점프 높이 계산 (사인 함수를 이용해 부드러운 상승/하강 효과)
         float height = Mathf.Sin(normalizedTime * Mathf.PI) * jumpHeight;
         // 시작 위치에서 목표 위치로 선형 보간하고, 위쪽(height) 오프셋을 더하여 현재 위치 계산
-        Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, normalizedTime) + Vector3.up * height;
+        Vector3 currentPosition = Vector3.Lerp(startPosition, lastKnownMountPoint, normalizedTime) + Vector3.up * height;
         transform.position = currentPosition;
 
         // 목표 방향 계산 후, 해당 방향을 향하도록 부드러운 회전 보간 적용
-        Vector3 direction = (targetPosition - transform.position).normalized;
+        Vector3 direction = (lastKnownMountPoint - transform.position).normalized;
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -328,7 +342,7 @@ public class PlayerKMS : MonoBehaviour
         }
 
         // 목표 위치와의 거리 계산
-        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        float distanceToTarget = Vector3.Distance(transform.position, lastKnownMountPoint);
 
         // 전환 진행이 완료되었거나 (normalizedTime >= 1.0f)
         // 목표에 충분히 가까워졌으면 (distanceToTarget < mountThreshold) 전환 완료 처리
@@ -391,7 +405,7 @@ public class PlayerKMS : MonoBehaviour
         transform.localRotation = Quaternion.identity;
     }
 
-    private void ExitObject()
+    public void ExitObject()
     {
         transform.SetParent(null);
         UpdatePlayerState(PlayerState.Idle);
@@ -404,6 +418,11 @@ public class PlayerKMS : MonoBehaviour
         // 타고 있는 오브젝트가 있다면, 해당 오브젝트에서 내림
         if (currentInteractableObject != null)
         {
+            // 현재 탄 물체의 이벤트 삭제
+            currentInteractable.onHPUpdate -= currentInteractableObject.StartHpDecrease;
+            currentInteractable.OnDestroyCalled -= durabilityZero;
+            currentInteractable = null;
+
             // 원래 물건 위치와 회전을 프리팹 위치와 회전으로 설정
             currentInteractableObject.transform.position = currentObjectPrefab.transform.position;
             currentInteractableObject.transform.rotation = currentObjectPrefab.transform.rotation;
@@ -424,6 +443,7 @@ public class PlayerKMS : MonoBehaviour
             // 플레이어의 기본 이동 및 입력 컨트롤러로 복구
             currentMovement = GetComponent<IMovement>();
             currentInput = GetComponent<IInputHandler>();
+            
         }
     }
 
@@ -441,6 +461,14 @@ public class PlayerKMS : MonoBehaviour
         currentObjectPrefab = Instantiate(target.objectData.winPrefab,
                                          spawnPosition + new Vector3(0, 1f, 0),
                                          spawnRotation);
+
+        // 현재 타고 있는 오브젝트의 인터렉테이블 오브젝트
+        currentInteractable = currentObjectPrefab.GetComponent<InteractableObject>();
+        currentInteractable.onHPUpdate += currentInteractable.StartHpDecrease;
+        currentInteractable.onHPUpdate.Invoke();
+
+        // 현재 타고 있는 오브젝트의 파괴 이벤트
+        currentInteractable.OnDestroyCalled += durabilityZero;
     }
 
     // 탈 수 있는 오브젝트 찾는 함수 (현재 사용되지 않음)
@@ -529,7 +557,15 @@ public class PlayerKMS : MonoBehaviour
 
     public void durabilityZero()
     {
+        ExitObject();
         UpdatePlayerState(PlayerState.Dead);
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            if (rb != null)
+            {
+                rb.AddExplosionForce(20f, transform.position, 20f, 20f ,ForceMode.Impulse);
+            }
+        }
     }
 
     private void SaveCurrentVelocity()
@@ -575,11 +611,11 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        InteractableObject interactable = other.GetComponent<InteractableObject>();
-        if(interactable != null)
-        {
-            Ride(interactable);
-        }
-    }
+    // private void OnTriggerEnter(Collider other) {
+    //     InteractableObject interactable = other.GetComponent<InteractableObject>();
+    //     if(interactable != null && currentInteractable == null)
+    //     {
+    //         Ride(interactable);
+    //     }
+    // }
 }

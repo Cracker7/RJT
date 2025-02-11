@@ -5622,6 +5622,7 @@ GameObject:
   - component: {fileID: 3144237680647006154}
   - component: {fileID: 5899208111343513600}
   - component: {fileID: 3800449467234688837}
+  - component: {fileID: 8529571395559393564}
   m_Layer: 7
   m_Name: Arcade_Military combat Jeep Variant
   m_TagString: Untagged
@@ -6025,6 +6026,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8529571395559393564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264980800788272180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9a96c22aeb3d14595cc28a50b6714a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDurability: 0
+  currentDurability: 0
+  mountPoint: {fileID: 0}
+  objectData: {fileID: 11400000, guid: 30fbe60306a804047beca95be3434353, type: 2}
+  hpBar: {fileID: 0}
 --- !u!1 &4282939568845089731
 GameObject:
   m_ObjectHideFlags: 0
@@ -11248,9 +11266,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 7051636946649381694}
   objectData: {fileID: 11400000, guid: 6a911135919be894986bffa796e2a55f, type: 2}
+  hpBar: {fileID: 0}
 --- !u!114 &7260880580406559966
 MonoBehaviour:
   m_ObjectHideFlags: 0
