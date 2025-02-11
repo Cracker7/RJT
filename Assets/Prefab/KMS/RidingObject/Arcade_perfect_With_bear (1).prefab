@@ -23132,6 +23132,7 @@ GameObject:
   - component: {fileID: 1550697527247693618}
   - component: {fileID: 6273789767361750048}
   - component: {fileID: 2699918170124362078}
+  - component: {fileID: -6755269652916392999}
   m_Layer: 7
   m_Name: Arcade_perfect_With_bear (1)
   m_TagString: Untagged
@@ -23216,7 +23217,7 @@ MonoBehaviour:
   turn: 10
   gravity: 7
   downforce: 5
-  AirControl: 0
+  AirControl: 1
   kartLike: 0
   driftMultiplier: 1.5
   rb: {fileID: 1016245190392441042}
@@ -23535,6 +23536,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6755269652916392999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860436600109843569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de84ed3450778c14dae96cf0de18ba87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDurability: 0
+  currentDurability: 0
+  isOccupied: 0
+  mountPoint: {fileID: 0}
+  objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
+  hpBar: {fileID: 0}
 --- !u!1 &5911328702941169727
 GameObject:
   m_ObjectHideFlags: 0
@@ -23833,6 +23852,7 @@ MonoBehaviour:
   isOccupied: 0
   mountPoint: {fileID: 3626459036351351560}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
+  hpBar: {fileID: 0}
 --- !u!114 &8440025286386734593
 MonoBehaviour:
   m_ObjectHideFlags: 0
