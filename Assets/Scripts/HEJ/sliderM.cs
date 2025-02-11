@@ -34,7 +34,7 @@ public class sliderM : MonoBehaviour
 
     private void Update()
     {
-        if (!isPaused) elapsedTime += Time.deltaTime;
+       // if (!isPaused) elapsedTime += Time.deltaTime;
         UpdateStopwatchDisplay();
         
 
@@ -44,13 +44,7 @@ public class sliderM : MonoBehaviour
             MoveHandle(); // 핸들 이동
         }
 
-        // 5초 경과 시 닫힘
-        if(elapsedTime >= 1f)
-        {
-            ShutDown();
-            // 여기에 실패 결과
-            elapsedTime = 0f;
-        }
+        
     }
 
  
@@ -81,17 +75,17 @@ public class sliderM : MonoBehaviour
     {
         // Time.deltaTime과 Time.timeScale을 이용하여 이동 속도 결정
         float moveSpeed = Time.deltaTime * 300 / Time.timeScale;
-        moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
+        //moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
+        moveSpot += Time.deltaTime * 500;
 
-        // 좌우 한계점 체크 (0 ~ 140)
-        if (moveSpot >= 140)
+
+        // 좌우 한계점 체크 (0 ~ 145)
+        if (moveSpot >= 145)
         {
-            movingRight = false;
+            ShutDown();
+            Debug.Log("Fail결과 여기에 넣기");
         }
-        else if (moveSpot <= 0)
-        {
-            movingRight = true;
-        }
+        
 
         // 핸들의 위치 업데이트
         handle.anchoredPosition = new Vector2(moveSpot, handle.anchoredPosition.y);
@@ -134,7 +128,7 @@ public class sliderM : MonoBehaviour
 
     private void ShutDown()
     {
-        elapsedTime = 0f;
+       // elapsedTime = 0f;
         isPaused = true;
         moveSpot = 0f;
         canvas.gameObject.SetActive(false);
@@ -144,7 +138,7 @@ public class sliderM : MonoBehaviour
     // 나중에 다시 시작할 때 사용할 함수
     public void OpenCanvas()
     {
-        elapsedTime = 0f;
+       // elapsedTime = 0f;
         canvas.gameObject.SetActive(true);
         isPaused = false;
 
