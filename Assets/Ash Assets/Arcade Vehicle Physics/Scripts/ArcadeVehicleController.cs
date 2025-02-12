@@ -111,7 +111,8 @@ namespace ArcadeVP
             if (grounded())
             {
                 //turnlogic
-                float sign = Mathf.Sign(carVelocity.z);
+                //float sign = Mathf.Sign(carVelocity.z);
+                float sign = 1f;
                 float TurnMultiplyer = turnCurve.Evaluate(carVelocity.magnitude / MaxSpeed);
                 if (kartLike && brakeInput > 0.1f) { TurnMultiplyer *= driftMultiplier; } //turn more if drifting
 
