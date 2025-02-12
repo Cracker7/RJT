@@ -9,16 +9,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 497.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.58
+      value: 1905.46
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 109.85033
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       propertyPath: m_Name
       value: Remy Ragdoll
@@ -66,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8291172429997770610}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6872387035154242468}
     - targetCorrespondingSourceObject: {fileID: 1082271958561512970, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6673710409073855235}
@@ -334,15 +353,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useGravity: 1
   isKinematic: 0
-  interactionRange: 15
-  interactKeyCode: 103
+  interactionRange: 40
+  interactKeyCode: 32
   maxRange: 30
   minRange: 15
-  transitionDuration: 1.5
+  transitionDuration: 1
   jumpHeight: 15
   mountThreshold: 0.5
   timeScale: 0.01
-  miniGame: {fileID: 0}
   currentObjectPrefab: {fileID: 0}
 --- !u!54 &8291172429997770610
 Rigidbody:
@@ -371,6 +389,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!138 &6872387035154242468
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677911351881079089}
+  serializedVersion: 1
+  m_ConnectedBody: {fileID: 1477466782430868644}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &1844057842003469862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9070493210130169274, guid: 52d647243ed1c774e8fe2e3047f21e7a, type: 3}
