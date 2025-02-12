@@ -48,8 +48,8 @@ public class PlayerKMS : MonoBehaviour
     private bool hasSlowedTime = false;
 
     [Space(10)]
-    public sliderM miniGame;
     public GameObject currentObjectPrefab;
+    //public sliderM miniGame;
 
     // 속도 전달 관련
     private Vector3 savedVelocity;
@@ -276,7 +276,7 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("주변 오브젝트를 찾음");
             StartTransition(nearestObject);
             // 미니 게임 열기
-            miniGame.OpenCanvas();
+            //miniGame.OpenCanvas();
         }
     }
 
@@ -335,14 +335,14 @@ public class PlayerKMS : MonoBehaviour
         // 목표에 충분히 가까워졌으면 (distanceToTarget < mountThreshold) 전환 완료 처리
         if (normalizedTime >= 1.0f || distanceToTarget < mountThreshold)
         {
-            // 미니 게임을 실패했을 경우의 코드
-            if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
-            {
-                ExitObject();
-                UpdatePlayerState(PlayerState.Dead);
-                ExplosionRb();
-            }
-            else
+            //// 미니 게임을 실패했을 경우의 코드
+            //if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
+            //{
+            //    ExitObject();
+            //    UpdatePlayerState(PlayerState.Dead);
+            //    ExplosionRb();
+            //}
+            //else
                 CompleteTransition();
             // 미니 게임 닫는 코드
         }
@@ -463,7 +463,7 @@ public class PlayerKMS : MonoBehaviour
         Quaternion spawnRotation = target.transform.rotation;
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라질 수 있음
-        currentObjectPrefab = Instantiate(SelectPrefab(target),
+        currentObjectPrefab = Instantiate(target.objectData.winPrefab,
                                          spawnPosition + new Vector3(0, 1f, 0),
                                          spawnRotation);
 
@@ -537,24 +537,24 @@ public class PlayerKMS : MonoBehaviour
     {
         GameObject Prefab = null;
 
-        if (miniGame.lastCollisionState == sliderM.CollisionState.Win)
-        {
-            Debug.Log("미니게임 성공");
-            Prefab = target.objectData.winPrefab;
-        }
-        else if (miniGame.lastCollisionState == sliderM.CollisionState.Pass)
-        {
-            Debug.Log("미니게임 패스");
-            Prefab = target.objectData.passPrefab;
-            if (Prefab == null)
-                Prefab = target.objectData.winPrefab;
-        }
-        else if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
-        {
-            Debug.Log("미니게임 실패");
-            // 게임 오버? 떨어지기
-            UpdatePlayerState(PlayerState.Dead);
-        }
+        //if (miniGame.lastCollisionState == sliderM.CollisionState.Win)
+        //{
+        //    Debug.Log("미니게임 성공");
+        //    Prefab = target.objectData.winPrefab;
+        //}
+        //else if (miniGame.lastCollisionState == sliderM.CollisionState.Pass)
+        //{
+        //    Debug.Log("미니게임 패스");
+        //    Prefab = target.objectData.passPrefab;
+        //    if (Prefab == null)
+        //        Prefab = target.objectData.winPrefab;
+        //}
+        //else if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
+        //{
+        //    Debug.Log("미니게임 실패");
+        //    // 게임 오버? 떨어지기
+        //    UpdatePlayerState(PlayerState.Dead);
+        //}
 
         return Prefab;
     }
@@ -569,7 +569,7 @@ public class PlayerKMS : MonoBehaviour
 
     private void ExplosionRb()
     {
-                foreach (Rigidbody rb in ragdollRigidbodies)
+        foreach (Rigidbody rb in ragdollRigidbodies)
         {
             if (rb != null)
             {
