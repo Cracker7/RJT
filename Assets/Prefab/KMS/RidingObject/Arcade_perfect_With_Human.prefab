@@ -16747,7 +16747,8 @@ MonoBehaviour:
   turn: 10
   gravity: 7
   downforce: 5
-  AirControl: 0
+  AirControl: 1
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
   rb: {fileID: 9050748276338936863}
@@ -17080,9 +17081,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 254669843194992392}
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
+  hpBar: {fileID: 0}
 --- !u!1 &7082337247273000615
 GameObject:
   m_ObjectHideFlags: 0
@@ -28484,9 +28485,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 254669843194992392}
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
+  hpBar: {fileID: 0}
 --- !u!114 &3189352218762009991
 MonoBehaviour:
   m_ObjectHideFlags: 0

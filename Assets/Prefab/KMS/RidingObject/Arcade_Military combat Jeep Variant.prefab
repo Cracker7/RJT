@@ -5141,7 +5141,7 @@ GameObject:
   - component: {fileID: 3093686779131719234}
   - component: {fileID: 6398144575048645568}
   - component: {fileID: 4950511852204667750}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SphereRB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5707,7 +5707,8 @@ MonoBehaviour:
   turn: 10
   gravity: 5
   downforce: 5
-  AirControl: 0
+  AirControl: 1
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
   rb: {fileID: 6398144575048645568}

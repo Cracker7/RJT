@@ -5555,6 +5555,7 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 1
+  airControlTranslationForce: 50
   kartLike: 1
   driftMultiplier: 1.5
   rb: {fileID: 7921828433891736874}
@@ -5887,7 +5888,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 0}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
@@ -6983,7 +6983,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 354604321440369748}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
