@@ -19,6 +19,7 @@ public class InteractableObject : MonoBehaviour
     public OnHPUpdateDelegate onHPUpdate;
 
     public event Action OnDestroyCalled;
+    public event Action OnHpBarTr;
 
     public virtual void Awake()
     {
@@ -29,6 +30,14 @@ public class InteractableObject : MonoBehaviour
         if (hpBar != null)
         {
             hpBar.UpdateHpBar(maxDurability, maxDurability);
+        }
+    }
+
+    private void Update()
+    {
+        if(onHPUpdate != null && OnDestroyCalled != null)
+        {
+            UpdateHpBarTr();
         }
     }
 
@@ -91,6 +100,15 @@ public class InteractableObject : MonoBehaviour
         {
             DestroyObject();
         }
+    }
+
+    // hp바 위치를 업데이트 하는 함수
+    public void UpdateHpBarTr()
+    {   
+        hpBar.UpdatePosition(transform);
+
+        // 이벤트에 등록되어있는게 있다면 실행
+        OnHpBarTr?.Invoke();
     }
 
     // 체력이 0이 되면 파괴되는 함수 실행 후 오브젝트 삭제
