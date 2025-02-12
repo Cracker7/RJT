@@ -84,8 +84,9 @@ public class sliderM : MonoBehaviour
         {
             ShutDown();
             Debug.Log("Fail결과 여기에 넣기");
+
         }
-        
+
 
         // 핸들의 위치 업데이트
         handle.anchoredPosition = new Vector2(moveSpot, handle.anchoredPosition.y);
