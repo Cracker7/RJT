@@ -5469,6 +5469,7 @@ GameObject:
   - component: {fileID: 5096483301294878441}
   - component: {fileID: 7054008297025554486}
   - component: {fileID: 6750597323139863232}
+  - component: {fileID: -4822872701110996297}
   m_Layer: 7
   m_Name: Arcade_unperfect_With_Bear
   m_TagString: Untagged
@@ -5554,6 +5555,7 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 1
+  airControlTranslationForce: 50
   kartLike: 1
   driftMultiplier: 1.5
   rb: {fileID: 7921828433891736874}
@@ -5872,6 +5874,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4822872701110996297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548203549623453847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de84ed3450778c14dae96cf0de18ba87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDurability: 0
+  currentDurability: 0
+  mountPoint: {fileID: 0}
+  objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
+  hpBar: {fileID: 0}
 --- !u!1 &633978248215892116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6964,9 +6983,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 354604321440369748}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
+  hpBar: {fileID: 0}
 --- !u!114 &7052848534876654273
 MonoBehaviour:
   m_ObjectHideFlags: 0

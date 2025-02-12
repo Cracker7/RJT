@@ -83,13 +83,13 @@ public class RGTHpBar : MonoBehaviour
         }
     }
 
-    public void UpdatePosition(Vector3 _pos)
+    public void UpdatePosition(Transform tr)
     {
         //Vector3 worldToScreen = Camera.main.WorldToScreenPoint(_pos);
         //worldToScreen.y += 50f;
-        Vector3 PlayerPos = _pos;
-        PlayerPos.y += 5f;
-        transform.position = PlayerPos;
+
+        transform.position = tr.position + new Vector3(0f, 5f, 0f);
+        transform.rotation = tr.rotation;
     }
 
 

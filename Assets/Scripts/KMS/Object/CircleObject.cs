@@ -15,8 +15,4 @@ public class CircleObject : InteractableObject
         tr.localRotation *= Quaternion.Euler(transform.right * 10);
 
     }
-
-    public override void TakeDamage(float damage)
-    {
-    }
 }
