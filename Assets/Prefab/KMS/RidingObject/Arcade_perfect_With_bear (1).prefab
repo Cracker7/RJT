@@ -23207,19 +23207,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 0
+  movementMode: 1
   GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
   MaxSpeed: 150
-  accelaration: 20
+  accelaration: 10
   turn: 10
   gravity: 7
   downforce: 5
   AirControl: 1
   airControlTranslationForce: 50
-  kartLike: 0
+  kartLike: 1
   driftMultiplier: 1.5
   decelerationFactor: 2
   rb: {fileID: 1016245190392441042}
