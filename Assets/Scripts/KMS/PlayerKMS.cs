@@ -1,40 +1,40 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerKMS : MonoBehaviour
 {
-    // »óÅÂ ¸Ó½Å
+    // ìƒíƒœ ë¨¸ì‹ 
     private enum PlayerState { Idle, Transitioning, Riding, Dead }
     private PlayerState currentState = PlayerState.Idle;
 
-    // ÄÄÆ÷³ÍÆ® Ä³½Ì
+    // ì»´í¬ë„ŒíŠ¸ ìºì‹±
     private List<SkinnedMeshRenderer> skinRenderer;
     public IInputHandler currentInput;
     public IMovement currentMovement;
     private InteractableObject currentInteractable;
 
-    // ·¡±×µ¹ ¹°¸® ÄÄÆ÷³ÍÆ® Ä³½Ì
+    // ë˜ê·¸ëŒ ë¬¼ë¦¬ ì»´í¬ë„ŒíŠ¸ ìºì‹±
     private List<Rigidbody> ragdollRigidbodies;
     private List<Collider> ragdollColliders;
-    private Rigidbody mainRigidbody;  // ·çÆ® ¿ÀºêÁ§Æ®ÀÇ ¸®Áöµå¹Ùµğ
-    private Collider mainCollider;     // ·çÆ® ¿ÀºêÁ§Æ®ÀÇ Äİ¶óÀÌ´õ
+    private Rigidbody mainRigidbody;  // ë£¨íŠ¸ ì˜¤ë¸Œì íŠ¸ì˜ ë¦¬ì§€ë“œë°”ë””
+    private Collider mainCollider;     // ë£¨íŠ¸ ì˜¤ë¸Œì íŠ¸ì˜ ì½œë¼ì´ë”
 
-    // ¹°¸® ¼³Á¤
-    [Header("¹°¸® ¼³Á¤")]
+    // ë¬¼ë¦¬ ì„¤ì •
+    [Header("ë¬¼ë¦¬ ì„¤ì •")]
     public bool useGravity = true;
     public bool isKinematic = false;
 
-    // »óÈ£ ÀÛ¿ë °ü·Ã
+    // ìƒí˜¸ ì‘ìš© ê´€ë ¨
     private InteractableObject currentInteractableObject;
-    [Header("»óÈ£ÀÛ¿ë ¼³Á¤")]
+    [Header("ìƒí˜¸ì‘ìš© ì„¤ì •")]
     public float interactionRange = 2f;
     public KeyCode interactKeyCode = KeyCode.G;
     public float maxRange = 10f;
     public float minRange = 2f;
     private bool Isdurabillity = false;
 
-    // Æ÷¹°¼± ÀÌµ¿ °ü·Ã
-    [Header("Æ÷¹°¼± ÀÌµ¿ ¼³Á¤")]
+    // í¬ë¬¼ì„  ì´ë™ ê´€ë ¨
+    [Header("í¬ë¬¼ì„  ì´ë™ ì„¤ì •")]
     public float transitionDuration = 1f;
     public float jumpHeight = 3f;
     public float mountThreshold = 0.5f;
@@ -43,15 +43,24 @@ public class PlayerKMS : MonoBehaviour
     private InteractableObject targetObject = null;
     private Vector3 lastKnownMountPoint;
 
-    [Header("½Ã°£ ¼³Á¤")]
+    [Header("ì‹œê°„ ì„¤ì •")]
     public float timeScale = 0.01f;
     private bool hasSlowedTime = false;
+
+    [Header("ë‚´êµ¬ë„ 0 ë°œì‚¬ì²´ ì„¤ì •")]
+    public float projectileDuration = 1f;     // ì „ì²´ ë°œì‚¬ì²´ ì´ë™ ì‹œê°„ (ì´ˆ)
+    public float projectileDistance = 10f;      // ì•ìœ¼ë¡œ ë‚ ì•„ê°ˆ ê±°ë¦¬
+    public float projectileHeight = 3f;         // ìµœê³  ë†’ì´ (ì¡°ì • ê°€ëŠ¥)
+    private bool isProjectileLaunched = false;  // ë°œì‚¬ì²´ ëª¨ì…˜ ì§„í–‰ ì—¬ë¶€
+    private float projectileElapsedTime = 0f;   // ê²½ê³¼ ì‹œê°„
+    private Vector3 projectileStartPosition;    // ë°œì‚¬ ì‹œì‘ ìœ„ì¹˜
+    private Vector3 projectileForward;          // ë°œì‚¬ ì‹œì˜ ì§„í–‰ ë°©í–¥
 
     [Space(10)]
     public GameObject currentObjectPrefab;
     //public sliderM miniGame;
 
-    // ¼Óµµ Àü´Ş °ü·Ã
+    // ì†ë„ ì „ë‹¬ ê´€ë ¨
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
     private bool hasSavedVelocity = false;
@@ -60,30 +69,30 @@ public class PlayerKMS : MonoBehaviour
 
     private void Awake()
     {
-        // ±âº» ÄÄÆ÷³ÍÆ® Ä³½Ì
+        // ê¸°ë³¸ ì»´í¬ë„ŒíŠ¸ ìºì‹±
         skinRenderer = new List<SkinnedMeshRenderer>(GetComponentsInChildren<SkinnedMeshRenderer>());
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
 
-        // ·¡±×µ¹ ÄÄÆ÷³ÍÆ® Ä³½Ì
+        // ë˜ê·¸ëŒ ì»´í¬ë„ŒíŠ¸ ìºì‹±
         CacheRagdollComponents();
 
-        // ÃÊ±â ¹°¸® »óÅÂ ¼³Á¤
+        // ì´ˆê¸° ë¬¼ë¦¬ ìƒíƒœ ì„¤ì •
         SetPhysicsState(true, false, false);
     }
 
-    // ·¡±×µ¹ ÄÄÆ÷³ÍÆ®µéÀ» Ä³½ÃÇÏ´Â ¸Ş¼­µå
+    // ë˜ê·¸ëŒ ì»´í¬ë„ŒíŠ¸ë“¤ì„ ìºì‹œí•˜ëŠ” ë©”ì„œë“œ
     private void CacheRagdollComponents()
     {
-        // ¸ŞÀÎ ÄÄÆ÷³ÍÆ® Ä³½Ã
+        // ë©”ì¸ ì»´í¬ë„ŒíŠ¸ ìºì‹œ
         mainRigidbody = GetComponent<Rigidbody>();
         mainCollider = GetComponent<Collider>();
 
-        // ÀÚ½Ä ÄÄÆ÷³ÍÆ®µé Ä³½Ã
+        // ìì‹ ì»´í¬ë„ŒíŠ¸ë“¤ ìºì‹œ
         ragdollRigidbodies = new List<Rigidbody>(GetComponentsInChildren<Rigidbody>());
         ragdollColliders = new List<Collider>(GetComponentsInChildren<Collider>());
 
-        // ¸ŞÀÎ ÄÄÆ÷³ÍÆ®°¡ ¸®½ºÆ®¿¡ Æ÷ÇÔµÇ¾î ÀÖ´Ù¸é Á¦°Å
+        // ë©”ì¸ ì»´í¬ë„ŒíŠ¸ê°€ ë¦¬ìŠ¤íŠ¸ì— í¬í•¨ë˜ì–´ ìˆë‹¤ë©´ ì œê±°
         if (mainRigidbody != null && ragdollRigidbodies.Contains(mainRigidbody))
         {
             ragdollRigidbodies.Remove(mainRigidbody);
@@ -106,14 +115,14 @@ public class PlayerKMS : MonoBehaviour
 
     private void Update()
     {
-        // Transitioning »óÅÂÀÏ ¶§´Â ÀÔ·ÂÀ» ¹«½ÃÇÑ´Ù.
+        // Transitioning ìƒíƒœì¼ ë•ŒëŠ” ì…ë ¥ì„ ë¬´ì‹œí•œë‹¤.
         if (currentState == PlayerState.Transitioning)
         {
             UpdateTransition();
         }
         else if (currentState == PlayerState.Dead)
         {
-            // ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§ ½ÇÇàÇÏ´Â ÇÔ¼ö
+            // í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ ë•Œ ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜
             if (currentObjectPrefab != null)
             {
                 ExitObject();
@@ -121,25 +130,30 @@ public class PlayerKMS : MonoBehaviour
                 ExplosionRb();
             }
 
-            // // ºÎ¸ğ °ü°è ÇØÁ¦
+            // // ë¶€ëª¨ ê´€ê³„ í•´ì œ
             // if (currentObjectPrefab != null)
             //     transform.SetParent(null);
 
-            // // ¸Ş½Ã ·»´õ·¯ È°¼ºÈ­
+            // // ë©”ì‹œ ë Œë”ëŸ¬ í™œì„±í™”
             // foreach (SkinnedMeshRenderer skin in skinRenderer)
             // {
             //     skin.enabled = true;
             // }
 
-            // Á×¾úÀ» ¶§ÀÇ Ãß°¡ ·ÎÁ÷ (¹Ì´Ï°ÔÀÓ ½ÇÆĞ, ³»±¸µµ ¼ÒÁø µî)
+            // ì£½ì—ˆì„ ë•Œì˜ ì¶”ê°€ ë¡œì§ (ë¯¸ë‹ˆê²Œì„ ì‹¤íŒ¨, ë‚´êµ¬ë„ ì†Œì§„ ë“±)
         }
         else
         {
-            // ÀÌÀü¿¡´Â IdleÀÌ³ª Riding »óÅÂ¿¡¼­ »óÈ£ÀÛ¿ë Å° ÀÔ·ÂÀ» Ã³¸®ÇßÀ¸³ª,
-            // ÀÌÁ¦ Å¾½ÂÀº Ãæµ¹ ½Ã(OnCollisionEnter) Ã³¸®ÇÏ¹Ç·Î ÀÔ·Â °ü·Ã ÄÚµå´Â Á¦°ÅÇÕ´Ï´Ù.
+            // Idle ìƒíƒœì—ì„œ ë°œì‚¬ì²´ ëª¨ì…˜ ì§„í–‰ ì¤‘ì´ë©´ ì—…ë°ì´íŠ¸
+            if (currentState == PlayerState.Idle && isProjectileLaunched)
+            {
+                UpdateProjectileMotion();
+            }
+
+            // í‰ìƒì‹œ ì…ë ¥ ì²˜ë¦¬
             HandleInput();
 
-            // Riding »óÅÂ¶ó¸é Riding °ü·Ã Ãß°¡ ·ÎÁ÷µµ Ã³¸®
+            // Riding ìƒíƒœë¼ë©´ Riding ê´€ë ¨ ì¶”ê°€ ë¡œì§ë„ ì²˜ë¦¬
             if (currentState == PlayerState.Riding)
             {
                 if (!hasHandledRiding && currentInteractable.currentDurability <= currentInteractable.maxDurability / 2)
@@ -149,8 +163,8 @@ public class PlayerKMS : MonoBehaviour
                 }
             }
         }
-        Debug.Log("¶óÀÌµù »óÅÂ : " + currentState);
-        Debug.Log("¼±ÅÃµÈ ÇÁ¸®ÆÕ : " + currentObjectPrefab);
+        Debug.Log("ë¼ì´ë”© ìƒíƒœ : " + currentState);
+        Debug.Log("ì„ íƒëœ í”„ë¦¬íŒ¹ : " + currentObjectPrefab);
     }
 
     private void FixedUpdate()
@@ -159,16 +173,16 @@ public class PlayerKMS : MonoBehaviour
         {
             HandleRidingMovement();
         }
-        else if (currentState == PlayerState.Idle)
-        {
-            HandlePlayerMovement();
-        }
+        //else if (currentState == PlayerState.Idle)
+        //{
+        //    HandlePlayerMovement();
+        //}
     }
 
-    // ¹°¸® »óÅÂ ¼³Á¤À» À§ÇÑ ÇïÆÛ ¸Ş¼­µå
+    // ë¬¼ë¦¬ ìƒíƒœ ì„¤ì •ì„ ìœ„í•œ í—¬í¼ ë©”ì„œë“œ
     private void SetPhysicsState(bool enablePhysics, bool isKinematic, bool isTrigger)
     {
-        // ¸ŞÀÎ ÄÄÆ÷³ÍÆ® ¼³Á¤
+        // ë©”ì¸ ì»´í¬ë„ŒíŠ¸ ì„¤ì •
         if (mainRigidbody != null)
         {
             mainRigidbody.useGravity = enablePhysics;
@@ -181,7 +195,7 @@ public class PlayerKMS : MonoBehaviour
             mainCollider.enabled = true;
         }
 
-        // ¸ğµç ·¡±×µ¹ ¸®Áöµå¹Ùµğ ¼³Á¤
+        // ëª¨ë“  ë˜ê·¸ëŒ ë¦¬ì§€ë“œë°”ë”” ì„¤ì •
         foreach (Rigidbody rb in ragdollRigidbodies)
         {
             if (rb != null)
@@ -191,7 +205,7 @@ public class PlayerKMS : MonoBehaviour
             }
         }
 
-        // ¸ğµç ·¡±×µ¹ Äİ¶óÀÌ´õ ¼³Á¤
+        // ëª¨ë“  ë˜ê·¸ëŒ ì½œë¼ì´ë” ì„¤ì •
         foreach (Collider col in ragdollColliders)
         {
             if (col != null)
@@ -209,31 +223,31 @@ public class PlayerKMS : MonoBehaviour
         switch (newState)
         {
             case PlayerState.Idle:
-                // ÀÏ¹İ »óÅÂ: ¸ğµç ¹°¸® È°¼ºÈ­
+                // ì¼ë°˜ ìƒíƒœ: ëª¨ë“  ë¬¼ë¦¬ í™œì„±í™”
                 SetPhysicsState(true, false, false);
                 break;
 
             case PlayerState.Transitioning:
-                // ÀüÈ¯ »óÅÂ: ¸ğµç ¹°¸® ºñÈ°¼ºÈ­, Å°³×¸¶Æ½ È°¼ºÈ­
+                // ì „í™˜ ìƒíƒœ: ëª¨ë“  ë¬¼ë¦¬ ë¹„í™œì„±í™”, í‚¤ë„¤ë§ˆí‹± í™œì„±í™”
                 SetPhysicsState(false, true, true);
                 break;
 
             case PlayerState.Dead:
-                // Á×Àº »óÅÂ : ÀÏ¹İ »óÅÂ¿Í °°À½
+                // ì£½ì€ ìƒíƒœ : ì¼ë°˜ ìƒíƒœì™€ ê°™ìŒ
                 SetPhysicsState(true, false, false);
                 break;
 
             case PlayerState.Riding:
-                // Å¾½Â »óÅÂ: ¸ğµç Äİ¶óÀÌ´õ ºñÈ°¼ºÈ­
+                // íƒ‘ìŠ¹ ìƒíƒœ: ëª¨ë“  ì½œë¼ì´ë” ë¹„í™œì„±í™”
                 DisableAllPhysics();
                 break;
         }
     }
 
-    // ¸ğµç ¹°¸® ÄÄÆ÷³ÍÆ® ºñÈ°¼ºÈ­
+    // ëª¨ë“  ë¬¼ë¦¬ ì»´í¬ë„ŒíŠ¸ ë¹„í™œì„±í™”
     private void DisableAllPhysics()
     {
-        // ¸ŞÀÎ ÄÄÆ÷³ÍÆ® ºñÈ°¼ºÈ­
+        // ë©”ì¸ ì»´í¬ë„ŒíŠ¸ ë¹„í™œì„±í™”
         if (mainRigidbody != null)
         {
             mainRigidbody.isKinematic = true;
@@ -244,7 +258,7 @@ public class PlayerKMS : MonoBehaviour
             mainCollider.enabled = false;
         }
 
-        // ¸ğµç ·¡±×µ¹ ÄÄÆ÷³ÍÆ® ºñÈ°¼ºÈ­
+        // ëª¨ë“  ë˜ê·¸ëŒ ì»´í¬ë„ŒíŠ¸ ë¹„í™œì„±í™”
         foreach (Rigidbody rb in ragdollRigidbodies)
         {
             if (rb != null)
@@ -263,12 +277,12 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
-    // ±âÁ¸ÀÇ Å° ÀÔ·Â ±â¹İ »óÈ£ÀÛ¿ë ÇÔ¼ö´Â ´õ ÀÌ»ó »ç¿ëÇÏÁö ¾Ê½À´Ï´Ù.
+    // ê¸°ì¡´ì˜ í‚¤ ì…ë ¥ ê¸°ë°˜ ìƒí˜¸ì‘ìš© í•¨ìˆ˜ëŠ” ë” ì´ìƒ ì‚¬ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     private void HandleInput()
     {
         if (Input.GetKey(interactKeyCode))
         {
-            Debug.Log("»óÈ£ ÀÛ¿ë Å°°¡ ´­¸²");
+            Debug.Log("ìƒí˜¸ ì‘ìš© í‚¤ê°€ ëˆŒë¦¼");
             HandleInteraction();
         }
     }
@@ -280,9 +294,9 @@ public class PlayerKMS : MonoBehaviour
         if ((currentInteractableObject != null && nearestObject != null && nearestObject != currentInteractableObject) ||
             (currentInteractableObject == null && nearestObject != null))
         {
-            Debug.Log("ÁÖº¯ ¿ÀºêÁ§Æ®¸¦ Ã£À½");
+            Debug.Log("ì£¼ë³€ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ìŒ");
             StartTransition(nearestObject);
-            // ¹Ì´Ï °ÔÀÓ ¿­±â
+            // ë¯¸ë‹ˆ ê²Œì„ ì—´ê¸°
             //miniGame.OpenCanvas();
         }
     }
@@ -291,9 +305,9 @@ public class PlayerKMS : MonoBehaviour
     {
         hasHandledRiding = false;
 
-        SaveCurrentVelocity(); // ÀüÈ¯ ½ÃÀÛ Àü¿¡ ÇöÀç ¼Óµµ ÀúÀå
+        SaveCurrentVelocity(); // ì „í™˜ ì‹œì‘ ì „ì— í˜„ì¬ ì†ë„ ì €ì¥
 
-        ExitObject(); // ±âÁ¸ ¿ÀºêÁ§Æ®¿¡¼­ ³»¸®±â
+        ExitObject(); // ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë‚´ë¦¬ê¸°
 
         UpdatePlayerState(PlayerState.Transitioning);
         targetObject = target;
@@ -301,35 +315,35 @@ public class PlayerKMS : MonoBehaviour
         transitionTime = 0f;
         //lastKnownMountPoint = target.mountPoint.position;
 
-        // ÀÌµ¿ Áß¿¡´Â ÀÔ·Â°ú ÀÌµ¿À» ºñÈ°¼ºÈ­
+        // ì´ë™ ì¤‘ì—ëŠ” ì…ë ¥ê³¼ ì´ë™ì„ ë¹„í™œì„±í™”
         currentInput = null;
         currentMovement = null;
     }
 
     private void UpdateTransition()
     {
-        // targetObject°¡ ¾øÀ¸¸é »óÅÂ¸¦ Idle·Î ÀüÈ¯ÇÏ°í ÇÔ¼ö Á¾·á
+        // targetObjectê°€ ì—†ìœ¼ë©´ ìƒíƒœë¥¼ Idleë¡œ ì „í™˜í•˜ê³  í•¨ìˆ˜ ì¢…ë£Œ
         if (targetObject == null)
         {
             currentState = PlayerState.Idle;
             return;
         }
 
-        // ÀüÈ¯ ÁøÇà ½Ã°£ ¾÷µ¥ÀÌÆ® ¹× ÁøÇà ºñÀ² °è»ê
+        // ì „í™˜ ì§„í–‰ ì‹œê°„ ì—…ë°ì´íŠ¸ ë° ì§„í–‰ ë¹„ìœ¨ ê³„ì‚°
         transitionTime += Time.deltaTime;
         float normalizedTime = transitionTime / transitionDuration;
 
-        // ¸ñÇ¥ À§Ä¡ (mountPoint) °¡Á®¿À±â
+        // ëª©í‘œ ìœ„ì¹˜ (mountPoint) ê°€ì ¸ì˜¤ê¸°
         //Vector3 targetPosition = targetObject.mountPoint.position;
         lastKnownMountPoint = targetObject.mountPoint.position;
 
-        // ÁøÇà ºñÀ²¿¡ µû¶ó Á¡ÇÁ ³ôÀÌ °è»ê (»çÀÎ ÇÔ¼ö¸¦ ÀÌ¿ëÇØ ºÎµå·¯¿î »ó½Â/ÇÏ°­ È¿°ú)
+        // ì§„í–‰ ë¹„ìœ¨ì— ë”°ë¼ ì í”„ ë†’ì´ ê³„ì‚° (ì‚¬ì¸ í•¨ìˆ˜ë¥¼ ì´ìš©í•´ ë¶€ë“œëŸ¬ìš´ ìƒìŠ¹/í•˜ê°• íš¨ê³¼)
         float height = Mathf.Sin(normalizedTime * Mathf.PI) * jumpHeight;
-        // ½ÃÀÛ À§Ä¡¿¡¼­ ¸ñÇ¥ À§Ä¡·Î ¼±Çü º¸°£ÇÏ°í, À§ÂÊ(height) ¿ÀÇÁ¼ÂÀ» ´õÇÏ¿© ÇöÀç À§Ä¡ °è»ê
+        // ì‹œì‘ ìœ„ì¹˜ì—ì„œ ëª©í‘œ ìœ„ì¹˜ë¡œ ì„ í˜• ë³´ê°„í•˜ê³ , ìœ„ìª½(height) ì˜¤í”„ì…‹ì„ ë”í•˜ì—¬ í˜„ì¬ ìœ„ì¹˜ ê³„ì‚°
         Vector3 currentPosition = Vector3.Lerp(startPosition, lastKnownMountPoint, normalizedTime) + Vector3.up * height;
         transform.position = currentPosition;
 
-        // ¸ñÇ¥ ¹æÇâ °è»ê ÈÄ, ÇØ´ç ¹æÇâÀ» ÇâÇÏµµ·Ï ºÎµå·¯¿î È¸Àü º¸°£ Àû¿ë
+        // ëª©í‘œ ë°©í–¥ ê³„ì‚° í›„, í•´ë‹¹ ë°©í–¥ì„ í–¥í•˜ë„ë¡ ë¶€ë“œëŸ¬ìš´ íšŒì „ ë³´ê°„ ì ìš©
         Vector3 direction = (lastKnownMountPoint - transform.position).normalized;
         if (direction != Vector3.zero)
         {
@@ -337,14 +351,14 @@ public class PlayerKMS : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
 
-        // ¸ñÇ¥ À§Ä¡¿ÍÀÇ °Å¸® °è»ê
+        // ëª©í‘œ ìœ„ì¹˜ì™€ì˜ ê±°ë¦¬ ê³„ì‚°
         float distanceToTarget = Vector3.Distance(transform.position, lastKnownMountPoint);
 
-        // ÀüÈ¯ ÁøÇàÀÌ ¿Ï·áµÇ¾ú°Å³ª (normalizedTime >= 1.0f)
-        // ¸ñÇ¥¿¡ ÃæºĞÈ÷ °¡±î¿öÁ³À¸¸é (distanceToTarget < mountThreshold) ÀüÈ¯ ¿Ï·á Ã³¸®
+        // ì „í™˜ ì§„í–‰ì´ ì™„ë£Œë˜ì—ˆê±°ë‚˜ (normalizedTime >= 1.0f)
+        // ëª©í‘œì— ì¶©ë¶„íˆ ê°€ê¹Œì›Œì¡Œìœ¼ë©´ (distanceToTarget < mountThreshold) ì „í™˜ ì™„ë£Œ ì²˜ë¦¬
         if (normalizedTime >= 1.0f || distanceToTarget < mountThreshold)
         {
-            //// ¹Ì´Ï °ÔÀÓÀ» ½ÇÆĞÇßÀ» °æ¿ìÀÇ ÄÚµå
+            //// ë¯¸ë‹ˆ ê²Œì„ì„ ì‹¤íŒ¨í–ˆì„ ê²½ìš°ì˜ ì½”ë“œ
             //if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
             //{
             //    ExitObject();
@@ -353,9 +367,8 @@ public class PlayerKMS : MonoBehaviour
             //}
             //else
             CompleteTransition();
-            // ¹Ì´Ï °ÔÀÓ ´İ´Â ÄÚµå
+            // ë¯¸ë‹ˆ ê²Œì„ ë‹«ëŠ” ì½”ë“œ
         }
-
     }
 
     private void CompleteTransition()
@@ -372,39 +385,39 @@ public class PlayerKMS : MonoBehaviour
 
     private void EnterObject(InteractableObject interactableObject)
     {
-        // 1. ±âÁ¸ ÇÁ¸®ÆÕ Á¦°Å
+        // 1. ê¸°ì¡´ í”„ë¦¬íŒ¹ ì œê±°
         if (currentObjectPrefab != null)
         {
             Destroy(currentObjectPrefab);
             currentObjectPrefab = null;
         }
 
-        // 2. ÇÃ·¹ÀÌ¾î ¸Ş½¬ ·»´õ·¯ ºñÈ°¼ºÈ­
+        // 2. í”Œë ˆì´ì–´ ë©”ì‰¬ ë Œë”ëŸ¬ ë¹„í™œì„±í™”
         foreach (SkinnedMeshRenderer skin in skinRenderer)
         {
             skin.enabled = false;
         }
 
-        // ±âÁ¸¿¡ Å¸°í ÀÖ´ø ¿ÀºêÁ§Æ®¿¡¼­ ³»¸®´Â Ã³¸®
+        // ê¸°ì¡´ì— íƒ€ê³  ìˆë˜ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë‚´ë¦¬ëŠ” ì²˜ë¦¬
         if (currentInteractableObject != null)
         {
             currentInteractableObject.gameObject.SetActive(true);
         }
 
-        // 3. »õ·Î¿î ¿ÀºêÁ§Æ® ¼³Á¤
+        // 3. ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ ì„¤ì •
         currentInteractableObject = interactableObject;
 
-        // 4. »õ·Î¿î ¿ÀºêÁ§Æ® Å¸±â (ÇÁ¸®ÆÕ »ı¼º)
+        // 4. ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ íƒ€ê¸° (í”„ë¦¬íŒ¹ ìƒì„±)
         Ride(currentInteractableObject);
 
-        // ÇÁ¸®ÆÕÀÌ »ı¼ºµÈ ÈÄ¿¡ ÀúÀåµÈ ¼Óµµ Àû¿ë
+        // í”„ë¦¬íŒ¹ì´ ìƒì„±ëœ í›„ì— ì €ì¥ëœ ì†ë„ ì ìš©
         ApplySavedVelocity();
 
-        // 5. currentMovement¿Í currentInputÀ» ÇÁ¸®ÆÕ¿¡¼­ °¡Á®¿À±â
+        // 5. currentMovementì™€ currentInputì„ í”„ë¦¬íŒ¹ì—ì„œ ê°€ì ¸ì˜¤ê¸°
         currentMovement = currentObjectPrefab.GetComponentInChildren<IMovement>();
         currentInput = currentObjectPrefab.GetComponentInChildren<IInputHandler>();
 
-        // 6. »óÅÂ ¾÷µ¥ÀÌÆ®
+        // 6. ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdatePlayerState(PlayerState.Riding);
         transform.SetParent(currentObjectPrefab.transform);
         transform.localPosition = Vector3.zero;
@@ -421,16 +434,16 @@ public class PlayerKMS : MonoBehaviour
             skin.enabled = true;
         }
 
-        // Å¸°í ÀÖ´Â ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é, ÇØ´ç ¿ÀºêÁ§Æ®¿¡¼­ ³»¸²
+        // íƒ€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ìˆë‹¤ë©´, í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë‚´ë¦¼
         if (currentInteractableObject != null)
         {
             if (currentInteractable == null) return;
-            // ÇöÀç Åº ¹°Ã¼ÀÇ ÀÌº¥Æ® »èÁ¦
+            // í˜„ì¬ íƒ„ ë¬¼ì²´ì˜ ì´ë²¤íŠ¸ ì‚­ì œ
             currentInteractable.onHPUpdate -= currentInteractableObject.StartHpDecrease;
             currentInteractable.OnDestroyCalled -= durabilityZero;
             currentInteractable = null;
 
-            // ¿ø·¡ ¹°°Ç À§Ä¡¿Í È¸ÀüÀ» ÇÁ¸®ÆÕ À§Ä¡¿Í È¸ÀüÀ¸·Î ¼³Á¤
+            // ì›ë˜ ë¬¼ê±´ ìœ„ì¹˜ì™€ íšŒì „ì„ í”„ë¦¬íŒ¹ ìœ„ì¹˜ì™€ íšŒì „ìœ¼ë¡œ ì„¤ì •
             currentInteractableObject.transform.position = currentObjectPrefab.transform.position;
             currentInteractableObject.transform.rotation = currentObjectPrefab.transform.rotation;
 
@@ -441,21 +454,21 @@ public class PlayerKMS : MonoBehaviour
             }
             else if (hasHandledRiding)
             {
-                // ±âÁ¸¿¡ Å¸°í ÀÖ´ø ¿ÀºêÁ§Æ® ´Ù½Ã È°¼ºÈ­
+                // ê¸°ì¡´ì— íƒ€ê³  ìˆë˜ ì˜¤ë¸Œì íŠ¸ ë‹¤ì‹œ í™œì„±í™”
                 currentInteractableObject.gameObject.SetActive(true);
             }
 
-            // currentInteractableObject ÃÊ±âÈ­
+            // currentInteractableObject ì´ˆê¸°í™”
             currentInteractableObject = null;
 
-            // ±âÁ¸ ÇÁ¸®ÆÕ Á¦°Å
+            // ê¸°ì¡´ í”„ë¦¬íŒ¹ ì œê±°
             if (currentObjectPrefab != null)
             {
                 Destroy(currentObjectPrefab);
                 currentObjectPrefab = null;
             }
 
-            // ÇÃ·¹ÀÌ¾îÀÇ ±âº» ÀÌµ¿ ¹× ÀÔ·Â ÄÁÆ®·Ñ·¯·Î º¹±¸
+            // í”Œë ˆì´ì–´ì˜ ê¸°ë³¸ ì´ë™ ë° ì…ë ¥ ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ë³µêµ¬
             currentMovement = GetComponent<IMovement>();
             currentInput = GetComponent<IInputHandler>();
 
@@ -464,28 +477,28 @@ public class PlayerKMS : MonoBehaviour
 
     private void Ride(InteractableObject target)
     {
-        // Å¸°Ù ºñÈ°¼ºÈ­
+        // íƒ€ê²Ÿ ë¹„í™œì„±í™”
         target.gameObject.SetActive(false);
 
-        // ÇÁ¸®ÆÕ »ı¼º À§Ä¡ ¹× È¸Àü ¼³Á¤
+        // í”„ë¦¬íŒ¹ ìƒì„± ìœ„ì¹˜ ë° íšŒì „ ì„¤ì •
         Vector3 spawnPosition = target.transform.position;
         Quaternion spawnRotation = target.transform.rotation;
 
-        // ¹Ì´Ï°ÔÀÓ °á°ú¿¡ µû¶ó »ı¼ºµÇ´Â ÇÁ¸®ÆÕÀÌ ´Ş¶óÁú ¼ö ÀÖÀ½
+        // ë¯¸ë‹ˆê²Œì„ ê²°ê³¼ì— ë”°ë¼ ìƒì„±ë˜ëŠ” í”„ë¦¬íŒ¹ì´ ë‹¬ë¼ì§ˆ ìˆ˜ ìˆìŒ
         currentObjectPrefab = Instantiate(target.objectData.Prefab,
                                          spawnPosition/* + new Vector3(0, 1f, 0)*/,
                                          spawnRotation);
 
-        // ÇöÀç Å¸°í ÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ ÀÎÅÍ·ºÅ×ÀÌºí ¿ÀºêÁ§Æ®
+        // í˜„ì¬ íƒ€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì˜ ì¸í„°ë ‰í…Œì´ë¸” ì˜¤ë¸Œì íŠ¸
         currentInteractable = currentObjectPrefab.GetComponent<InteractableObject>();
         currentInteractable.onHPUpdate += currentInteractable.StartHpDecrease;
         currentInteractable.onHPUpdate.Invoke();
 
-        // ÇöÀç Å¸°í ÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ ÆÄ±« ÀÌº¥Æ®
+        // í˜„ì¬ íƒ€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì˜ íŒŒê´´ ì´ë²¤íŠ¸
         currentInteractable.OnDestroyCalled += durabilityZero;
     }
 
-    // Å» ¼ö ÀÖ´Â ¿ÀºêÁ§Æ® Ã£´Â ÇÔ¼ö (ÇöÀç »ç¿ëµÇÁö ¾ÊÀ½)
+    // íƒˆ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ì°¾ëŠ” í•¨ìˆ˜ (í˜„ì¬ ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
     private InteractableObject CheckForInteractableObjects()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactionRange);
@@ -513,31 +526,31 @@ public class PlayerKMS : MonoBehaviour
 
     private void HandleRiding()
     {
-        //// Riding »óÅÂÀÏ¶§ ³»±¸µµ°¡ ÀÏÁ¤ ÀÌÇÏ·Î ³»·Á°¡¸é ¾Ö¸ÅÇÑ°ÍÀ¸·Î º¯°æµÇµµ·Ï ÇÔ
+        //// Riding ìƒíƒœì¼ë•Œ ë‚´êµ¬ë„ê°€ ì¼ì • ì´í•˜ë¡œ ë‚´ë ¤ê°€ë©´ ì• ë§¤í•œê²ƒìœ¼ë¡œ ë³€ê²½ë˜ë„ë¡ í•¨
         //StartTransition(currentInteractableObject);
         ////targetObject.objectData.passPrefab;
-        // ÇöÀç Å¸°í ÀÖ´Â ¿ÀºêÁ§Æ®°¡ Á¸ÀçÇÒ ¶§¸¸ ½ÇÇà
+        // í˜„ì¬ íƒ€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ì¡´ì¬í•  ë•Œë§Œ ì‹¤í–‰
         if (currentInteractable != null)
         {
-            // ExitObject() È£Ãâ ½Ã currentInteractableObject°¡ null·Î ÃÊ±âÈ­µÇ¹Ç·Î ¹Ì¸® ÀúÀåÇÕ´Ï´Ù.
+            // ExitObject() í˜¸ì¶œ ì‹œ currentInteractableObjectê°€ nullë¡œ ì´ˆê¸°í™”ë˜ë¯€ë¡œ ë¯¸ë¦¬ ì €ì¥í•©ë‹ˆë‹¤.
             InteractableObject target = currentInteractable;
             float durability = currentInteractable.currentDurability;
             float maxDurability = currentInteractable.maxDurability;
 
-            // ¸¸¾à ¼Óµµ Àü´ŞÀÌ ÇÊ¿äÇÏ´Ù¸é ¼Óµµ ÀúÀå (¿É¼Ç)
+            // ë§Œì•½ ì†ë„ ì „ë‹¬ì´ í•„ìš”í•˜ë‹¤ë©´ ì†ë„ ì €ì¥ (ì˜µì…˜)
             SaveCurrentVelocity();
 
-            // ±âÁ¸ ¿ÀºêÁ§Æ®¿¡¼­ ³»¸®±â (ÀÌ °úÁ¤¿¡¼­ currentInteractableObject°¡ null·Î ÃÊ±âÈ­µÊ)
+            // ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë‚´ë¦¬ê¸° (ì´ ê³¼ì •ì—ì„œ currentInteractableObjectê°€ nullë¡œ ì´ˆê¸°í™”ë¨)
             ExitObject();
 
-            // ÀúÀåÇØµĞ ´ë»ó(target)À» ÀÌ¿ëÇØ ¹Ù·Î ¿ÀºêÁ§Æ®¸¦ Å¸µµ·Ï ÇÕ´Ï´Ù.
+            // ì €ì¥í•´ë‘” ëŒ€ìƒ(target)ì„ ì´ìš©í•´ ë°”ë¡œ ì˜¤ë¸Œì íŠ¸ë¥¼ íƒ€ë„ë¡ í•©ë‹ˆë‹¤.
             EnterObject(target);
 
-            // ÀÌÀü ³»±¸µµ¸¦ ÇöÀç Å¾½ÂÇÑ ¾Ö¸ÅÇÑ Å»°Í¿¡ °è½Â
+            // ì´ì „ ë‚´êµ¬ë„ë¥¼ í˜„ì¬ íƒ‘ìŠ¹í•œ ì• ë§¤í•œ íƒˆê²ƒì— ê³„ìŠ¹
             currentInteractable.maxDurability = maxDurability;
             currentInteractable.currentDurability = durability;
 
-            // ÇÁ¸®ÆÕ »ı¼º ÈÄ ÀúÀåÇß´ø ¼Óµµ¸¦ Àû¿ë (¿É¼Ç)
+            // í”„ë¦¬íŒ¹ ìƒì„± í›„ ì €ì¥í–ˆë˜ ì†ë„ë¥¼ ì ìš© (ì˜µì…˜)
             ApplySavedVelocity();
 
         }
@@ -547,48 +560,48 @@ public class PlayerKMS : MonoBehaviour
     {
         if (currentInput != null && currentMovement != null)
         {
-            Debug.Log("ÀÎÇ²,¹«ºê¸ÕÆ®°¡ Á¸ÀçÇÔ");
+            Debug.Log("ì¸í’‹,ë¬´ë¸Œë¨¼íŠ¸ê°€ ì¡´ì¬í•¨");
             Vector3 moveDirection = currentInput.HandleInput();
             currentMovement.Move(moveDirection);
         }
     }
 
-    private void HandlePlayerMovement()
-    {
-        if (currentInput != null && currentMovement != null)
-        {
-            Vector3 moveDirection = currentInput.HandleInput();
-            currentMovement.Move(moveDirection);
-        }
-    }
+    //private void HandlePlayerMovement()
+    //{
+    //    if (currentInput != null && currentMovement != null)
+    //    {
+    //        Vector3 moveDirection = currentInput.HandleInput();
+    //        currentMovement.Move(moveDirection);
+    //    }
+    //}
 
-    // ÀÌº¥Æ®°¡ È£ÃâµÉ ¶§ ½ÇÇàµÉ ¸Ş¼­µå
+    // ì´ë²¤íŠ¸ê°€ í˜¸ì¶œë  ë•Œ ì‹¤í–‰ë  ë©”ì„œë“œ
     private void ResetTimeScale()
     {
 
     }
 
-    // ¹Ì´Ï°ÔÀÓÀÇ °á°ú¿¡ µû¸¥ ÇÁ¸®ÆÕ ¼±ÅÃ (ÇöÀç Ride()¿¡¼­ Á÷Á¢ winPrefab »ç¿ë)
+    // ë¯¸ë‹ˆê²Œì„ì˜ ê²°ê³¼ì— ë”°ë¥¸ í”„ë¦¬íŒ¹ ì„ íƒ (í˜„ì¬ Ride()ì—ì„œ ì§ì ‘ winPrefab ì‚¬ìš©)
     //private GameObject SelectPrefab(InteractableObject target)
     //{
     //    GameObject Prefab = null;
 
     //    if (miniGame.lastCollisionState == sliderM.CollisionState.Win)
     //    {
-    //        Debug.Log("¹Ì´Ï°ÔÀÓ ¼º°ø");
+    //        Debug.Log("ë¯¸ë‹ˆê²Œì„ ì„±ê³µ");
     //        Prefab = target.objectData.Prefab;
     //    }
     //    else if (miniGame.lastCollisionState == sliderM.CollisionState.Pass)
     //    {
-    //        Debug.Log("¹Ì´Ï°ÔÀÓ ÆĞ½º");
+    //        Debug.Log("ë¯¸ë‹ˆê²Œì„ íŒ¨ìŠ¤");
     //        Prefab = target.objectData.passPrefab;
     //        if (Prefab == null)
     //            Prefab = target.objectData.winPrefab;
     //    }
     //    //else if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
     //    //{
-    //    //    Debug.Log("¹Ì´Ï°ÔÀÓ ½ÇÆĞ");
-    //    //    // °ÔÀÓ ¿À¹ö? ¶³¾îÁö±â
+    //    //    Debug.Log("ë¯¸ë‹ˆê²Œì„ ì‹¤íŒ¨");
+    //    //    // ê²Œì„ ì˜¤ë²„? ë–¨ì–´ì§€ê¸°
     //    //    UpdatePlayerState(PlayerState.Dead);
     //    //}
 
@@ -600,8 +613,40 @@ public class PlayerKMS : MonoBehaviour
         if (currentState == PlayerState.Transitioning) return;
         Isdurabillity = true;
         ExitObject();
-        UpdatePlayerState(PlayerState.Dead);
-        ExplosionRb();
+        LaunchProjectileMotion(); // ë°œì‚¬ì²´ ëª¨ì…˜ ì‹œì‘
+    }
+
+    private void LaunchProjectileMotion()
+    {
+        // ìƒíƒœëŠ” ì´ë¯¸ ExitObjectì—ì„œ Idleë¡œ ì „í™˜ë˜ì—ˆì§€ë§Œ í˜¹ì‹œ ëª°ë¼ ë‹¤ì‹œ ì„¤ì •
+        UpdatePlayerState(PlayerState.Idle);
+        // í˜„ì¬ ìœ„ì¹˜ì™€ ì§„í–‰ ë°©í–¥ ì €ì¥
+        projectileStartPosition = transform.position;
+        projectileForward = transform.forward; // ë°œì‚¬ ì‹œì ì˜ forward ë°©í–¥ ì €ì¥
+        projectileElapsedTime = 0f;
+        isProjectileLaunched = true;
+    }
+
+    private void UpdateProjectileMotion()
+    {
+        projectileElapsedTime += Time.deltaTime;
+        float t = projectileElapsedTime / projectileDuration;
+        t = Mathf.Clamp01(t);
+
+        // ìˆ˜í‰ ì´ë™: ë°œì‚¬ ì‹œ ì €ì¥í•œ forward ë°©í–¥ì„ ë”°ë¼ ì„ í˜• ì§„í–‰
+        Vector3 horizontalOffset = projectileForward * projectileDistance * t;
+
+        // ìˆ˜ì§ ì´ë™: í¬ë¬¼ì„  (ì˜ˆì‹œ: 4 * H * t * (1-t)) â€” t=0,1ì—ì„œ 0, t=0.5ì—ì„œ ìµœê³  ë†’ì´
+        float verticalOffset = 4f * projectileHeight * t * (1f - t);
+
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ ê³„ì‚° (ì‹œì‘ ìœ„ì¹˜ ê¸°ì¤€)
+        transform.position = projectileStartPosition + horizontalOffset + Vector3.up * verticalOffset;
+
+        // ì´ë™ ì™„ë£Œ í›„ ë°œì‚¬ì²´ ëª¨ì…˜ ì¢…ë£Œ
+        if (t >= 1f)
+        {
+            isProjectileLaunched = false;
+        }
     }
 
     private void ExplosionRb()

@@ -5702,14 +5702,14 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 40
   accelaration: 15
   turn: 10
   gravity: 5
   downforce: 5
   AirControl: 1
   airControlTranslationForce: 50
-  kartLike: 0
+  kartLike: 1
   driftMultiplier: 1.5
   decelerationFactor: 2
   rb: {fileID: 6398144575048645568}
@@ -11068,7 +11068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2620124031884894127
 Transform:
   m_ObjectHideFlags: 0
