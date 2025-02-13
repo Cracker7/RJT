@@ -5702,14 +5702,14 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 40
   accelaration: 15
   turn: 10
   gravity: 5
   downforce: 5
   AirControl: 1
   airControlTranslationForce: 50
-  kartLike: 0
+  kartLike: 1
   driftMultiplier: 1.5
   decelerationFactor: 2
   rb: {fileID: 6398144575048645568}
@@ -6045,6 +6045,7 @@ MonoBehaviour:
   mountPoint: {fileID: 0}
   objectData: {fileID: 11400000, guid: 30fbe60306a804047beca95be3434353, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!1 &4282939568845089731
 GameObject:
   m_ObjectHideFlags: 0
@@ -11067,7 +11068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2620124031884894127
 Transform:
   m_ObjectHideFlags: 0
@@ -11271,6 +11272,7 @@ MonoBehaviour:
   mountPoint: {fileID: 7051636946649381694}
   objectData: {fileID: 11400000, guid: 6a911135919be894986bffa796e2a55f, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!114 &7260880580406559966
 MonoBehaviour:
   m_ObjectHideFlags: 0
