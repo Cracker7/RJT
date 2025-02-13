@@ -5550,7 +5550,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   MaxSpeed: 150
-  accelaration: 18
+  accelaration: 10
   turn: 4
   gravity: 7
   downforce: 5
@@ -5892,6 +5892,7 @@ MonoBehaviour:
   mountPoint: {fileID: 0}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!1 &633978248215892116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6987,6 +6988,7 @@ MonoBehaviour:
   mountPoint: {fileID: 354604321440369748}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!114 &7052848534876654273
 MonoBehaviour:
   m_ObjectHideFlags: 0
