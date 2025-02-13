@@ -31,6 +31,7 @@ public class PlayerKMS : MonoBehaviour
     public KeyCode interactKeyCode = KeyCode.G;
     public float maxRange = 10f;
     public float minRange = 2f;
+    private bool Isdurabillity = false;
 
     // 포물선 이동 관련
     [Header("포물선 이동 설정")]
@@ -47,13 +48,15 @@ public class PlayerKMS : MonoBehaviour
     private bool hasSlowedTime = false;
 
     [Space(10)]
-    public sliderM miniGame;
     public GameObject currentObjectPrefab;
+    //public sliderM miniGame;
 
     // 속도 전달 관련
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
     private bool hasSavedVelocity = false;
+
+    private bool hasHandledRiding = false;
 
     private void Awake()
     {
@@ -93,12 +96,12 @@ public class PlayerKMS : MonoBehaviour
 
     private void OnEnable()
     {
-        //sliderM.OnShutdown += ResetTimeScale;
+        sliderM.OnShutdown += ResetTimeScale;
     }
 
     private void OnDisable()
     {
-        //sliderM.OnShutdown -= ResetTimeScale;
+        sliderM.OnShutdown -= ResetTimeScale;
     }
 
     private void Update()
@@ -111,17 +114,23 @@ public class PlayerKMS : MonoBehaviour
         else if (currentState == PlayerState.Dead)
         {
             // 플레이어가 죽었을 때 실행하는 함수
-
-            // 부모 관계 해제
             if (currentObjectPrefab != null)
-                transform.SetParent(null);
-
-            // 메시 렌더러 활성화
-            foreach (SkinnedMeshRenderer skin in skinRenderer)
             {
-                skin.enabled = true;
+                ExitObject();
+                UpdatePlayerState(PlayerState.Dead);
+                ExplosionRb();
             }
-            
+
+            // // 부모 관계 해제
+            // if (currentObjectPrefab != null)
+            //     transform.SetParent(null);
+
+            // // 메시 렌더러 활성화
+            // foreach (SkinnedMeshRenderer skin in skinRenderer)
+            // {
+            //     skin.enabled = true;
+            // }
+
             // 죽었을 때의 추가 로직 (미니게임 실패, 내구도 소진 등)
         }
         else
@@ -133,7 +142,11 @@ public class PlayerKMS : MonoBehaviour
             // Riding 상태라면 Riding 관련 추가 로직도 처리
             if (currentState == PlayerState.Riding)
             {
-                HandleRiding();
+                if (!hasHandledRiding && currentInteractable.currentDurability <= currentInteractable.maxDurability / 2)
+                {
+                    HandleRiding();
+                    hasHandledRiding = true;
+                }
             }
         }
         Debug.Log("라이딩 상태 : " + currentState);
@@ -260,7 +273,7 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
-     private void HandleInteraction()
+    private void HandleInteraction()
     {
         InteractableObject nearestObject = CheckForInteractableObjects();
 
@@ -269,32 +282,15 @@ public class PlayerKMS : MonoBehaviour
         {
             Debug.Log("주변 오브젝트를 찾음");
             StartTransition(nearestObject);
-        }
-    }
-
-    // 기존 HandleInteraction()도 사용하지 않으므로 제거 가능함.
-    // 필요한 경우 추후 다른 입력 처리로 활용하세요.
-
-    /// <summary>
-    /// 플레이어가 다른 오브젝트와 충돌하면, 해당 오브젝트가 InteractableObject라면 탑승 전환을 시작합니다.
-    /// </summary>
-    private void OnCollisionEnter(Collision collision)
-    {
-        // 현재 Idle 상태일 때만 충돌로 탑승을 허용합니다.
-        if (currentState != PlayerState.Idle)
-            return;
-
-        // 충돌한 오브젝트에서 InteractableObject 컴포넌트를 가져옵니다.
-        InteractableObject interactable = collision.gameObject.GetComponent<InteractableObject>();
-        if (interactable != null && interactable != currentInteractableObject)
-        {
-            Debug.Log("충돌하여 상호작용 시작");
-            StartTransition(interactable);
+            // 미니 게임 열기
+            //miniGame.OpenCanvas();
         }
     }
 
     private void StartTransition(InteractableObject target)
     {
+        hasHandledRiding = false;
+
         SaveCurrentVelocity(); // 전환 시작 전에 현재 속도 저장
 
         ExitObject(); // 기존 오브젝트에서 내리기
@@ -348,8 +344,18 @@ public class PlayerKMS : MonoBehaviour
         // 목표에 충분히 가까워졌으면 (distanceToTarget < mountThreshold) 전환 완료 처리
         if (normalizedTime >= 1.0f || distanceToTarget < mountThreshold)
         {
+            //// 미니 게임을 실패했을 경우의 코드
+            //if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
+            //{
+            //    ExitObject();
+            //    UpdatePlayerState(PlayerState.Dead);
+            //    ExplosionRb();
+            //}
+            //else
             CompleteTransition();
+            // 미니 게임 닫는 코드
         }
+
     }
 
     private void CompleteTransition()
@@ -418,6 +424,7 @@ public class PlayerKMS : MonoBehaviour
         // 타고 있는 오브젝트가 있다면, 해당 오브젝트에서 내림
         if (currentInteractableObject != null)
         {
+            if (currentInteractable == null) return;
             // 현재 탄 물체의 이벤트 삭제
             currentInteractable.onHPUpdate -= currentInteractableObject.StartHpDecrease;
             currentInteractable.OnDestroyCalled -= durabilityZero;
@@ -427,8 +434,16 @@ public class PlayerKMS : MonoBehaviour
             currentInteractableObject.transform.position = currentObjectPrefab.transform.position;
             currentInteractableObject.transform.rotation = currentObjectPrefab.transform.rotation;
 
-            // 기존에 타고 있던 오브젝트 다시 활성화
-            currentInteractableObject.gameObject.SetActive(true);
+            if (Isdurabillity)
+            {
+                currentInteractableObject.gameObject.SetActive(false);
+                Isdurabillity = false;
+            }
+            else if (hasHandledRiding)
+            {
+                // 기존에 타고 있던 오브젝트 다시 활성화
+                currentInteractableObject.gameObject.SetActive(true);
+            }
 
             // currentInteractableObject 초기화
             currentInteractableObject = null;
@@ -443,7 +458,7 @@ public class PlayerKMS : MonoBehaviour
             // 플레이어의 기본 이동 및 입력 컨트롤러로 복구
             currentMovement = GetComponent<IMovement>();
             currentInput = GetComponent<IInputHandler>();
-            
+
         }
     }
 
@@ -457,9 +472,8 @@ public class PlayerKMS : MonoBehaviour
         Quaternion spawnRotation = target.transform.rotation;
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라질 수 있음
-        // 아래 코드는 미니게임 승리 프리팹으로 생성하는 예시입니다.
-        currentObjectPrefab = Instantiate(target.objectData.winPrefab,
-                                         spawnPosition + new Vector3(0, 1f, 0),
+        currentObjectPrefab = Instantiate(target.objectData.Prefab,
+                                         spawnPosition/* + new Vector3(0, 1f, 0)*/,
                                          spawnRotation);
 
         // 현재 타고 있는 오브젝트의 인터렉테이블 오브젝트
@@ -499,7 +513,34 @@ public class PlayerKMS : MonoBehaviour
 
     private void HandleRiding()
     {
-        // Riding 상태에서의 추가적인 로직 (예: 특정 애니메이션 재생)
+        //// Riding 상태일때 내구도가 일정 이하로 내려가면 애매한것으로 변경되도록 함
+        //StartTransition(currentInteractableObject);
+        ////targetObject.objectData.passPrefab;
+        // 현재 타고 있는 오브젝트가 존재할 때만 실행
+        if (currentInteractable != null)
+        {
+            // ExitObject() 호출 시 currentInteractableObject가 null로 초기화되므로 미리 저장합니다.
+            InteractableObject target = currentInteractable;
+            float durability = currentInteractable.currentDurability;
+            float maxDurability = currentInteractable.maxDurability;
+
+            // 만약 속도 전달이 필요하다면 속도 저장 (옵션)
+            SaveCurrentVelocity();
+
+            // 기존 오브젝트에서 내리기 (이 과정에서 currentInteractableObject가 null로 초기화됨)
+            ExitObject();
+
+            // 저장해둔 대상(target)을 이용해 바로 오브젝트를 타도록 합니다.
+            EnterObject(target);
+
+            // 이전 내구도를 현재 탑승한 애매한 탈것에 계승
+            currentInteractable.maxDurability = maxDurability;
+            currentInteractable.currentDurability = durability;
+
+            // 프리팹 생성 후 저장했던 속도를 적용 (옵션)
+            ApplySavedVelocity();
+
+        }
     }
 
     private void HandleRidingMovement()
@@ -524,46 +565,52 @@ public class PlayerKMS : MonoBehaviour
     // 이벤트가 호출될 때 실행될 메서드
     private void ResetTimeScale()
     {
-        Time.timeScale = 1f;
-        Debug.Log("Time scale reset to 1f.");
+
     }
 
     // 미니게임의 결과에 따른 프리팹 선택 (현재 Ride()에서 직접 winPrefab 사용)
-    private GameObject SelectPrefab(InteractableObject target)
-    {
-        GameObject Prefab = null;
+    //private GameObject SelectPrefab(InteractableObject target)
+    //{
+    //    GameObject Prefab = null;
 
-        if (miniGame.lastCollisionState == sliderM.CollisionState.Win)
-        {
-            Debug.Log("미니게임 성공");
-            Prefab = target.objectData.winPrefab;
-        }
-        else if (miniGame.lastCollisionState == sliderM.CollisionState.Pass)
-        {
-            Debug.Log("미니게임 패스");
-            Prefab = target.objectData.passPrefab;
-            if (Prefab == null)
-                Prefab = target.objectData.winPrefab;
-        }
-        else
-        {
-            Debug.Log("미니게임 실패");
-            // 게임 오버? 떨어지기
-            UpdatePlayerState(PlayerState.Dead);
-        }
+    //    if (miniGame.lastCollisionState == sliderM.CollisionState.Win)
+    //    {
+    //        Debug.Log("미니게임 성공");
+    //        Prefab = target.objectData.Prefab;
+    //    }
+    //    else if (miniGame.lastCollisionState == sliderM.CollisionState.Pass)
+    //    {
+    //        Debug.Log("미니게임 패스");
+    //        Prefab = target.objectData.passPrefab;
+    //        if (Prefab == null)
+    //            Prefab = target.objectData.winPrefab;
+    //    }
+    //    //else if (miniGame.lastCollisionState == sliderM.CollisionState.Fail)
+    //    //{
+    //    //    Debug.Log("미니게임 실패");
+    //    //    // 게임 오버? 떨어지기
+    //    //    UpdatePlayerState(PlayerState.Dead);
+    //    //}
 
-        return Prefab;
-    }
+    //    return Prefab;
+    //}
 
     public void durabilityZero()
     {
+        if (currentState == PlayerState.Transitioning) return;
+        Isdurabillity = true;
         ExitObject();
         UpdatePlayerState(PlayerState.Dead);
+        ExplosionRb();
+    }
+
+    private void ExplosionRb()
+    {
         foreach (Rigidbody rb in ragdollRigidbodies)
         {
             if (rb != null)
             {
-                rb.AddExplosionForce(20f, transform.position, 20f, 20f ,ForceMode.Impulse);
+                rb.AddExplosionForce(100f, transform.position, 20f, 20f, ForceMode.Impulse);
             }
         }
     }

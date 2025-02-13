@@ -16,10 +16,16 @@ namespace ArcadeVP
         public float MaxSpeed, accelaration, turn, gravity = 7f, downforce = 5f;
         [Tooltip("if true : can turn vehicle in air")]
         public bool AirControl = false;
+        [Tooltip("추가적인 공중 이동 힘. 값이 클수록 공중에서 이동 제어가 강해집니다.")]
+        public float airControlTranslationForce = 50f;
         [Tooltip("if true : vehicle will drift instead of brake while holding space")]
         public bool kartLike = false;
         [Tooltip("turn more while drifting (while holding space) only if kart Like is true")]
         public float driftMultiplier = 1.5f;
+
+        [Header("Speed Limit Settings")]
+        [Tooltip("최대속도를 초과했을 때, 서서히 최대속도로 감속하는 정도를 결정합니다.")]
+        public float decelerationFactor = 2f;
 
         public Rigidbody rb, carBody;
 
@@ -105,7 +111,8 @@ namespace ArcadeVP
             if (grounded())
             {
                 //turnlogic
-                float sign = Mathf.Sign(carVelocity.z);
+                //float sign = Mathf.Sign(carVelocity.z);
+                float sign = 1f;
                 float TurnMultiplyer = turnCurve.Evaluate(carVelocity.magnitude / MaxSpeed);
                 if (kartLike && brakeInput > 0.1f) { TurnMultiplyer *= driftMultiplier; } //turn more if drifting
 
@@ -167,16 +174,42 @@ namespace ArcadeVP
             }
             else
             {
+                // if (AirControl)
+                // {
+                //     //turnlogic
+                //     float TurnMultiplyer = turnCurve.Evaluate(carVelocity.magnitude / MaxSpeed);
+
+                //     carBody.AddTorque(Vector3.up * steeringInput * turn * 100 * TurnMultiplyer);
+                // }
+
+                // carBody.MoveRotation(Quaternion.Slerp(carBody.rotation, Quaternion.FromToRotation(carBody.transform.up, Vector3.up) * carBody.transform.rotation, 0.02f));
+                // rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.deltaTime * gravity);
+
+                 // 공중일 때 (AirControl 활성화 시 좌우 회전 + 이동 제어)
                 if (AirControl)
                 {
-                    //turnlogic
+                    // 기존 좌우 회전 토크 적용
                     float TurnMultiplyer = turnCurve.Evaluate(carVelocity.magnitude / MaxSpeed);
+                    carBody.AddTorque(Vector3.up * steeringInput * turn * airControlTranslationForce * TurnMultiplyer);
 
-                    carBody.AddTorque(Vector3.up * steeringInput * turn * 100 * TurnMultiplyer);
+                    // 새롭게 공중 이동 힘 추가 (전진/후진 및 약간의 측면 이동)
+                    Vector3 airTranslationForce = (carBody.transform.forward * accelerationInput + carBody.transform.right * steeringInput) * airControlTranslationForce;
+                    carBody.AddForce(airTranslationForce, ForceMode.Acceleration);
                 }
 
-                carBody.MoveRotation(Quaternion.Slerp(carBody.rotation, Quaternion.FromToRotation(carBody.transform.up, Vector3.up) * carBody.transform.rotation, 0.02f));
+                // 공중에서는 차량이 천천히 원래 자세(수직)로 돌아오도록 회전 보정
+                carBody.MoveRotation(Quaternion.Slerp(carBody.rotation,
+                    Quaternion.FromToRotation(carBody.transform.up, Vector3.up) * carBody.transform.rotation,
+                    0.02f));
+
+                // 중력 적용
                 rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.deltaTime * gravity);
+
+                // **속도가 너무 빠르면 최대속도에 맞춰 서서히 감속**
+                if (movementMode == MovementMode.Velocity && rb.linearVelocity.magnitude > MaxSpeed)
+                {
+                    rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity.normalized * MaxSpeed, decelerationFactor * Time.deltaTime);
+                }
             }
 
         }

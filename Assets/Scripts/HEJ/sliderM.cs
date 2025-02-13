@@ -18,12 +18,12 @@ public class sliderM : MonoBehaviour
     private bool movingRight = true;   // 핸들이 오른쪽으로 이동 중인지 여부
     private bool isPaused = false;     // 핸들의 이동이 일시 중지되었는지 여부
     public Canvas canvas;
-    public CollisionState lastCollisionState;
+    public CollisionState lastCollisionState = CollisionState.Fail;
     public static event Action OnShutdown;
     int seconds;
     int milliseconds;
 
-    public TextMeshProUGUI stopwatchText; // UI Text에 시간을 표시할 변수
+    //public TextMeshProUGUI stopwatchText; // UI Text에 시간을 표시할 변수
     private float elapsedTime; // 경과 시간
 
     private void Start()
@@ -74,18 +74,20 @@ public class sliderM : MonoBehaviour
     private void MoveHandle()
     {
         // Time.deltaTime과 Time.timeScale을 이용하여 이동 속도 결정
-        float moveSpeed = Time.deltaTime * 300 / Time.timeScale;
+        //float moveSpeed = Time.deltaTime * 50;
         //moveSpot += movingRight ? moveSpeed : -moveSpeed; // 이동 방향에 따라 좌표 증가/감소
-        moveSpot += Time.deltaTime * 500;
+        moveSpot += Time.deltaTime * 100;
 
 
         // 좌우 한계점 체크 (0 ~ 145)
         if (moveSpot >= 145)
         {
+            lastCollisionState = CollisionState.Fail; // Fail 결과 설정
             ShutDown();
             Debug.Log("Fail결과 여기에 넣기");
+
         }
-        
+
 
         // 핸들의 위치 업데이트
         handle.anchoredPosition = new Vector2(moveSpot, handle.anchoredPosition.y);

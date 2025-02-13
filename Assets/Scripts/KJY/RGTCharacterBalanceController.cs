@@ -32,7 +32,7 @@ public class RGTCharacterBalanceController : MonoBehaviour
 
     private void Update()
     {
-        hpBar.UpdatePosition(transform.position);
+        hpBar.UpdatePosition(transform);
 
         animator.SetBool("SetLeftActive", true);
 

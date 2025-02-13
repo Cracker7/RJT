@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 8960389501077498698}
   - component: {fileID: 1016245190392441042}
   - component: {fileID: 8895802060209311624}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SphereRB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17652,7 +17652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &832291827626595047
 Transform:
   m_ObjectHideFlags: 0
@@ -23218,8 +23218,10 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 1
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 1016245190392441042}
   carBody: {fileID: 2743276090239152032}
   frictionCurve:
@@ -23550,10 +23552,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 0}
-  objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
+  objectData: {fileID: 11400000, guid: 206813da90cb54c419d02c54ecd671c0, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!1 &5911328702941169727
 GameObject:
   m_ObjectHideFlags: 0
@@ -23849,10 +23851,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 3626459036351351560}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!114 &8440025286386734593
 MonoBehaviour:
   m_ObjectHideFlags: 0
