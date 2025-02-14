@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5730451149547706252}
   - component: {fileID: 8595276571668907344}
   - component: {fileID: 7663904704796687113}
-  - component: {fileID: 7085924992767778979}
   - component: {fileID: 5031928319101807141}
   - component: {fileID: 816644476519697762}
   m_Layer: 0
@@ -98,35 +97,6 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   FollowOffset: {x: 0, y: 3, z: -6}
---- !u!114 &7085924992767778979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196178779433841171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.5018017}
-    HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.5}
-  Lookahead:
-    Enabled: 1
-    Time: 0.6
-    Smoothing: 5
-    IgnoreY: 0
 --- !u!114 &5031928319101807141
 MonoBehaviour:
   m_ObjectHideFlags: 0

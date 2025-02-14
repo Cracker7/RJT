@@ -9,9 +9,11 @@ public class PlayerKMS : MonoBehaviour
 
     // 컴포넌트 캐싱
     private List<SkinnedMeshRenderer> skinRenderer;
+    private InteractableObject currentInteractable;
+    private Rigidbody cachedVehicleRigidbody;
     public IInputHandler currentInput;
     public IMovement currentMovement;
-    private InteractableObject currentInteractable;
+    public IBoxCastFinder boxCastFinder;
 
     // 래그돌 물리 컴포넌트 캐싱
     private List<Rigidbody> ragdollRigidbodies;
@@ -58,6 +60,16 @@ public class PlayerKMS : MonoBehaviour
 
     [Space(10)]
     public GameObject currentObjectPrefab;
+    // currentObjectPrefab 대신 ActiveRigidbody를 사용하여
+    // 탑승한 오브젝트의 리지드바디가 있다면 그것을, 없으면 플레이어 자신의 리지드바디를 반환
+    public Rigidbody ActiveRigidbody
+    {
+        get
+        {
+            return (currentObjectPrefab != null && cachedVehicleRigidbody != null) ?
+                    cachedVehicleRigidbody : mainRigidbody;
+        }
+    }
     //public sliderM miniGame;
 
     // 속도 전달 관련
@@ -73,6 +85,7 @@ public class PlayerKMS : MonoBehaviour
         skinRenderer = new List<SkinnedMeshRenderer>(GetComponentsInChildren<SkinnedMeshRenderer>());
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
+        boxCastFinder = new BoxCastFinder();
 
         // 래그돌 컴포넌트 캐싱
         CacheRagdollComponents();
@@ -148,10 +161,25 @@ public class PlayerKMS : MonoBehaviour
             if (currentState == PlayerState.Idle && isProjectileLaunched)
             {
                 UpdateProjectileMotion();
-            }
+                // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
+                GameObject findcar =
+                    boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(1, 1, 1), 50, LayerMask.NameToLayer("carbody"));
 
-            // 평상시 입력 처리
-            HandleInput();
+                if(projectileElapsedTime == projectileDuration)
+                {
+                    currentState = PlayerState.Dead;
+                }
+                else if (findcar != null && Input.GetKeyDown(interactKeyCode))
+                {
+                    StartTransition(findcar.GetComponent<InteractableObject>());
+                }
+
+            }
+            else
+            {
+                // 평상시 입력 처리
+                HandleInput();
+            }
 
             // Riding 상태라면 Riding 관련 추가 로직도 처리
             if (currentState == PlayerState.Riding)
@@ -229,7 +257,7 @@ public class PlayerKMS : MonoBehaviour
 
             case PlayerState.Transitioning:
                 // 전환 상태: 모든 물리 비활성화, 키네마틱 활성화
-                SetPhysicsState(false, true, true);
+                SetPhysicsState(true, false, false);
                 break;
 
             case PlayerState.Dead:
@@ -468,6 +496,9 @@ public class PlayerKMS : MonoBehaviour
                 currentObjectPrefab = null;
             }
 
+            // 캐싱된 탑승 오브젝트의 리지드바디 초기화
+            cachedVehicleRigidbody = null;
+
             // 플레이어의 기본 이동 및 입력 컨트롤러로 복구
             currentMovement = GetComponent<IMovement>();
             currentInput = GetComponent<IInputHandler>();
@@ -486,8 +517,11 @@ public class PlayerKMS : MonoBehaviour
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라질 수 있음
         currentObjectPrefab = Instantiate(target.objectData.Prefab,
-                                         spawnPosition/* + new Vector3(0, 1f, 0)*/,
+                                         spawnPosition + new Vector3(0, 0.05f, 0),
                                          spawnRotation);
+
+        // 캐싱: 생성된 프리팹의 Rigidbody를 한 번 가져와서 저장
+        cachedVehicleRigidbody = currentObjectPrefab.GetComponent<Rigidbody>();
 
         // 현재 타고 있는 오브젝트의 인터렉테이블 오브젝트
         currentInteractable = currentObjectPrefab.GetComponent<InteractableObject>();
@@ -498,7 +532,7 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.OnDestroyCalled += durabilityZero;
     }
 
-    // 탈 수 있는 오브젝트 찾는 함수 (현재 사용되지 않음)
+    // 탈 수 있는 오브젝트 찾는 함수
     private InteractableObject CheckForInteractableObjects()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactionRange);
@@ -520,7 +554,6 @@ public class PlayerKMS : MonoBehaviour
                 }
             }
         }
-
         return closestObject;
     }
 
@@ -614,6 +647,11 @@ public class PlayerKMS : MonoBehaviour
         Isdurabillity = true;
         ExitObject();
         LaunchProjectileMotion(); // 발사체 모션 시작
+    }
+
+    public void SetDeadState()
+    {
+        UpdatePlayerState(PlayerState.Dead);
     }
 
     private void LaunchProjectileMotion()
