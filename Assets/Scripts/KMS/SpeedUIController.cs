@@ -21,6 +21,7 @@ public class SpeedUIController : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindWithTag("Player");
+        Debug.Log("Player : " + player);
         if (player != null)
         {
             Debug.Log("플레이어 찾음");
