@@ -1406,15 +1406,15 @@ GameObject:
   m_Component:
   - component: {fileID: 5037445078414196601}
   - component: {fileID: 4527153170687869349}
-  - component: {fileID: 2848298800512729621}
   - component: {fileID: 3000808768775573589}
+  - component: {fileID: 2848298800512729621}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5037445078414196601
 Transform:
   m_ObjectHideFlags: 0
@@ -1473,19 +1473,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &2848298800512729621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1764145337724598959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3000808768775573589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1505,6 +1492,19 @@ MonoBehaviour:
     RotationDamping: {x: 2, y: 1.5, z: 2}
     QuaternionDamping: 0
   FollowOffset: {x: 0, y: 1.57, z: -6}
+--- !u!114 &2848298800512729621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764145337724598959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1780180178018553909
 GameObject:
   m_ObjectHideFlags: 0
@@ -16751,6 +16751,7 @@ MonoBehaviour:
   airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 9050748276338936863}
   carBody: {fileID: 3890264399814509598}
   frictionCurve:
@@ -17084,6 +17085,7 @@ MonoBehaviour:
   mountPoint: {fileID: 254669843194992392}
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!1 &7082337247273000615
 GameObject:
   m_ObjectHideFlags: 0
@@ -28488,6 +28490,7 @@ MonoBehaviour:
   mountPoint: {fileID: 254669843194992392}
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
   hpBar: {fileID: 0}
+  damagePerSecond: 1
 --- !u!114 &3189352218762009991
 MonoBehaviour:
   m_ObjectHideFlags: 0

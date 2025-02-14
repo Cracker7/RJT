@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class AccelPlatform : MonoBehaviour
 {
+
+    public float speed = 500f;
+
     private void OnTriggerEnter(Collider collider)
     {
         // 레이어로 필터링
@@ -16,7 +19,8 @@ public class AccelPlatform : MonoBehaviour
                 return;
             }
             // Rigidbody 컴포넌트에 힘을 가함
-            rb.AddForce(transform.forward * 200f, ForceMode.Impulse);
+            //rb.AddForce(transform.forward * 200f, ForceMode.Impulse);
+            rb.linearVelocity = transform.forward * speed;
         }
 
     }

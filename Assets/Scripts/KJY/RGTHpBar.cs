@@ -5,14 +5,11 @@ using System.Collections;
 public class RGTHpBar : MonoBehaviour
 {
     [SerializeField] private RectTransform yellowRectTr = null;
-    [SerializeField] private Image redImg = null;
-    [SerializeField] private Image transparent = null;
+    [SerializeField] private RectTransform redImgTr = null;
+    [SerializeField] private RectTransform transparentTr = null;
 
-    private float maxWidth = 0f;
-    private float maxHeight = 0f;
-
-    private RectTransform redImgTr;
-    private RectTransform transparentTr;
+    private float maxWidth = 100f;
+    private float maxHeight = 100f;
 
     //플레이어 스크립트에 넣어야 함 -> 위치 업데이트
     //    private void Update()
@@ -26,8 +23,6 @@ public class RGTHpBar : MonoBehaviour
     {
         maxWidth = yellowRectTr.sizeDelta.x;
         maxHeight = yellowRectTr.sizeDelta.y;
-        redImgTr = redImg.GetComponent<RectTransform>();
-        transparentTr = transparent.GetComponent<RectTransform>();
 
         // 앵커와 피벗을 왼쪽으로 설정
         yellowRectTr.pivot = new Vector2(0f, 0.5f);  // 왼쪽 중앙 기준
