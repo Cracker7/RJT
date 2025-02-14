@@ -80,6 +80,8 @@ public class PlayerKMS : MonoBehaviour
 
     private bool hasHandledRiding = false;
 
+    private bool isDead = false;
+
     private void Awake()
     {
         // 기본 컴포넌트 캐싱
@@ -140,8 +142,11 @@ public class PlayerKMS : MonoBehaviour
             if (currentObjectPrefab != null)
             {
                 ExitObject();
-                UpdatePlayerState(PlayerState.Dead);
                 ExplosionRb();
+                if(!isDead)
+                {
+                    HandleInput();
+                }
             }
 
             // // 부모 관계 해제
@@ -158,29 +163,31 @@ public class PlayerKMS : MonoBehaviour
         }
         else
         {
-            // Idle 상태에서 발사체 모션 진행 중이면 업데이트
-            if (currentState == PlayerState.Idle && isProjectileLaunched)
-            {
-                UpdateProjectileMotion();
-                // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
-                GameObject findcar =
-                    boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
+            //// Idle 상태에서 발사체 모션 진행 중이면 업데이트
+            //if (currentState == PlayerState.Idle && isProjectileLaunched)
+            //{
+            //    UpdateProjectileMotion();
+            //    // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
+            //    GameObject findcar =
+            //        boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
 
-                if(projectileElapsedTime == projectileDuration)
-                {
-                    currentState = PlayerState.Dead;
-                }
-                else if (findcar != null && Input.GetKeyDown(interactKeyCode))
-                {
-                    StartTransition(findcar.GetComponent<InteractableObject>());
-                }
+            //    if(projectileElapsedTime == projectileDuration)
+            //    {
+            //        currentState = PlayerState.Dead;
+            //    }
+            //    else if (findcar != null && Input.GetKeyDown(interactKeyCode))
+            //    {
+            //        StartTransition(findcar.GetComponent<InteractableObject>());
+            //    }
 
-            }
-            else
-            {
-                // 평상시 입력 처리
-                HandleInput();
-            }
+            //}
+            //else
+            //{
+            //    // 평상시 입력 처리
+            //    HandleInput();
+            //}
+
+            HandleInput();
 
             // Riding 상태라면 Riding 관련 추가 로직도 처리
             if (currentState == PlayerState.Riding)
@@ -220,7 +227,7 @@ public class PlayerKMS : MonoBehaviour
 
         if (mainCollider != null)
         {
-            mainCollider.isTrigger = isTrigger;
+            //mainCollider.isTrigger = isTrigger;
             mainCollider.enabled = true;
         }
 
@@ -467,9 +474,9 @@ public class PlayerKMS : MonoBehaviour
         if (currentInteractableObject != null)
         {
             if (currentInteractable == null) return;
-            // 현재 탄 물체의 이벤트 삭제
-            currentInteractable.onHPUpdate -= currentInteractableObject.StartHpDecrease;
-            currentInteractable.OnDestroyCalled -= durabilityZero;
+
+            ExitEvent();
+
             currentInteractable = null;
 
             // 원래 물건 위치와 회전을 프리팹 위치와 회전으로 설정
@@ -526,8 +533,7 @@ public class PlayerKMS : MonoBehaviour
 
         // 현재 타고 있는 오브젝트의 인터렉테이블 오브젝트
         currentInteractable = currentObjectPrefab.GetComponent<InteractableObject>();
-        currentInteractable.onHPUpdate += currentInteractable.StartHpDecrease;
-        currentInteractable.onHPUpdate.Invoke();
+        EnterEvent();
 
         // 현재 타고 있는 오브젝트의 파괴 이벤트
         currentInteractable.OnDestroyCalled += durabilityZero;
@@ -583,6 +589,7 @@ public class PlayerKMS : MonoBehaviour
             // 이전 내구도를 현재 탑승한 애매한 탈것에 계승
             currentInteractable.maxDurability = maxDurability;
             currentInteractable.currentDurability = durability;
+            currentInteractable.hpBar.UpdateHpBar(maxDurability, durability);
 
             // 프리팹 생성 후 저장했던 속도를 적용 (옵션)
             ApplySavedVelocity();
@@ -647,7 +654,9 @@ public class PlayerKMS : MonoBehaviour
         if (currentState == PlayerState.Transitioning) return;
         Isdurabillity = true;
         ExitObject();
-        LaunchProjectileMotion(); // 발사체 모션 시작
+        //LaunchProjectileMotion(); // 발사체 모션 시작
+        ExplosionRb();
+        currentState = PlayerState.Dead;
     }
 
     public void SetDeadState()
@@ -729,6 +738,33 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
+    private void EnterEvent()
+    {
+        currentInteractable.onRideUpdate += currentInteractable.StartHpDecrease;
+        currentInteractable.onRideUpdate.Invoke();
+        currentInteractable.onRideCol += currentInteractable.HandleCollisionDamage;
+    }
+
+    private void ExitEvent()
+    {
+        // 현재 탄 물체의 이벤트 삭제
+        currentInteractable.onRideUpdate -= currentInteractableObject.StartHpDecrease;
+        currentInteractable.OnDestroyCalled -= durabilityZero;
+        currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("플레이어와 부딪힌 것 이름" + other.name);
+        //if (other.CompareTag("Untagged")) return;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Default")) return;
+        if (currentState == PlayerState.Dead)
+        {
+            Debug.Log("플레이어가 죽음");
+            isDead = true;
+        }
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -743,29 +779,29 @@ public class PlayerKMS : MonoBehaviour
 
 
 
-        // 메인 카메라가 없는 경우 반환
-        if (Camera.main == null)
-            return;
+        //// 메인 카메라가 없는 경우 반환
+        //if (Camera.main == null)
+        //    return;
 
-        // 카메라의 위치와 forward 방향
-        Vector3 origin = Camera.main.transform.position + Vector3.zero;
-        Vector3 direction = Camera.main.transform.forward;
-        Quaternion rotation = Camera.main.transform.rotation;
+        //// 카메라의 위치와 forward 방향
+        //Vector3 origin = Camera.main.transform.position + Vector3.zero;
+        //Vector3 direction = Camera.main.transform.forward;
+        //Quaternion rotation = Camera.main.transform.rotation;
 
 
-        // 스윕 볼륨의 중심: 시작점부터 maxDistance의 중간
-        Vector3 center = origin + direction * (50 * 0.5f);
+        //// 스윕 볼륨의 중심: 시작점부터 maxDistance의 중간
+        //Vector3 center = origin + direction * (50 * 0.5f);
 
-        // 스윕 볼륨의 크기:
-        // - X, Y: 원래 박스의 크기 (halfExtents * 2)
-        // - Z: 이동 거리(maxDistance) + 시작 박스의 깊이(halfExtents.z * 2)
-        Vector3 size = new Vector3(5 * 2,
-                                   5 * 2,
-                                   50 + 1 * 2);
+        //// 스윕 볼륨의 크기:
+        //// - X, Y: 원래 박스의 크기 (halfExtents * 2)
+        //// - Z: 이동 거리(maxDistance) + 시작 박스의 깊이(halfExtents.z * 2)
+        //Vector3 size = new Vector3(5 * 2,
+        //                           5 * 2,
+        //                           50 + 1 * 2);
 
-        // 회전과 중심을 적용한 행렬로 설정
-        Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, size);
+        //// 회전과 중심을 적용한 행렬로 설정
+        //Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
+        //Gizmos.DrawWireCube(Vector3.zero, size);
     }
 
     // private void OnTriggerEnter(Collider other) {
