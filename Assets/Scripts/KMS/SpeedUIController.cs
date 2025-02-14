@@ -23,7 +23,12 @@ public class SpeedUIController : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         if (player != null)
         {
+            Debug.Log("플레이어 찾음");
             playerKMS = player.GetComponent<PlayerKMS>();
+            if(playerKMS != null)
+            {
+                Debug.Log("플레이어스크립트 찾음");
+            }
         }
         else
         {
