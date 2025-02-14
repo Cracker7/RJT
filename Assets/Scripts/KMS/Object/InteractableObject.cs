@@ -14,11 +14,11 @@ public class InteractableObject : MonoBehaviour
     public IMovement movementController;
     public IInputHandler inputHandler;
     public RGTHpBar hpBar;
-    public float damagePerSecond = 1f;
+    private float damagePerSecond = 1f;
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
-    private float collisionCooldown = 1f;           // 충돌 쿨다운 시간 (초 단위)
+    private float collisionCooldown = 0.2f;           // 충돌 쿨다운 시간 (초 단위)
     private Coroutine collisionCooldownCoroutine = null; // 실행중인 코루틴 참조
 
     // HP 업데이트를 위한 델리게이트 선언
@@ -36,11 +36,11 @@ public class InteractableObject : MonoBehaviour
         Init();
         currentDurability = objectData.durability;
         maxDurability = objectData.durability;
-        
-        //if (hpBar != null)
-        //{
-        //    hpBar.UpdateHpBar(maxDurability, maxDurability);
-        //}
+
+        if (hpBar != null)
+        {
+            hpBar.UpdateHpBar(maxDurability, maxDurability);
+        }
     }
 
     private void OnEnable()
@@ -107,7 +107,7 @@ public class InteractableObject : MonoBehaviour
     // 충돌이나 트리거 발생 시 호출될 onRideUpdate에 등록된 함수입니다.
     public void HandleCollisionDamage()
     {
-        currentDurability -= maxDurability/6;
+        currentDurability -= maxDurability/3;
         Debug.Log("충돌/트리거로 인한 체력 감소. 남은 체력: " + currentDurability);
 
         hpBar.UpdateHpBar(maxDurability, currentDurability);
@@ -140,6 +140,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("장애물에 부딪힘");
         if (!collisionTriggered && collision.gameObject.CompareTag("Obstacle"))
         {
             onRideCol?.Invoke();
@@ -149,8 +150,10 @@ public class InteractableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("발판을 밟음");
         if (!collisionTriggered && other.CompareTag("Platform"))
         {
+            Debug.Log("Trigger 발판 밟음");
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
         }

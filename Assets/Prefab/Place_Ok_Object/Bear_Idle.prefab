@@ -100,9 +100,17 @@ PrefabInstance:
       value: Bear_Idle
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 77fc11d5f95ceb94eaa686ac90c8f276, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 77fc11d5f95ceb94eaa686ac90c8f276, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 34eea311389ee8c4fa62809b561672fb, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 77fc11d5f95ceb94eaa686ac90c8f276, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -177,9 +185,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  mountPoint: {fileID: 1837581607354538806}
+  mountPoint: {fileID: 2617282253074414712}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
+  timeDamage: 0
 --- !u!4 &1837581607354538806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 77fc11d5f95ceb94eaa686ac90c8f276, type: 3}

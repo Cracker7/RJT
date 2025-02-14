@@ -23212,11 +23212,11 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 150
-  accelaration: 10
+  MaxSpeed: 70
+  accelaration: 15
   turn: 10
-  gravity: 7
-  downforce: 5
+  gravity: 5
+  downforce: 100
   AirControl: 1
   airControlTranslationForce: 50
   kartLike: 1
@@ -23305,6 +23305,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 6273789767361750048}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!54 &2743276090239152032
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23555,7 +23556,7 @@ MonoBehaviour:
   mountPoint: {fileID: 0}
   objectData: {fileID: 11400000, guid: 206813da90cb54c419d02c54ecd671c0, type: 2}
   hpBar: {fileID: 0}
-  damagePerSecond: 1
+  timeDamage: 0
 --- !u!1 &5911328702941169727
 GameObject:
   m_ObjectHideFlags: 0
@@ -23792,7 +23793,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6842726201336370672}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3969922682fc3d544a39fd1414bb3c7e, type: 3}
   m_Name: 
@@ -23854,7 +23855,7 @@ MonoBehaviour:
   mountPoint: {fileID: 3626459036351351560}
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
-  damagePerSecond: 1
+  timeDamage: 0
 --- !u!114 &8440025286386734593
 MonoBehaviour:
   m_ObjectHideFlags: 0
