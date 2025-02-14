@@ -211,11 +211,11 @@ namespace ArcadeVP
                     Vector3 airTranslationForce = (carBody.transform.forward * accelerationInput + carBody.transform.right * steeringInput) * airControlTranslationForce;
                     carBody.AddForce(airTranslationForce, ForceMode.Acceleration);
 
-                    if (!grounded())
-                    {
-                        // 차량이 표면에 밀착되도록 추가 힘 적용
-                        rb.AddForce(-transform.up * gravity * rb.mass);
-                    }
+                    //if (!grounded())
+                    //{
+                    //    // 차량이 표면에 밀착되도록 추가 힘 적용
+                    //    rb.AddForce(-transform.up * gravity * rb.mass);
+                    //}
                 }
 
                 // 공중에서는 차량이 천천히 원래 자세(수직)로 돌아오도록 회전 보정
