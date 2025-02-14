@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerKMS : MonoBehaviour
 {
     // 상태 머신
-    private enum PlayerState { Idle, Transitioning, Riding, Dead }
-    private PlayerState currentState = PlayerState.Idle;
+    public enum PlayerState { Idle, Transitioning, Riding, Dead }
+    public PlayerState currentState = PlayerState.Idle;
 
     // 컴포넌트 캐싱
     private List<SkinnedMeshRenderer> skinRenderer;
@@ -163,7 +164,7 @@ public class PlayerKMS : MonoBehaviour
                 UpdateProjectileMotion();
                 // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
                 GameObject findcar =
-                    boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(1, 1, 1), 50, LayerMask.NameToLayer("carbody"));
+                    boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
 
                 if(projectileElapsedTime == projectileDuration)
                 {
@@ -739,6 +740,32 @@ public class PlayerKMS : MonoBehaviour
             Gizmos.DrawLine(transform.position, targetObject.mountPoint.position);
             Gizmos.DrawWireSphere(targetObject.mountPoint.position, mountThreshold);
         }
+
+
+
+        // 메인 카메라가 없는 경우 반환
+        if (Camera.main == null)
+            return;
+
+        // 카메라의 위치와 forward 방향
+        Vector3 origin = Camera.main.transform.position + Vector3.zero;
+        Vector3 direction = Camera.main.transform.forward;
+        Quaternion rotation = Camera.main.transform.rotation;
+
+
+        // 스윕 볼륨의 중심: 시작점부터 maxDistance의 중간
+        Vector3 center = origin + direction * (50 * 0.5f);
+
+        // 스윕 볼륨의 크기:
+        // - X, Y: 원래 박스의 크기 (halfExtents * 2)
+        // - Z: 이동 거리(maxDistance) + 시작 박스의 깊이(halfExtents.z * 2)
+        Vector3 size = new Vector3(5 * 2,
+                                   5 * 2,
+                                   50 + 1 * 2);
+
+        // 회전과 중심을 적용한 행렬로 설정
+        Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, size);
     }
 
     // private void OnTriggerEnter(Collider other) {

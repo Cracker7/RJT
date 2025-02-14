@@ -5625,7 +5625,7 @@ GameObject:
   - component: {fileID: 8529571395559393564}
   m_Layer: 7
   m_Name: Arcade_Military combat Jeep Variant
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5702,14 +5702,14 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 40
+  MaxSpeed: 50
   accelaration: 15
   turn: 10
   gravity: 5
-  downforce: 5
+  downforce: 100
   AirControl: 1
   airControlTranslationForce: 50
-  kartLike: 1
+  kartLike: 0
   driftMultiplier: 1.5
   decelerationFactor: 2
   rb: {fileID: 6398144575048645568}
@@ -5795,6 +5795,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 5899208111343513600}
   skidWidth: 0.1051774
+  parallelMovement: 0
 --- !u!54 &4522297514277781518
 Rigidbody:
   m_ObjectHideFlags: 0
