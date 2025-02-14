@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -14,10 +15,18 @@ public class InteractableObject : MonoBehaviour
     public IInputHandler inputHandler;
     public RGTHpBar hpBar;
     public float damagePerSecond = 1f;
+    public bool timeDamage = false;
+
+    private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
+    private float collisionCooldown = 1f;           // 충돌 쿨다운 시간 (초 단위)
+    private Coroutine collisionCooldownCoroutine = null; // 실행중인 코루틴 참조
 
     // HP 업데이트를 위한 델리게이트 선언
-    public delegate void OnHPUpdateDelegate();
-    public OnHPUpdateDelegate onHPUpdate;
+    public delegate void OnRideUpdateDelegate();
+    public OnRideUpdateDelegate onRideUpdate;
+
+    public delegate void OnRideColUpdateDelegate();
+    public OnRideColUpdateDelegate onRideCol;
 
     public event Action OnDestroyCalled;
     public event Action OnHpBarTr;
@@ -28,15 +37,26 @@ public class InteractableObject : MonoBehaviour
         currentDurability = objectData.durability;
         maxDurability = objectData.durability;
         
-        if (hpBar != null)
-        {
-            hpBar.UpdateHpBar(maxDurability, maxDurability);
-        }
+        //if (hpBar != null)
+        //{
+        //    hpBar.UpdateHpBar(maxDurability, maxDurability);
+        //}
     }
+
+    private void OnEnable()
+    {
+        collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+    }
+
+    //private void Start()
+    //{
+    //    hpBar.UpdateHpBar(maxDurability, maxDurability);
+
+    //}
 
     private void Update()
     {
-        if(onHPUpdate != null && OnDestroyCalled != null)
+        if(onRideUpdate != null && OnDestroyCalled != null)
         {
             UpdateHpBarTr();
         }
@@ -59,33 +79,13 @@ public class InteractableObject : MonoBehaviour
         // Debug.Log("체력 함수 실행됨");
         // currentDurability -= 1f;
         // hpBar.UpdateHpBar(currentDurability, maxDurability);
+        if (!timeDamage) return;
         StartCoroutine(DecreaseHpCoroutine());
     }
 
     // 1초 동안 5만큼 HP를 부드럽게 감소시키는 코루틴
     private IEnumerator DecreaseHpCoroutine()
     {
-        // // 감소할 양 및 코루틴 지속 시간 (1초)
-        // float decreaseAmount = 5f;
-        // float duration = 1f;
-        // float elapsed = 0f;
-
-        // // 시작 HP와 최종 HP 값 계산
-        // float startHP = currentDurability;
-        // float targetHP = Mathf.Max(currentDurability - decreaseAmount, 0f);
-
-        // // 1초 동안 매 프레임마다 선형 보간(Lerp)로 HP 감소
-        // while (elapsed < duration)
-        // {
-        //     elapsed += Time.deltaTime;
-        //     currentDurability = Mathf.Lerp(startHP, targetHP, elapsed / duration);
-        //     hpBar.UpdateHpBar(currentDurability, maxDurability);
-        //     yield return null;
-        // }
-
-        // // 코루틴 종료 시 확실히 targetHP로 설정
-        // currentDurability = targetHP;
-
         while(currentDurability > 0){
             Debug.Log("체력 함수 실행됨");
 
@@ -103,6 +103,21 @@ public class InteractableObject : MonoBehaviour
             DestroyObject();
         }
     }
+
+    // 충돌이나 트리거 발생 시 호출될 onRideUpdate에 등록된 함수입니다.
+    public void HandleCollisionDamage()
+    {
+        currentDurability -= maxDurability/6;
+        Debug.Log("충돌/트리거로 인한 체력 감소. 남은 체력: " + currentDurability);
+
+        hpBar.UpdateHpBar(maxDurability, currentDurability);
+
+        if (currentDurability <= 0)
+        {
+            DestroyObject();
+        }
+    }
+
 
     // hp바 위치를 업데이트 하는 함수
     public void UpdateHpBarTr()
@@ -123,9 +138,35 @@ public class InteractableObject : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collisionTriggered && collision.gameObject.CompareTag("Obstacle"))
+        {
+            onRideCol?.Invoke();
+            collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!collisionTriggered && other.CompareTag("Platform"))
+        {
+            onRideCol?.Invoke();
+            collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+        }
+    }
+
+    private IEnumerator CollisionCooldownCoroutine()
+    {
+        collisionTriggered = true;
+        yield return new WaitForSeconds(collisionCooldown);
+        collisionTriggered = false;
+        collisionCooldownCoroutine = null;
+    }
+
     private void OnDestroy()
     {
         // 델리게이트 정리
-        onHPUpdate = null;
+        onRideUpdate = null;
     }
 }

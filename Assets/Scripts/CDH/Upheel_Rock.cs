@@ -6,8 +6,8 @@ public class Upheel_Rock : MonoBehaviour
     public GameObject explosionEffect; // 파편 효과 프리팹
 
 
-    public float minGravity = 5f;  // 최소 중력
-    public float maxGravity = 30f; // 최대 중력
+    public float minGravity = 30f;  // 최소 중력
+    public float maxGravity = 60f; // 최대 중력
     public float minPushForce = 5f;  // 최소 추가 속도
     public float maxPushForce = 50f; // 최대 추가 속도
 
@@ -17,9 +17,10 @@ public class Upheel_Rock : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        //rb.useGravity = false;
         // 돌마다 다른 중력 효과 적용
         float randomGravity = Random.Range(minGravity, maxGravity);
-        rb.AddForce(Vector3.down * randomGravity, ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * randomGravity * 1000f, ForceMode.Acceleration);
 
         // 랜덤한 힘을 추가해서 돌마다 속도 차이를 둠
         float randomPush = Random.Range(minPushForce, maxPushForce);
