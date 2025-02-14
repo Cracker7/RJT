@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.LightTransport.InputExtraction;
 
 namespace ArcadeVP
@@ -54,6 +55,7 @@ namespace ArcadeVP
         [HideInInspector]
         public float skidWidth;
 
+        public bool parallelMovement = false;
 
         private float radius, steeringInput, accelerationInput, brakeInput;
         private Vector3 origin;
@@ -105,6 +107,7 @@ namespace ArcadeVP
             {
                 //changes friction according to sideways speed of car
                 frictionMaterial.dynamicFriction = frictionCurve.Evaluate(Mathf.Abs(carVelocity.x / 100));
+                //frictionMaterial.dynamicFriction = Mathf.Clamp(frictionCurve.Evaluate(Mathf.Abs(carVelocity.x / 100)), 0.1f, 1f);
             }
 
 
@@ -116,14 +119,26 @@ namespace ArcadeVP
                 float TurnMultiplyer = turnCurve.Evaluate(carVelocity.magnitude / MaxSpeed);
                 if (kartLike && brakeInput > 0.1f) { TurnMultiplyer *= driftMultiplier; } //turn more if drifting
 
-
-                if (accelerationInput > 0.1f || carVelocity.z > 1)
+                if (!parallelMovement)
                 {
-                    carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    if (accelerationInput > 0.1f || carVelocity.z > 1)
+                    {
+                        carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    }
+                    else if (accelerationInput < -0.1f || carVelocity.z < -1)
+                    {
+                        carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    }
                 }
-                else if (accelerationInput < -0.1f || carVelocity.z < -1)
+                else
                 {
-                    carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    if (accelerationInput > 0.1f || carVelocity.z > 1 || accelerationInput < -0.1f || carVelocity.z < -1)
+                    {
+                        // transform.right는 차량의 오른쪽 방향입니다.
+                        Vector3 lateralMovement = transform.right * steeringInput * turn * 100;
+                        //carBody.MovePosition(carBody.position + lateralMovement);
+                        carBody.AddForce(lateralMovement, ForceMode.Acceleration);
+                    }
                 }
 
 
@@ -195,6 +210,12 @@ namespace ArcadeVP
                     // 새롭게 공중 이동 힘 추가 (전진/후진 및 약간의 측면 이동)
                     Vector3 airTranslationForce = (carBody.transform.forward * accelerationInput + carBody.transform.right * steeringInput) * airControlTranslationForce;
                     carBody.AddForce(airTranslationForce, ForceMode.Acceleration);
+
+                    if (!grounded())
+                    {
+                        // 차량이 표면에 밀착되도록 추가 힘 적용
+                        rb.AddForce(-transform.up * gravity * rb.mass);
+                    }
                 }
 
                 // 공중에서는 차량이 천천히 원래 자세(수직)로 돌아오도록 회전 보정
@@ -258,7 +279,8 @@ namespace ArcadeVP
 
         public bool grounded() //checks for if vehicle is grounded or not
         {
-            origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
+            //origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
+            origin = rb.position + transform.up * (rb.GetComponent<SphereCollider>().radius + 0.1f);
             var direction = -transform.up;
             var maxdistance = rb.GetComponent<SphereCollider>().radius + 0.2f;
 
@@ -276,7 +298,7 @@ namespace ArcadeVP
 
             else if (GroundCheck == groundCheck.sphereCaste)
             {
-                if (Physics.SphereCast(origin, radius + 0.1f, direction, out hit, maxdistance, drivableSurface))
+                if (Physics.SphereCast(origin, radius * 0.9f, direction, out hit, maxdistance, drivableSurface))
                 {
                     return true;
 
