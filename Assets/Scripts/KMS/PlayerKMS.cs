@@ -81,6 +81,7 @@ public class PlayerKMS : MonoBehaviour
     private bool hasHandledRiding = false;
 
     private bool isDead = false;
+    private bool hasTransition = false;
 
     private void Awake()
     {
@@ -346,6 +347,7 @@ public class PlayerKMS : MonoBehaviour
         ExitObject(); // 기존 오브젝트에서 내리기
 
         UpdatePlayerState(PlayerState.Transitioning);
+        hasTransition = true;
         targetObject = target;
         startPosition = transform.position;
         transitionTime = 0f;
@@ -520,12 +522,12 @@ public class PlayerKMS : MonoBehaviour
         target.gameObject.SetActive(false);
 
         // 프리팹 생성 위치 및 회전 설정
-        Vector3 spawnPosition = target.transform.position;
-        Quaternion spawnRotation = target.transform.rotation;
+        Vector3 spawnPosition = target.mountPoint.position;
+        Quaternion spawnRotation = target.mountPoint.rotation;
 
         // 미니게임 결과에 따라 생성되는 프리팹이 달라질 수 있음
         currentObjectPrefab = Instantiate(target.objectData.Prefab,
-                                         spawnPosition + new Vector3(0, 0.05f, 0),
+                                         spawnPosition,
                                          spawnRotation);
 
         // 캐싱: 생성된 프리팹의 Rigidbody를 한 번 가져와서 저장
@@ -591,8 +593,8 @@ public class PlayerKMS : MonoBehaviour
             currentInteractable.currentDurability = durability;
             currentInteractable.hpBar.UpdateHpBar(maxDurability, durability);
 
-            // 프리팹 생성 후 저장했던 속도를 적용 (옵션)
-            ApplySavedVelocity();
+            //// 프리팹 생성 후 저장했던 속도를 적용 (옵션)
+            //ApplySavedVelocity();
 
         }
     }
@@ -730,9 +732,20 @@ public class PlayerKMS : MonoBehaviour
             Rigidbody rb = currentObjectPrefab.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.linearVelocity = savedVelocity;
-                rb.angularVelocity = savedAngularVelocity;
-                Debug.Log($"Applied velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+                if (hasTransition)
+                {
+                    Debug.Log("갈아탔을때 가속");
+                    rb.linearVelocity = savedVelocity * 5;
+                    rb.angularVelocity = savedAngularVelocity;
+
+                    // 트랜지션을 거친 상태를 다시 초기화
+                    hasTransition = false;
+                }
+                else {
+                    rb.linearVelocity = savedVelocity;
+                    rb.angularVelocity = savedAngularVelocity;
+                    Debug.Log($"Applied velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
+                }
             }
             hasSavedVelocity = false;
         }
