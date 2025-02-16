@@ -1,97 +1,82 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class RGTCARDown : MonoBehaviour
 {
-    public float sinkSpeed = 0.5f; // 땅에 빨려 들어가는 속도
-    public float riseSpeed = 1.0f; // 올라가는 속도
-    public float maxSinkDepth = 2.0f; // 최대 빨려 들어가는 깊이
-    public float moveThreshold = 0.5f; // 움직일 수 있는 깊이 임계값 (절반 이상)
+    public float sinkDepth = 2f;        // 최대 가라앉는 깊이
+    public float sinkSpeed = 0.5f;      // 가라앉는 속도
+    public float riseSpeed = 0.3f;      // 떠오르는 속도
+    public float requiredTapSpeed = 0.2f; // 연타 감지 시간
+    public float speedThreshold = 60f;  // 속도 임계값 (60 이하일 때 가라앉음)
 
-    private float currentDepth = 0f; // 현재 깊이
-    private bool isRising = false; // 올라가는 중인지 여부
-    private Vector3 originalPosition; // 원래 위치
+    private Vector3 startPos;  // 원래 위치 저장
+    private Vector3 targetPos; // 목표 위치
+    private bool isSinking = false;
+    private bool isRising = false;
+    private float lastTapTime = 0f;
+    private Rigidbody rb; // 차량 물리 제어
 
     void Start()
     {
-        originalPosition = transform.position; // 원래 위치 저장
+        rb = GetComponent<Rigidbody>();
+        startPos = transform.position;
+        targetPos = startPos;
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Quicksand"))
+        {
+            float currentSpeed = rb.linearVelocity.magnitude * 3.6f; // 속도를 km/h로 변환
+
+            if (currentSpeed < speedThreshold && !isSinking)
+            {
+                StartSinking();
+            }
+        }
     }
 
     void Update()
     {
-        // 탈것의 속도가 60 아래인지 확인
-        if (GetVehicleSpeed() < 60f)
+        if (isSinking)
         {
-            if (!isRising) // 올라가는 중이 아니면
+            if (isRising)
             {
-                SinkIntoQuicksand(); // 땅에 빨려 들어감
+                targetPos += new Vector3(0, riseSpeed * Time.deltaTime, 0);
+                targetPos.y = Mathf.Min(targetPos.y, startPos.y); // 원래 위치 이상 올라가지 않도록 제한
             }
+            else
+            {
+                targetPos -= new Vector3(0, sinkSpeed * Time.deltaTime, 0);
+                targetPos.y = Mathf.Max(targetPos.y, startPos.y - sinkDepth); // 최대 깊이 이하로 못 가게 제한
+            }
+
+            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5f);
         }
 
-        // 연타 입력 감지 (Spacebar를 연타로 가정)
-        if (Input.GetKey(KeyCode.Z))
+        // 🔥 연타 감지 (Space, W 키)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
-            StartRising(); // 올라가기 시작
+            if (Time.time - lastTapTime < requiredTapSpeed) // 연타 시 상승
+            {
+                isRising = true;
+            }
+            lastTapTime = Time.time;
         }
 
-        if (isRising)
+        // 🌟 차량의 절반 이상이 땅 위에 있으면 이동 가능
+        if (transform.position.y >= startPos.y - (sinkDepth / 2))
         {
-            RiseFromQuicksand(); // 올라가는 로직 실행
-        }
-    }
-
-    // 탈것의 속도를 가져오는 함수 (임시 구현)
-    float GetVehicleSpeed()
-    {
-        // 여기에 탈것의 속도를 계산하는 로직을 추가하세요.
-        // 예: Rigidbody의 velocity.magnitude를 사용
-        return GetComponent<Rigidbody>().linearVelocity.magnitude;
-    }
-
-    // 땅에 빨려 들어가는 로직
-    void SinkIntoQuicksand()
-    {
-        if (currentDepth < maxSinkDepth)
-        {
-            currentDepth += sinkSpeed * Time.deltaTime; // 깊이 증가
-            transform.position = originalPosition - Vector3.up * currentDepth; // 위치 업데이트
-        }
-    }
-
-    // 올라가기 시작
-    void StartRising()
-    {
-        isRising = true; // 올라가는 상태로 전환
-    }
-
-    // 땅에서 올라가는 로직
-    void RiseFromQuicksand()
-    {
-        if (currentDepth > 0f)
-        {
-            currentDepth -= riseSpeed * Time.deltaTime; // 깊이 감소
-            transform.position = originalPosition - Vector3.up * currentDepth; // 위치 업데이트
+            rb.linearDamping = 0.1f; // 이동 가능 (마찰 감소)
         }
         else
         {
-            isRising = false; // 올라가는 상태 종료
+            rb.linearDamping = 5f; // 이동 불가능 (마찰 증가)
         }
     }
 
-    // 움직일 수 있는지 여부 확인
-    bool CanMove()
+    void StartSinking()
     {
-        return currentDepth < maxSinkDepth * moveThreshold; // 절반 이상 땅 위에 있으면 true
+        isSinking = true;
+        targetPos = transform.position;
     }
-
-    // 탈것 이동 로직 (예시)
-    void MoveVehicle()
-    {
-        if (CanMove())
-        {
-            // 여기에 탈것 이동 로직을 추가하세요.
-            // 예: Rigidbody.AddForce 또는 transform.Translate 사용
-        }
-    }
-
 }
