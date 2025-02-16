@@ -26424,8 +26424,10 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 0
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 1341790391}
   carBody: {fileID: 1449558975}
   frictionCurve:
@@ -26509,6 +26511,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 1449558973}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!114 &1449558977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26967,8 +26970,10 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 0
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 713675484}
   carBody: {fileID: 1466906468}
   frictionCurve:
@@ -27052,6 +27057,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 1466906466}
   skidWidth: 0.16553968
+  parallelMovement: 0
 --- !u!114 &1466906470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57862,8 +57868,10 @@ MonoBehaviour:
   gravity: 5
   downforce: 5
   AirControl: 0
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 1668652264355650009}
   carBody: {fileID: 1668652264500705535}
   frictionCurve:
@@ -57947,6 +57955,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 1668652264500705521}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!65 &1668652264500705533
 BoxCollider:
   m_ObjectHideFlags: 0
