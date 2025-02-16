@@ -385,8 +385,10 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 0
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 1163919963}
   carBody: {fileID: 192092973}
   frictionCurve:
@@ -470,6 +472,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 192092971}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!114 &192092975
 MonoBehaviour:
   m_ObjectHideFlags: 0

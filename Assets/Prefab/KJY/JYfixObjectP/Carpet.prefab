@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3403741478931414950}
   - component: {fileID: 3324481435022690756}
   - component: {fileID: 2286040471939820780}
+  - component: {fileID: 4750778278632352600}
+  - component: {fileID: 389231832740024646}
   m_Layer: 0
   m_Name: Carpet
   m_TagString: Untagged
@@ -87,3 +89,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4750778278632352600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3560157393107305106}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1098044, y: 0.13931833, z: 2.818042}
+  m_Center: {x: -0.06528708, y: 0.10089714, z: 0.07824457}
+--- !u!114 &389231832740024646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3560157393107305106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1acbae8005de3e43870cb1347652540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDurability: 0
+  currentDurability: 0
+  mountPoint: {fileID: 3403741478931414950}
+  objectData: {fileID: 11400000, guid: deec6f2860b358b4b8377f86aee75a96, type: 2}
+  hpBar: {fileID: 0}
+  timeDamage: 0
