@@ -874,8 +874,10 @@ MonoBehaviour:
   gravity: 7
   downforce: 5
   AirControl: 0
+  airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
+  decelerationFactor: 2
   rb: {fileID: 248590693}
   carBody: {fileID: 859239569}
   frictionCurve:
@@ -959,6 +961,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 859239567}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!114 &859239571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,9 +1043,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDurability: 0
   currentDurability: 0
-  isOccupied: 0
   mountPoint: {fileID: 0}
   objectData: {fileID: 0}
+  hpBar: {fileID: 0}
+  timeDamage: 0
 --- !u!114 &940497710 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4565310502526729320, guid: d18c05342cf83714aa1222d76668dd00, type: 3}
