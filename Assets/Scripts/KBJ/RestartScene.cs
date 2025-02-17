@@ -14,7 +14,7 @@ public class RestartScene : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            SceneManager.LoadScene("Main_Cave");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
