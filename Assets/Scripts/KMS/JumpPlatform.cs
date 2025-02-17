@@ -19,6 +19,7 @@ public class JumpPlatform : MonoBehaviour
                 return;
             }
             // Rigidbody ÄÄÆ÷³ÍÆ®¿¡ ÈûÀ» °¡ÇÔ
+            rb.transform.position += new Vector3(0, 1f, 0);
             rb.linearVelocity /= deceleration;
             rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
         }
