@@ -1,51 +1,48 @@
+using System;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class RGTTornadoRandomTrs : MonoBehaviour
 {
-    [SerializeField] float UpdateInterval = 3f;
-    private NavMeshAgent agent;
-    private float TimeSinceLastUpdate;
+    public Transform[] positions; // 사용할 위치 배열
+    public GameObject obj; // 이동할 오브젝트
+    public float speed = 2f; // 이동 속도
 
-    [SerializeField] private GameObject Tornado1;
-    [SerializeField] private GameObject Tornado2;
-    [SerializeField] private GameObject Tornado3;
-    [SerializeField] private GameObject Tornado4;
-    [SerializeField] private GameObject Tornado5;
+    private int currentIndex = 0; // 현재 목표 위치 인덱스
+    private Vector3 targetPosition; // 목표 위치
 
-    private void Start()
+    void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        TimeSinceLastUpdate = UpdateInterval;
+        // 초기 목표 위치 설정
+        SetNextTargetPosition();
     }
 
-    private void Update()
+    void Update()
     {
-        TimeSinceLastUpdate += Time.deltaTime; // 시간 값을 갱신합니다.
+        MoveToNextPosition();
+    }
 
-        if (TimeSinceLastUpdate >= UpdateInterval) // 설정한 시간 간격이 지났는지 확인합니다.
+    // 목표 위치로 이동하는 함수
+    void MoveToNextPosition()
+    {
+        // 부드럽게 목표 위치로 이동
+        obj.transform.position = Vector3.MoveTowards(
+            obj.transform.position,
+            targetPosition,
+            speed * Time.deltaTime
+        );
+
+        // 목표 위치에 도달하면 다음 위치 설정
+        if (Vector3.Distance(obj.transform.position, targetPosition) < 0.1f)
         {
-            Vector3 randomPosition = GetRandomPositionOnNavMesh(); // NavMesh 위의 랜덤한 위치를 가져옵니다.
-            agent.SetDestination(randomPosition); // NavMeshAgent의 목표 위치를 랜덤 위치로 설정합니다.
-            TimeSinceLastUpdate = 0f; // 시간 값을 초기화합니다.
+            SetNextTargetPosition();
         }
     }
 
-    Vector3 GetRandomPositionOnNavMesh()
+    // 다음 목표 위치 설정 함수
+    void SetNextTargetPosition()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * 100f; // 원하는 범위 내의 랜덤한 방향 벡터를 생성합니다.
-        randomDirection += transform.position; // 랜덤 방향 벡터를 현재 위치에 더합니다.
-
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomDirection, out hit, 100f, NavMesh.AllAreas)) // 랜덤 위치가 NavMesh 위에 있는지 확인합니다.
-        {
-            return hit.position; // NavMesh 위의 랜덤 위치를 반환합니다.
-        }
-        else
-        {
-            return transform.position; // NavMesh 위의 랜덤 위치를 찾지 못한 경우 현재 위치를 반환합니다.
-        }
+        currentIndex = (currentIndex + 1) % positions.Length;
+        targetPosition = positions[currentIndex].position;
     }
-
-
 }

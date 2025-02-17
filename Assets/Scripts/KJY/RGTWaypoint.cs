@@ -3,35 +3,45 @@ using UnityEngine.AI;
 
 public class RGTWaypoint : MonoBehaviour
 {
-    public Transform[] waypoints; // 웨이포인트 배열
-    private int currentWaypointIndex = 0; // 현재 목표 웨이포인트
+    [SerializeField] private Transform[] positions; // 사용할 위치 배열
+    [SerializeField] private GameObject obj; // 이동할 오브젝트
+    [SerializeField] private float speed = 10f; // 이동 속도
 
-    private NavMeshAgent agent;
+    private int currentIndex = 0; // 현재 목표 위치 인덱스
+    private Vector3 targetPosition; // 목표 위치
 
     void Start()
     {
-        transform.rotation = Quaternion.Euler(0f,0f,0f);
-        agent = GetComponent<NavMeshAgent>();
-        MoveToNextWaypoint();
+        // 초기 목표 위치 설정
+        SetNextTargetPosition();
     }
 
     void Update()
     {
-        // 목적지에 거의 도착하면 다음 웨이포인트로 이동
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        MoveToNextPosition();
+    }
+
+    // 목표 위치로 이동하는 함수
+    void MoveToNextPosition()
+    {
+        // 부드럽게 목표 위치로 이동
+        obj.transform.position = Vector3.MoveTowards(
+            obj.transform.position,
+            targetPosition,
+            speed * Time.deltaTime
+        );
+
+        // 목표 위치에 도달하면 다음 위치 설정
+        if (Vector3.Distance(obj.transform.position, targetPosition) < 0.1f)
         {
-            MoveToNextWaypoint();
+            SetNextTargetPosition();
         }
     }
 
-    void MoveToNextWaypoint()
+    // 다음 목표 위치 설정 함수
+    void SetNextTargetPosition()
     {
-        if (waypoints.Length == 0)
-            return;
-
-        agent.SetDestination(waypoints[currentWaypointIndex].position);
-
-        // 다음 웨이포인트 인덱스 설정 (순환 방식)
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        currentIndex = (currentIndex + 1) % positions.Length;
+        targetPosition = positions[currentIndex].position;
     }
 }
