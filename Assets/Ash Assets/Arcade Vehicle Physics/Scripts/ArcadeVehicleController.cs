@@ -15,13 +15,13 @@ namespace ArcadeVP
         public LayerMask drivableSurface;
 
         public float MaxSpeed, accelaration, turn, gravity = 7f, downforce = 5f;
-        [Tooltip("if true : can turn vehicle in air")]
+        [Tooltip("공중 컨트롤 가능 여부")]
         public bool AirControl = false;
         [Tooltip("추가적인 공중 이동 힘. 값이 클수록 공중에서 이동 제어가 강해집니다.")]
         public float airControlTranslationForce = 50f;
-        [Tooltip("if true : vehicle will drift instead of brake while holding space")]
+        [Tooltip("스페이스바를 누르면 멈추는 대신 드리프트가 됨")]
         public bool kartLike = false;
-        [Tooltip("turn more while drifting (while holding space) only if kart Like is true")]
+        [Tooltip("kartLike가 true일 경우 드리프트하는 동안 값에 따라 더 많이 회전할 수 있음")]
         public float driftMultiplier = 1.5f;
 
         [Header("Speed Limit Settings")]
