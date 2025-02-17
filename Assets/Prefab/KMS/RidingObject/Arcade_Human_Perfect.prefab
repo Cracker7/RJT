@@ -16664,7 +16664,7 @@ GameObject:
   - component: {fileID: 4358539993718410607}
   - component: {fileID: 3374384113913744048}
   m_Layer: 7
-  m_Name: Arcade_perfect_With_Human
+  m_Name: Arcade_Human_Perfect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16680,8 +16680,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.76, y: -0.042182148, z: 7.1862116}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 135991312371523750}
   - {fileID: 4302746943879567282}
@@ -16835,6 +16835,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 1653692202636694719}
   skidWidth: 0.13985014
+  parallelMovement: 0
 --- !u!54 &3890264399814509598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17083,9 +17084,9 @@ MonoBehaviour:
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 254669843194992392}
-  objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
+  objectData: {fileID: 11400000, guid: 168e71e1d83e0584b819a4848a86590f, type: 2}
   hpBar: {fileID: 0}
-  damagePerSecond: 1
+  timeDamage: 0
 --- !u!1 &7082337247273000615
 GameObject:
   m_ObjectHideFlags: 0
@@ -28490,7 +28491,7 @@ MonoBehaviour:
   mountPoint: {fileID: 254669843194992392}
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
   hpBar: {fileID: 0}
-  damagePerSecond: 1
+  timeDamage: 0
 --- !u!114 &3189352218762009991
 MonoBehaviour:
   m_ObjectHideFlags: 0
