@@ -7,6 +7,11 @@ public class RGTTornadoRandomTrs : MonoBehaviour
     private NavMeshAgent agent;
     private float TimeSinceLastUpdate;
 
+    [SerializeField] private GameObject Tornado1;
+    [SerializeField] private GameObject Tornado2;
+    [SerializeField] private GameObject Tornado3;
+    [SerializeField] private GameObject Tornado4;
+    [SerializeField] private GameObject Tornado5;
 
     private void Start()
     {
