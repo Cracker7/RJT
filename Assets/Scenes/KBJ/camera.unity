@@ -491,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 330655282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.32, z: 1.36586}
+  m_LocalPosition: {x: 0, y: 8.32, z: -1.63414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -512,8 +512,8 @@ MonoBehaviour:
   Damping: {x: 0.1, y: 0, z: 0.1}
   ShoulderOffset: {x: 0, y: 1, z: -5}
   VerticalArmLength: 0.4
-  CameraSide: 0.504
-  CameraDistance: 2
+  CameraSide: 1
+  CameraDistance: 5
   AvoidObstacles:
     Enabled: 0
     CollisionFilter:
@@ -611,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 347426091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.32, z: 1.36586}
+  m_LocalPosition: {x: 0, y: 8.32, z: -1.63414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -637,11 +637,11 @@ MonoBehaviour:
   UpdateMethod: 1
   BlendUpdateMethod: 1
   LensModeOverride:
-    Enabled: 1
+    Enabled: 0
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 0.75
+    Time: 0.5
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -859,6 +859,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: subVCam
+      value: 
+      objectReference: {fileID: 1143179658}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -869,9 +873,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1677911351881079089, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1983865679}
-    - targetCorrespondingSourceObject: {fileID: 1677911351881079089, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1983865685}
   m_SourcePrefab: {fileID: 100100000, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
 --- !u!1001 &538385820
 PrefabInstance:
@@ -1802,7 +1803,7 @@ GameObject:
   - component: {fileID: 1143179661}
   - component: {fileID: 1143179660}
   m_Layer: 0
-  m_Name: CinemachineCamera (1)
+  m_Name: JumpCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29169,21 +29170,6 @@ MonoBehaviour:
   m_SkinMeshRef: {fileID: 0}
   m_OriginalMeshObject: {fileID: 0}
   m_Mode: 0
---- !u!114 &1983865685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671867985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 505707fef0df7574b89cfb1843bb9ec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainVCam: {fileID: 330655286}
-  subVCam: {fileID: 1143179658}
-  switchDuration: 1
 --- !u!1001 &2039589122
 PrefabInstance:
   m_ObjectHideFlags: 0
