@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using Unity.VisualScripting;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -30,6 +29,9 @@ public class InteractableObject : MonoBehaviour
 
     public event Action OnDestroyCalled;
     public event Action OnHpBarTr;
+
+    [SerializeField] private float bounceForce = 10f;  // 날아가는 힘의 크기
+    [SerializeField] private float upwardForce = 2f;   // 위로 뜨는 힘의 크기
 
     public virtual void Awake()
     {
@@ -156,6 +158,29 @@ public class InteractableObject : MonoBehaviour
             Debug.Log("Trigger 발판 밟음");
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+
+            // 충돌 지점 계산
+            Vector3 collisionPoint = other.ClosestPoint(transform.position);
+
+            // 충돌 방향 계산 (충돌 지점에서 현재 오브젝트 방향으로)
+            Vector3 direction = (transform.position - collisionPoint).normalized;
+
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+
+            // Kinematic을 해제하고 물리 시뮬레이션 활성화
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+
+                // 약간의 위쪽 방향 벡터 추가
+                Vector3 bounceDirection = (direction + Vector3.up * upwardForce).normalized;
+
+                // 힘 적용
+                rb.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+
+                // 회전력 추가 (선택사항)
+                rb.AddTorque(UnityEngine.Random.insideUnitSphere * bounceForce, ForceMode.Impulse);
+            }
         }
     }
 
