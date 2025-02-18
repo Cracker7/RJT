@@ -491,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 330655282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.32, z: -1.63414}
+  m_LocalPosition: {x: 0, y: 8.32, z: 0.36586}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -509,11 +509,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625c14eee3ad46c99df7c7c891ef668a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damping: {x: 0.1, y: 0, z: 0.1}
+  Damping: {x: 0.4, y: 0.1, z: 0.5}
   ShoulderOffset: {x: 0, y: 1, z: -5}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 5
+  CameraDistance: 3
   AvoidObstacles:
     Enabled: 0
     CollisionFilter:
@@ -611,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 347426091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.32, z: -1.63414}
+  m_LocalPosition: {x: 0, y: 8.32, z: 0.36586}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
