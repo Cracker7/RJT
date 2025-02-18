@@ -20,7 +20,8 @@ public class AccelPlatform : MonoBehaviour
             }
             // Rigidbody ÄÄÆ÷³ÍÆ®¿¡ ÈûÀ» °¡ÇÔ
             //rb.AddForce(transform.forward * 200f, ForceMode.Impulse);
-            rb.linearVelocity = transform.forward * speed;
+            rb.linearVelocity *= speed;
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 100);
         }
 
     }

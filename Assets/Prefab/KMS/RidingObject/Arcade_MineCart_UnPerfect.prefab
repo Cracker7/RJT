@@ -74,15 +74,15 @@ GameObject:
   m_Component:
   - component: {fileID: 6196453523616112773}
   - component: {fileID: 9203879109863388009}
-  - component: {fileID: 7429956043689220809}
   - component: {fileID: 5960076968479687592}
+  - component: {fileID: 7429956043689220809}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6196453523616112773
 Transform:
   m_ObjectHideFlags: 0
@@ -141,19 +141,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &7429956043689220809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947602862487852745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &5960076968479687592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +160,19 @@ MonoBehaviour:
     RotationDamping: {x: 2, y: 1.5, z: 2}
     QuaternionDamping: 0
   FollowOffset: {x: 0, y: 1.57, z: -6}
+--- !u!114 &7429956043689220809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947602862487852745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1954329847784637170
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,8 +5421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 0
-  GroundCheck: 0
+  movementMode: 1
+  GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
@@ -5519,7 +5519,7 @@ MonoBehaviour:
   MaxPitch: 3
   SkidSound: {fileID: 7671375012959726393}
   skidWidth: 0.17504606
-  parallelMovement: 0
+  parallelMovement: 1
 --- !u!54 &4100553396994068285
 Rigidbody:
   m_ObjectHideFlags: 0

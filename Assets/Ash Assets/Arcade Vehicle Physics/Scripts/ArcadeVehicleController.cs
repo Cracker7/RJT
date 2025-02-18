@@ -60,6 +60,13 @@ namespace ArcadeVP
         private float radius, steeringInput, accelerationInput, brakeInput;
         private Vector3 origin;
 
+        public ICarDown carDown;
+        private bool inDesert = false;
+        public bool InDesert { get { return inDesert; } set { inDesert = value; } }
+
+        private Transform bodyTr;
+        public Transform BodyTr { get { return bodyTr; } set { bodyTr = value; } }
+
         private void Start()
         {
             radius = rb.GetComponent<SphereCollider>().radius;
@@ -181,6 +188,13 @@ namespace ArcadeVP
                     }
                 }
 
+                // 트리거가 작동할 경우 carDown을 실행시키는 코드
+                if (inDesert)
+                {
+                    Debug.Log("빠지기 실행됨");
+                    carDown.Sink(bodyTr);
+                }
+
                 // down froce
                 rb.AddForce(-transform.up * downforce * rb.mass);
 
@@ -282,7 +296,7 @@ namespace ArcadeVP
             //origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
             origin = rb.position + transform.up * (rb.GetComponent<SphereCollider>().radius + 0.1f);
             var direction = -transform.up;
-            var maxdistance = rb.GetComponent<SphereCollider>().radius + 5f;
+            var maxdistance = rb.GetComponent<SphereCollider>().radius + 0.5f;
 
             if (GroundCheck == groundCheck.rayCast)
             {

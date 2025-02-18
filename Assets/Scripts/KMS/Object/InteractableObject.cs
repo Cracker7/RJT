@@ -18,7 +18,7 @@ public class InteractableObject : MonoBehaviour
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
-    private float collisionCooldown = 0.2f;           // 충돌 쿨다운 시간 (초 단위)
+    private float collisionCooldown = 0.7f;           // 충돌 쿨다운 시간 (초 단위)
     private Coroutine collisionCooldownCoroutine = null; // 실행중인 코루틴 참조
 
     // HP 업데이트를 위한 델리게이트 선언
@@ -141,7 +141,7 @@ public class InteractableObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("장애물에 부딪힘");
-        if (!collisionTriggered && collision.gameObject.CompareTag("Obstacle"))
+        if (!collisionTriggered /*&& collision.gameObject.CompareTag("Obstacle")*/)
         {
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
