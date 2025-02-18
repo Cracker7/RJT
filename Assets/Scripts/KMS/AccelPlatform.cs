@@ -21,6 +21,7 @@ public class AccelPlatform : MonoBehaviour
             // Rigidbody 컴포넌트에 힘을 가함
             //rb.AddForce(transform.forward * 200f, ForceMode.Impulse);
             rb.linearVelocity *= speed;
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 100);
         }
 
     }

@@ -49,7 +49,7 @@ MonoBehaviour:
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 2208441039340804808}
-  objectData: {fileID: 11400000, guid: 1639cb57ebf8f7749820b26def995a3c, type: 2}
+  objectData: {fileID: 11400000, guid: deec6f2860b358b4b8377f86aee75a96, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
 --- !u!65 &2014794796382257640
@@ -95,19 +95,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -115,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
