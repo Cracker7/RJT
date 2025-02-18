@@ -296,7 +296,7 @@ namespace ArcadeVP
             //origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
             origin = rb.position + transform.up * (rb.GetComponent<SphereCollider>().radius + 0.1f);
             var direction = -transform.up;
-            var maxdistance = rb.GetComponent<SphereCollider>().radius + 5f;
+            var maxdistance = rb.GetComponent<SphereCollider>().radius + 0.5f;
 
             if (GroundCheck == groundCheck.rayCast)
             {
