@@ -61,11 +61,12 @@ namespace ArcadeVP
         private Vector3 origin;
 
         public ICarDown carDown;
-        private bool inDesert = false;
+
+        public bool inDesert = false;
         public bool InDesert { get { return inDesert; } set { inDesert = value; } }
 
-        private Transform bodyTr;
-        public Transform BodyTr { get { return bodyTr; } set { bodyTr = value; } }
+        public Transform bodyTr;
+        //public Transform BodyTr { get { return bodyTr; } set { bodyTr = value; } }
 
         private void Start()
         {
@@ -74,6 +75,7 @@ namespace ArcadeVP
             {
                 Physics.defaultMaxAngularSpeed = MaxSpeed;
             }
+            carDown = new RGTCarDownV2();
         }
 
         private void Update()
@@ -194,7 +196,7 @@ namespace ArcadeVP
                 // 트리거가 작동할 경우 carDown을 실행시키는 코드
                 if (inDesert)
                 {
-                    Debug.Log("빠지기 실행됨");
+                    Debug.Log("빠지기 실행됨 : " + bodyTr);
                     carDown.Sink(bodyTr);
                 }
 

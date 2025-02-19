@@ -93,7 +93,6 @@ public class PlayerKMS : MonoBehaviour
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
         boxCastFinder = new BoxCastFinder();
-        carDown = new RGTCarDownV2();
 
         // 래그돌 컴포넌트 캐싱
         CacheRagdollComponents();
