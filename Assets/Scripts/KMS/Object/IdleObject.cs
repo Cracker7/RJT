@@ -6,4 +6,9 @@ public class IdleObject : InteractableObject
     {
         return;
     }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        return;
+    }
 }
