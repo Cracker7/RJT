@@ -183,7 +183,7 @@ public class InteractableObject : MonoBehaviour
             {
                 Debug.Log("EEE 정면 충돌");
                 // 정면 충돌이면 충돌된 곳을 기준으로 반대 방향으로 튕기게 함
-                StartCoroutine(BounceBackCoroutine(collisionPoint));
+                //StartCoroutine(BounceBackCoroutine(collisionPoint));
             }
             else
             {
