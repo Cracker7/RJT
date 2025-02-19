@@ -83,8 +83,8 @@ public class RGTHpBar : MonoBehaviour
         //Vector3 worldToScreen = Camera.main.WorldToScreenPoint(_pos);
         //worldToScreen.y += 50f;
 
-        transform.position = tr.position + new Vector3(0f, 5f, 0f);
-        transform.rotation = tr.rotation;
+        //transform.position = tr.position + new Vector3(0f, 2f, 0f);
+        //transform.rotation = tr.rotation;
     }
 
 
