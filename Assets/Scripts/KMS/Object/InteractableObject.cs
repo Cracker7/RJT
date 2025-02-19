@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
+using Kamgam.PowerPivot;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -16,11 +18,11 @@ public class InteractableObject : MonoBehaviour
     private float damagePerSecond = 1f;
     public bool timeDamage = false;
 
-    private bool collisionTriggered = false;      // Ãæµ¹ÀÌ ¹ß»ıÇß´ÂÁö ¿©ºÎ ÇÃ·¡±×
-    private float collisionCooldown = 0.4f;           // Ãæµ¹ Äğ´Ù¿î ½Ã°£ (ÃÊ ´ÜÀ§)
-    private Coroutine collisionCooldownCoroutine = null; // ½ÇÇàÁßÀÎ ÄÚ·çÆ¾ ÂüÁ¶
+    private bool collisionTriggered = false;      // ì¶©ëŒì´ ë°œìƒí–ˆëŠ”ì§€ ì—¬ë¶€ í”Œë˜ê·¸
+    private float collisionCooldown = 0.4f;           // ì¶©ëŒ ì¿¨ë‹¤ìš´ ì‹œê°„ (ì´ˆ ë‹¨ìœ„)
+    private Coroutine collisionCooldownCoroutine = null; // ì‹¤í–‰ì¤‘ì¸ ì½”ë£¨í‹´ ì°¸ì¡°
 
-    // HP ¾÷µ¥ÀÌÆ®¸¦ À§ÇÑ µ¨¸®°ÔÀÌÆ® ¼±¾ğ
+    // HP ì—…ë°ì´íŠ¸ë¥¼ ìœ„í•œ ë¸ë¦¬ê²Œì´íŠ¸ ì„ ì–¸
     public delegate void OnRideUpdateDelegate();
     public OnRideUpdateDelegate onRideUpdate;
 
@@ -32,8 +34,10 @@ public class InteractableObject : MonoBehaviour
 
     Rigidbody rb;
 
-    private float bounceForce = 100f;  // ³¯¾Æ°¡´Â ÈûÀÇ Å©±â
-    private float upwardForce = 10f;   // À§·Î ¶ß´Â ÈûÀÇ Å©±â
+    private float bounceForce = 200f;  // ë‚ ì•„ê°€ëŠ” í˜ì˜ í¬ê¸°
+    private float upwardForce = 10f;   // ìœ„ë¡œ ëœ¨ëŠ” í˜ì˜ í¬ê¸°
+
+    private float collisionAngle = 45f;
 
     public virtual void Awake()
     {
@@ -77,25 +81,25 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    // ¿ÜºÎ¿¡¼­ È£ÃâÇÏ¸é ÄÚ·çÆ¾À» ÅëÇØ HP¸¦ ºÎµå·´°Ô °¨¼Ò½ÃÅµ´Ï´Ù.
+    // ì™¸ë¶€ì—ì„œ í˜¸ì¶œí•˜ë©´ ì½”ë£¨í‹´ì„ í†µí•´ HPë¥¼ ë¶€ë“œëŸ½ê²Œ ê°ì†Œì‹œí‚µë‹ˆë‹¤.
     public void StartHpDecrease()
     {
-        // Debug.Log("Ã¼·Â ÇÔ¼ö ½ÇÇàµÊ");
+        // Debug.Log("ì²´ë ¥ í•¨ìˆ˜ ì‹¤í–‰ë¨");
         // currentDurability -= 1f;
         // hpBar.UpdateHpBar(currentDurability, maxDurability);
         if (!timeDamage) return;
         StartCoroutine(DecreaseHpCoroutine());
     }
 
-    // 1ÃÊ µ¿¾È 5¸¸Å­ HP¸¦ ºÎµå·´°Ô °¨¼Ò½ÃÅ°´Â ÄÚ·çÆ¾
+    // 1ì´ˆ ë™ì•ˆ 5ë§Œí¼ HPë¥¼ ë¶€ë“œëŸ½ê²Œ ê°ì†Œì‹œí‚¤ëŠ” ì½”ë£¨í‹´
     private IEnumerator DecreaseHpCoroutine()
     {
         while(currentDurability > 0){
-            Debug.Log("Ã¼·Â ÇÔ¼ö ½ÇÇàµÊ");
+            Debug.Log("ì²´ë ¥ í•¨ìˆ˜ ì‹¤í–‰ë¨");
 
             currentDurability -= damagePerSecond * Time.deltaTime;
 
-            Debug.Log("ÇöÀç Ã¼·Â" + currentDurability);
+            Debug.Log("í˜„ì¬ ì²´ë ¥" + currentDurability);
 
             hpBar.UpdateHpBar(maxDurability, currentDurability);
 
@@ -108,11 +112,11 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    // Ãæµ¹ÀÌ³ª Æ®¸®°Å ¹ß»ı ½Ã È£ÃâµÉ onRideUpdate¿¡ µî·ÏµÈ ÇÔ¼öÀÔ´Ï´Ù.
+    // ì¶©ëŒì´ë‚˜ íŠ¸ë¦¬ê±° ë°œìƒ ì‹œ í˜¸ì¶œë  onRideUpdateì— ë“±ë¡ëœ í•¨ìˆ˜ì…ë‹ˆë‹¤.
     public void HandleCollisionDamage()
     {
         currentDurability -= maxDurability/10;
-        Debug.Log("Ãæµ¹/Æ®¸®°Å·Î ÀÎÇÑ Ã¼·Â °¨¼Ò. ³²Àº Ã¼·Â: " + currentDurability);
+        Debug.Log("ì¶©ëŒ/íŠ¸ë¦¬ê±°ë¡œ ì¸í•œ ì²´ë ¥ ê°ì†Œ. ë‚¨ì€ ì²´ë ¥: " + currentDurability);
 
         hpBar.UpdateHpBar(maxDurability, currentDurability);
 
@@ -123,19 +127,19 @@ public class InteractableObject : MonoBehaviour
     }
 
 
-    // hp¹Ù À§Ä¡¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ÇÔ¼ö
+    // hpë°” ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” í•¨ìˆ˜
     public void UpdateHpBarTr()
     {   
         hpBar.UpdatePosition(transform);
 
-        // ÀÌº¥Æ®¿¡ µî·ÏµÇ¾îÀÖ´Â°Ô ÀÖ´Ù¸é ½ÇÇà
+        // ì´ë²¤íŠ¸ì— ë“±ë¡ë˜ì–´ìˆëŠ”ê²Œ ìˆë‹¤ë©´ ì‹¤í–‰
         OnHpBarTr?.Invoke();
     }
 
-    // Ã¼·ÂÀÌ 0ÀÌ µÇ¸é ÆÄ±«µÇ´Â ÇÔ¼ö ½ÇÇà ÈÄ ¿ÀºêÁ§Æ® »èÁ¦
+    // ì²´ë ¥ì´ 0ì´ ë˜ë©´ íŒŒê´´ë˜ëŠ” í•¨ìˆ˜ ì‹¤í–‰ í›„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
     public void DestroyObject()
     {
-        Debug.Log("¿ÀºêÁ§Æ® ÆÄ±«µÊ");
+        Debug.Log("ì˜¤ë¸Œì íŠ¸ íŒŒê´´ë¨");
 
         OnDestroyCalled?.Invoke();
 
@@ -144,7 +148,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Àå¾Ö¹°¿¡ ºÎµúÈû");
+        Debug.Log("ì¥ì• ë¬¼ì— ë¶€ë”ªí˜");
         if (!collisionTriggered /*&& collision.gameObject.CompareTag("Obstacle")*/)
         {
             onRideCol?.Invoke();
@@ -154,46 +158,56 @@ public class InteractableObject : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("¹ßÆÇÀ» ¹âÀ½");
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ignore"))
+        {
+            if (!collisionTriggered && other.CompareTag("Platform"))
+            {
+                onRideCol?.Invoke();
+                collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+                return;
+            }
+            return;
+        }
+        Debug.Log("ë°œíŒì„ ë°ŸìŒ");
         if (!collisionTriggered /* && other.CompareTag("Platform") */)
         {
-            Debug.Log("Trigger ¹ßÆÇ ¹âÀ½");
+            Debug.Log("Trigger ë°œíŒ ë°ŸìŒ");
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
             rb = transform.GetComponent<Rigidbody>();
 
-            // Ãæµ¹ ÁöÁ¡À» ÆÇÁ¤ÇÕ´Ï´Ù.
+            // ì¶©ëŒ ì§€ì ì„ íŒì •í•©ë‹ˆë‹¤.
             Vector3 collisionPoint = other.ClosestPoint(transform.position);
-            // Â÷·® À§Ä¡¿¡¼­ Ãæµ¹ ÁöÁ¡À¸·Î ÇâÇÏ´Â ¹æÇâ º¤ÅÍ (Á¤±ÔÈ­)
+            // ì°¨ëŸ‰ ìœ„ì¹˜ì—ì„œ ì¶©ëŒ ì§€ì ìœ¼ë¡œ í–¥í•˜ëŠ” ë°©í–¥ ë²¡í„° (ì •ê·œí™”)
             Vector3 collisionDirection = (collisionPoint - transform.position).normalized;
 
-            // Â÷·®ÀÇ ÁøÇà ¹æÇâ (¶Ç´Â ¼Óµµ ¹æÇâ)À» ¾ò½À´Ï´Ù.
-            // ÀÏ¹İÀûÀ¸·Î Â÷·®ÀÇ transform.forward°¡ ÁøÇà ¹æÇâÀÔ´Ï´Ù.
+            // ì°¨ëŸ‰ì˜ ì§„í–‰ ë°©í–¥ (ë˜ëŠ” ì†ë„ ë°©í–¥)ì„ ì–»ìŠµë‹ˆë‹¤.
+            // ì¼ë°˜ì ìœ¼ë¡œ ì°¨ëŸ‰ì˜ transform.forwardê°€ ì§„í–‰ ë°©í–¥ì…ë‹ˆë‹¤.
             //Vector3 vehicleForward = transform.forward;
-            // È¤Àº ¼Óµµ ¹æÇâÀ¸·Î ÆÇ´ÜÇÏ°í ½Í´Ù¸é ¾Æ·¡Ã³·³ ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+            // í˜¹ì€ ì†ë„ ë°©í–¥ìœ¼ë¡œ íŒë‹¨í•˜ê³  ì‹¶ë‹¤ë©´ ì•„ë˜ì²˜ëŸ¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
              Vector3 vehicleVelocityDirection = rb.linearVelocity.normalized;
 
-            // Â÷·® ÁøÇà ¹æÇâ°ú Ãæµ¹ ¹æÇâ »çÀÌÀÇ °¢µµ¸¦ ±¸ÇÕ´Ï´Ù.
+            // ì°¨ëŸ‰ ì§„í–‰ ë°©í–¥ê³¼ ì¶©ëŒ ë°©í–¥ ì‚¬ì´ì˜ ê°ë„ë¥¼ êµ¬í•©ë‹ˆë‹¤.
             float angle = Vector3.Angle(vehicleVelocityDirection, collisionDirection);
-            Debug.Log("Â÷·® ÁøÇà ¹æÇâ°ú Ãæµ¹ ¹æÇâ »çÀÌÀÇ °¢µµ: " + angle);
+            Debug.Log("ì°¨ëŸ‰ ì§„í–‰ ë°©í–¥ê³¼ ì¶©ëŒ ë°©í–¥ ì‚¬ì´ì˜ ê°ë„: " + angle);
 
-            // 45µµ ÀÌÇÏÀÌ¸é Á¤¸é Ãæµ¹, ±× ÀÌ»óÀÌ¸é Ãø¸é Ãæµ¹·Î ÆÇ´ÜÇÕ´Ï´Ù.
-            if (angle < 45f)
+            // 45ë„ ì´í•˜ì´ë©´ ì •ë©´ ì¶©ëŒ, ê·¸ ì´ìƒì´ë©´ ì¸¡ë©´ ì¶©ëŒë¡œ íŒë‹¨í•©ë‹ˆë‹¤.
+            if (angle < collisionAngle)
             {
-                Debug.Log("EEE Á¤¸é Ãæµ¹");
-                // Á¤¸é Ãæµ¹ÀÌ¸é Ãæµ¹µÈ °÷À» ±âÁØÀ¸·Î ¹İ´ë ¹æÇâÀ¸·Î Æ¨±â°Ô ÇÔ
-                //StartCoroutine(BounceBackCoroutine(collisionPoint));
+                Debug.Log("EEE ì •ë©´ ì¶©ëŒ");
+                // ì •ë©´ ì¶©ëŒì´ë©´ ì¶©ëŒëœ ê³³ì„ ê¸°ì¤€ìœ¼ë¡œ ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ íŠ•ê¸°ê²Œ í•¨
+                StartCoroutine(BounceBackCoroutine(collisionPoint));
             }
             else
             {
-                Debug.Log("EEE Ãø¸é Ãæµ¹");
+                Debug.Log("EEE ì¸¡ë©´ ì¶©ëŒ");
 
-                // ÀÌ¸§ÀÌ "Mesh"ÀÎ °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ Ã£½À´Ï´Ù.
+                // ì´ë¦„ì´ "Mesh"ì¸ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ìŠµë‹ˆë‹¤.
                 Transform meshTransform = transform.Find("Mesh");
                 if (meshTransform == null)
                 {
-                    // Á÷Á¢ÀûÀÎ ÀÚ½ÄÀ¸·Î Ã£Áö ¸øÇÑ °æ¿ì, ÀüÃ¼ ÇÏÀ§ °èÃş¿¡¼­ °Ë»öÇÕ´Ï´Ù.
+                    // ì§ì ‘ì ì¸ ìì‹ìœ¼ë¡œ ì°¾ì§€ ëª»í•œ ê²½ìš°, ì „ì²´ í•˜ìœ„ ê³„ì¸µì—ì„œ ê²€ìƒ‰í•©ë‹ˆë‹¤.
                     foreach (Transform child in transform.GetComponentsInChildren<Transform>())
                     {
                         if (child.name.Equals("Mesh"))
@@ -206,38 +220,42 @@ public class InteractableObject : MonoBehaviour
 
                 if (meshTransform != null)
                 {
-                    Debug.Log("Mesh ¿ÀºêÁ§Æ® Ã£À½: " + meshTransform.gameObject.name);
-                    // ¿¹½Ã: Àü¿ª ±âÁØÀ¸·Î YÃàÀ» Áß½ÉÀ¸·Î 90µµ È¸Àü½ÃÅµ´Ï´Ù.
+                    Debug.Log("Mesh ì˜¤ë¸Œì íŠ¸ ì°¾ìŒ: " + meshTransform.gameObject.name);
+                    // ì˜ˆì‹œ: ì „ì—­ ê¸°ì¤€ìœ¼ë¡œ Yì¶•ì„ ì¤‘ì‹¬ìœ¼ë¡œ 90ë„ íšŒì „ì‹œí‚µë‹ˆë‹¤.
                     StartCoroutine(RotateCoroutine(meshTransform));
                 }
                 else
                 {
-                    Debug.Log("Mesh ÀÌ¸§ÀÇ ÀÚ½Ä °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ Ã£Áö ¸øÇÔ");
+                    Debug.Log("Mesh ì´ë¦„ì˜ ìì‹ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì§€ ëª»í•¨");
                 }
             }
 
-            // ÇöÀç Â÷·®ÀÇ ¼Óµµ º¤ÅÍµµ Ãâ·Â (µğ¹ö±ë¿ë)
+            // í˜„ì¬ ì°¨ëŸ‰ì˜ ì†ë„ ë²¡í„°ë„ ì¶œë ¥ (ë””ë²„ê¹…ìš©)
             Vector3 currentVelocity = rb.linearVelocity;
-            Debug.Log("ÇöÀç ¼Óµµ º¤ÅÍ: " + currentVelocity);
+            Debug.Log("í˜„ì¬ ì†ë„ ë²¡í„°: " + currentVelocity);
 
-            // ±âÁ¸ ·ÎÁ÷: Ãæµ¹ÇÑ ¹°Ã¼ÀÇ Rigidbody¸¦ °¡Á®¿Í¼­ ¹°¸® È¿°ú Àû¿ë
+            // ê¸°ì¡´ ë¡œì§: ì¶©ëŒí•œ ë¬¼ì²´ì˜ Rigidbodyë¥¼ ê°€ì ¸ì™€ì„œ ë¬¼ë¦¬ íš¨ê³¼ ì ìš©
             Rigidbody rbOther = other.GetComponentInParent<Rigidbody>();
-            Debug.Log("Æ®¸®°ÅµÈ ¹°Ã¼: " + rbOther);
+            Debug.Log("íŠ¸ë¦¬ê±°ëœ ë¬¼ì²´: " + rbOther);
             if (rbOther != null)
             {
                 rbOther.isKinematic = false;
                 rbOther.useGravity = true;
 
-                // ¼öÆò ¹æÇâÀ¸·Î -1 ~ 1 »çÀÌÀÇ ·£´ı °ª »ı¼º (¼öÆò ¼ººĞ¸¸ »ç¿ë)
-                Vector3 randomHorizontal = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(0.3f, 1f)).normalized;
+                // ìˆ˜í‰ ë°©í–¥ ë²¡í„°ë¥¼ ê³„ì‚° (ìˆ˜ì§ ì„±ë¶„ì„ ì œê±°)
+                Vector3 horizontalDirection = new Vector3(collisionDirection.x, 0f, collisionDirection.z).normalized;
 
-                // ±âº»ÀûÀ¸·Î À§ÂÊÀ¸·Î ³¯¾Æ°¡°Ô ÇÏ¸é¼­ ¼öÆò ¹æÇâ ·£´ı ¿ä¼Ò¸¦ Ãß°¡
-                Vector3 bounceDirection = (Vector3.up * upwardForce + randomHorizontal).normalized;
+                // ìœ„ìª½ ë°©í–¥ë³´ë‹¤ ìˆ˜í‰ ë°©í–¥ì˜ ì˜í–¥ì„ ë” í¬ê²Œ í•˜ê¸° ìœ„í•´ ë¹„ìœ¨ ì¡°ì •
+                float horizontalWeight = 2.0f; // ìˆ˜í‰ ë°©í–¥ ê°•í™”
+                float verticalWeight = 0.5f;    // ìœ„ìª½ í˜ ì¤„ì´ê¸°
 
-                // impulse ¹æ½ÄÀ¸·Î Èû Àû¿ë
+                // ìµœì¢… íŠ•ê¹€ ë°©í–¥ ê²°ì •
+                Vector3 bounceDirection = (horizontalDirection * horizontalWeight + Vector3.up * verticalWeight).normalized;
+
+                // impulse ë°©ì‹ìœ¼ë¡œ í˜ ì ìš©
                 rbOther.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
-                // ÇÊ¿ä ½Ã ÅäÅ©µµ Àû¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.
-                // rbOther.AddTorque(UnityEngine.Random.insideUnitSphere * (bounceForce / 10f), ForceMode.Impulse);
+                // í•„ìš” ì‹œ í† í¬ë„ ì ìš©í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+                rbOther.AddTorque(UnityEngine.Random.insideUnitSphere * (bounceForce / 20f), ForceMode.Impulse);
             }
         }
     }
@@ -253,7 +271,6 @@ public class InteractableObject : MonoBehaviour
     private IEnumerator RotateCoroutine(Transform meshTransform)
     {
         float elapsedTime = 0f;
-        Quaternion initialRotation = meshTransform.rotation; // ÃÊ±â È¸Àü°ª ÀúÀå
 
         if (rb != null)
         {
@@ -262,21 +279,55 @@ public class InteractableObject : MonoBehaviour
 
         while (elapsedTime < 1f)
         {
-            // ¸Å ÇÁ·¹ÀÓ¸¶´Ù YÃà ±âÁØÀ¸·Î 2000 * Time.deltaTime ¸¸Å­ È¸Àü
+            // ë§¤ í”„ë ˆì„ë§ˆë‹¤ Yì¶• ê¸°ì¤€ìœ¼ë¡œ 2000 * Time.deltaTime ë§Œí¼ íšŒì „
             meshTransform.Rotate(Vector3.up, 2000f * Time.deltaTime);
 
-            // °æ°ú ½Ã°£ ´©Àû
+            // ê²½ê³¼ ì‹œê°„ ëˆ„ì 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // È¸ÀüÀÌ ³¡³­ ÈÄ ¿ø·¡ÀÇ È¸Àü »óÅÂ(0,0,0)·Î µÇµ¹¸®±â
-        meshTransform.rotation = initialRotation;
+        // íšŒì „ì´ ëë‚œ í›„ ì›ë˜ì˜ íšŒì „ ìƒíƒœ(0,0,0)ë¡œ ë˜ëŒë¦¬ê¸°
+        //meshTransform.localRotation = meshTransform.InverseTransformRotation(Quaternion.identity);
+        meshTransform.localRotation = Quaternion.identity;
+    }
+
+    private IEnumerator BounceBackCoroutine(Vector3 collisionPoint)
+    {
+        // ë¹ ë¥¸ íŠ•ê¹€ì„ ìœ„í•´ ì§§ì€ ì§€ì†ì‹œê°„ ì‚¬ìš©
+        float duration = 0.5f;
+        float elapsedTime = 0f;
+
+        Vector3 startPos = transform.position;
+        Rigidbody rb = transform.GetComponent<Rigidbody>();
+        Vector3 currentVel = rb.linearVelocity;
+
+        // linearVelocityì˜ ë°˜ëŒ€ ë°©í–¥ ê³„ì‚°
+        Vector3 bounceDirection = -currentVel.normalized;
+
+        // íŠ•ê²¨ë‚˜ê°ˆ ê±°ë¦¬ë¥¼ í˜„ì¬ ì†ë„ì˜ í¬ê¸°ì— ë°°ìˆ˜ë¥¼ ê³±í•´ ê²°ì • (í•„ìš”ì— ë”°ë¼ multiplier ì¡°ì ˆ)
+        float bounceMultiplier = 0.5f;
+        float bounceDistance = currentVel.magnitude * bounceMultiplier;
+
+        Vector3 targetPos = startPos + bounceDirection * bounceDistance;
+
+        while (elapsedTime < duration)
+        {
+            rb.isKinematic = true;
+            // Lerpë¥¼ ì´ìš©í•´ ë¶€ë“œëŸ½ê²Œ ì´ë™
+            transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.isKinematic = false;
+        // ì†ë„ ê°ì†Œ (íŠ•ê¹€ í›„ ê°ì†)
+        rb.linearVelocity *= 15f;
     }
 
     private void OnDestroy()
     {
-        // µ¨¸®°ÔÀÌÆ® Á¤¸®
+        // ë¸ë¦¬ê²Œì´íŠ¸ ì •ë¦¬
         onRideUpdate = null;
     }
 }
