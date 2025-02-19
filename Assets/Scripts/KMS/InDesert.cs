@@ -26,7 +26,7 @@ public class InDesert : MonoBehaviour
             if (vehicle != null && bodyTransform != null)
             {
                 vehicle.InDesert = true;
-                vehicle.BodyTr = bodyTransform;
+                //vehicle.BodyTr = bodyTransform;
             }
             else
             {

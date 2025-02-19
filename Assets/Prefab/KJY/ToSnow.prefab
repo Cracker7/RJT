@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8476637617869217493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7042825271396294572}
+  - component: {fileID: 8754548156171433638}
+  - component: {fileID: 1274983630244073086}
+  m_Layer: 0
+  m_Name: ToSnow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7042825271396294572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8476637617869217493}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.9, y: 1.229, z: -490.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8754548156171433638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8476637617869217493}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 75.04115, y: 2.7790136, z: 1.8157043}
+  m_Center: {x: -9.918976, y: 0.8895068, z: 4.41008}
+--- !u!114 &1274983630244073086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8476637617869217493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea19a73764b15c54fbc315bae7907776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForestMap: {fileID: 3657040828179959478, guid: bb31f01735e3c0041bf198af73df1173, type: 3}
+  DesertMap: {fileID: 1888339871895041181, guid: 7903e6a39cee6b648bb8176541f7f5ae, type: 3}
+  SnowMap: {fileID: 0}
+  newSkybox: {fileID: 2100000, guid: 62bd40ea7d8e1424aa1b97e9865f2c2f, type: 2}
+  directionalLight: {fileID: 0}
+  NightColor: {r: 0.6, g: 0.45, b: 0.8, a: 1}
+  NightIntensity: 1.2
+  NightRotation: {x: 30, y: 200, z: 0}
+  transitionSpeed: 1.5

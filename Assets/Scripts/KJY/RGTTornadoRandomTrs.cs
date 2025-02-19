@@ -58,9 +58,9 @@ public class RGTTornadoRandomTrs : MonoBehaviour
     //private void OnTriggerEnter(Collider other)
     //{
 
-    //    if(other.gameObject.layer == LayerMask.NameToLayer("carbody"))
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("carbody"))
     //    {
-    //        //other.gameObject.transform.position = originPos.position;
+    //        other.gameObject.transform.position = originPos.position;
     //    }
     //}
 }
