@@ -56,8 +56,8 @@ public class RGTCheckCarPosManager : MonoBehaviour
         }
 
 
-        Debug.Log("L : " + LandC);
-        Debug.Log("R : " + RandC);
+        //Debug.Log("L : " + LandC);
+        //Debug.Log("R : " + RandC);
     }
 
     private void FollowPos()
