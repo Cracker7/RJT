@@ -55,12 +55,12 @@ public class RGTTornadoRandomTrs : MonoBehaviour
         currentIndex = (currentIndex + 1) % positions.Length;
         targetPosition = positions[currentIndex].position;
     }
-    private void OnTriggerEnter(Collider other)
-    {
+    //private void OnTriggerEnter(Collider other)
+    //{
 
-        if(other.gameObject.layer == LayerMask.NameToLayer("carbody"))
-        {
-            //other.gameObject.transform.position = originPos.position;
-        }
-    }
+    //    if(other.gameObject.layer == LayerMask.NameToLayer("carbody"))
+    //    {
+    //        //other.gameObject.transform.position = originPos.position;
+    //    }
+    //}
 }
