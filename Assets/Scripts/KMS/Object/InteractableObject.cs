@@ -17,7 +17,7 @@ public class InteractableObject : MonoBehaviour
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
-    private float collisionCooldown = 0.7f;           // 충돌 쿨다운 시간 (초 단위)
+    private float collisionCooldown = 0.4f;           // 충돌 쿨다운 시간 (초 단위)
     private Coroutine collisionCooldownCoroutine = null; // 실행중인 코루틴 참조
 
     // HP 업데이트를 위한 델리게이트 선언
@@ -30,8 +30,8 @@ public class InteractableObject : MonoBehaviour
     public event Action OnDestroyCalled;
     public event Action OnHpBarTr;
 
-    [SerializeField] private float bounceForce = 10f;  // 날아가는 힘의 크기
-    [SerializeField] private float upwardForce = 2f;   // 위로 뜨는 힘의 크기
+    private float bounceForce = 100f;  // 날아가는 힘의 크기
+    private float upwardForce = 10f;   // 위로 뜨는 힘의 크기
 
     public virtual void Awake()
     {
@@ -109,7 +109,7 @@ public class InteractableObject : MonoBehaviour
     // 충돌이나 트리거 발생 시 호출될 onRideUpdate에 등록된 함수입니다.
     public void HandleCollisionDamage()
     {
-        currentDurability -= maxDurability/3;
+        currentDurability -= maxDurability/10;
         Debug.Log("충돌/트리거로 인한 체력 감소. 남은 체력: " + currentDurability);
 
         hpBar.UpdateHpBar(maxDurability, currentDurability);
@@ -150,36 +150,33 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         Debug.Log("발판을 밟음");
-        if (!collisionTriggered && other.CompareTag("Platform"))
+        if (!collisionTriggered /* && other.CompareTag("Platform") */)
         {
             Debug.Log("Trigger 발판 밟음");
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
-            // 충돌 지점 계산
-            Vector3 collisionPoint = other.ClosestPoint(transform.position);
+            Rigidbody rb = other.GetComponentInParent<Rigidbody>();
 
-            // 충돌 방향 계산 (충돌 지점에서 현재 오브젝트 방향으로)
-            Vector3 direction = (transform.position - collisionPoint).normalized;
-
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-
-            // Kinematic을 해제하고 물리 시뮬레이션 활성화
+            Debug.Log("트리거된 물체" + rb);
             if (rb != null)
             {
                 rb.isKinematic = false;
+                rb.useGravity = true;
 
-                // 약간의 위쪽 방향 벡터 추가
-                Vector3 bounceDirection = (direction + Vector3.up * upwardForce).normalized;
+                // 수평 방향으로 -1 ~ 1 사이의 랜덤 값 생성 (수평 방향만 사용)
+                Vector3 randomHorizontal = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(0.3f, 1f)).normalized;
 
-                // 힘 적용
+                // 기본적으로 위쪽으로 날아가게 하고, 수평 방향의 랜덤 요소를 약간 추가
+                // upwardForce가 클수록 위쪽 성분이 강해집니다.
+                Vector3 bounceDirection = (Vector3.up * upwardForce + randomHorizontal).normalized;
+
+                // impulse 방식으로 힘과 토크 적용
                 rb.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
-
-                // 회전력 추가 (선택사항)
-                rb.AddTorque(UnityEngine.Random.insideUnitSphere * bounceForce, ForceMode.Impulse);
+                rb.AddTorque(UnityEngine.Random.insideUnitSphere * bounceForce/10, ForceMode.Impulse);
             }
         }
     }
