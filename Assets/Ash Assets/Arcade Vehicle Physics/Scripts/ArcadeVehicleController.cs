@@ -72,7 +72,7 @@ namespace ArcadeVP
             radius = rb.GetComponent<SphereCollider>().radius;
             if (movementMode == MovementMode.AngularVelocity)
             {
-                Physics.defaultMaxAngularSpeed = 100;
+                Physics.defaultMaxAngularSpeed = MaxSpeed;
             }
         }
 
@@ -241,7 +241,7 @@ namespace ArcadeVP
                 rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.deltaTime * gravity);
 
                 // **속도가 너무 빠르면 최대속도에 맞춰 서서히 감속**
-                if (movementMode == MovementMode.Velocity && rb.linearVelocity.magnitude > MaxSpeed)
+                if (movementMode == MovementMode.AngularVelocity && rb.linearVelocity.magnitude > MaxSpeed)
                 {
                     rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity.normalized * MaxSpeed, decelerationFactor * Time.deltaTime);
                 }
