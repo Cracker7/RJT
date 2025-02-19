@@ -5702,11 +5702,11 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 70
-  accelaration: 15
+  MaxSpeed: 500
+  accelaration: 50
   turn: 10
   gravity: 5
-  downforce: 100
+  downforce: 5
   AirControl: 1
   airControlTranslationForce: 50
   kartLike: 0

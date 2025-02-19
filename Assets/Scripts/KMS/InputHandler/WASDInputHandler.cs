@@ -18,6 +18,5 @@ public class WASDInputHandler : MonoBehaviour, IInputHandler
             ZAxis = 0f;
 
         return new Vector3(XAxis, YAxis, ZAxis);
-
     }
 }
