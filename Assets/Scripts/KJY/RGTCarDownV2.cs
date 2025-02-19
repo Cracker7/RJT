@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RGTCarDownV2 : MonoBehaviour
+public class RGTCarDownV2 : ICarDown
 {
     //빠지는 만큼
     [SerializeField] private float sinkDepth = 2f; 
@@ -15,20 +15,21 @@ public class RGTCarDownV2 : MonoBehaviour
     private bool isRising = false;
     private float lastTapTime = 0f;
     private float riseTimer = 0f;
+    private bool hasStart = true;
 
-
-    void Start()
+    public void Sink(Transform _body)
     {
-        startPosition = transform.position;
-    }
+        if(hasStart)
+        {
+            startPosition = _body.position;
+            hasStart = false;
+        }
 
-    void Update()
-    {
         //만약에 현재의 맵은 사막맵이고 속도가 60아래 떨어지면 isSinking = true; 나중에 조건을 추가해야되고 위에 isSinking false로 바꿔야 한다.
-        if(isSinking)
+        if (isSinking)
         {
 
-            SinkSand();
+            SinkSand(_body);
 
         }
         //연타 검사
@@ -37,31 +38,30 @@ public class RGTCarDownV2 : MonoBehaviour
         if (isRising)
         {
 
-            SandUp();
+            SandUp(_body);
 
         }
-
     }
 
 
-    private void SinkSand()
+    private void SinkSand(Transform _body)
     {
 
-        float targetY = startPosition.y - sinkDepth;
-        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), Time.deltaTime * sinkSpeed);
+        float targetY = _body.position.y - sinkDepth;
+        _body.position = Vector3.Lerp(_body.position, new Vector3(_body.position.x, targetY, _body.position.z), Time.fixedDeltaTime * sinkSpeed);
       
     }
 
-    private void SandUp()
+    private void SandUp(Transform _body)
     {
-        transform.position = Vector3.Lerp(transform.position, startPosition, Time.deltaTime * sinkSpeed);
+        _body.position = Vector3.Lerp(_body.position, startPosition, Time.fixedDeltaTime * sinkSpeed);
 
         //목표 위치에 도달하면 멈춤
-        if (Vector3.Distance(transform.position, startPosition) < 0.01f)
+        if (Vector3.Distance(_body.position, startPosition) < 0.01f)
         {
-            isRising = false;
-            //테스트할 때 이렇게 설정 나중에 지워야 한다.
-            isSinking = false;
+            //isRising = false;
+            ////테스트할 때 이렇게 설정 나중에 지워야 한다.
+            //isSinking = false;
         }
     }
 

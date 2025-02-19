@@ -15,6 +15,7 @@ public class PlayerKMS : MonoBehaviour
     public IInputHandler currentInput;
     public IMovement currentMovement;
     public IBoxCastFinder boxCastFinder;
+    public ICarDown carDown;
 
     // 래그돌 물리 컴포넌트 캐싱
     private List<Rigidbody> ragdollRigidbodies;
@@ -90,6 +91,7 @@ public class PlayerKMS : MonoBehaviour
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
         boxCastFinder = new BoxCastFinder();
+        carDown = new RGTCarDownV2();
 
         // 래그돌 컴포넌트 캐싱
         CacheRagdollComponents();
@@ -210,10 +212,6 @@ public class PlayerKMS : MonoBehaviour
         {
             HandleRidingMovement();
         }
-        //else if (currentState == PlayerState.Idle)
-        //{
-        //    HandlePlayerMovement();
-        //}
     }
 
     // 물리 상태 설정을 위한 헬퍼 메서드
