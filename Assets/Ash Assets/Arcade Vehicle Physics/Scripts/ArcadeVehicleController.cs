@@ -225,7 +225,7 @@ namespace ArcadeVP
                     carBody.AddTorque(Vector3.up * steeringInput * turn * airControlTranslationForce * TurnMultiplyer);
 
                     // 새롭게 공중 이동 힘 추가 (전진/후진 및 약간의 측면 이동)
-                    Vector3 airTranslationForce = (carBody.transform.forward * accelerationInput + carBody.transform.right * steeringInput) * airControlTranslationForce;
+                    Vector3 airTranslationForce = (carBody.transform.right * steeringInput) * airControlTranslationForce;
                     carBody.AddForce(airTranslationForce, ForceMode.Acceleration);
 
                     //if (!grounded())
