@@ -2,6 +2,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerKMS : MonoBehaviour
 {
@@ -62,6 +63,8 @@ public class PlayerKMS : MonoBehaviour
     private Vector3 projectileStartPosition;    // 발사 시작 위치
     private Vector3 projectileForward;          // 발사 시의 진행 방향
 
+    public GameObject BoomGo;
+
     [Space(10)]
     public GameObject currentObjectPrefab;
     // currentObjectPrefab 대신 ActiveRigidbody를 사용하여
@@ -93,7 +96,6 @@ public class PlayerKMS : MonoBehaviour
         currentMovement = GetComponent<IMovement>();
         currentInput = GetComponent<IInputHandler>();
         boxCastFinder = new BoxCastFinder();
-        carDown = new RGTCarDownV2();
 
         // 래그돌 컴포넌트 캐싱
         CacheRagdollComponents();
@@ -144,10 +146,8 @@ public class PlayerKMS : MonoBehaviour
         else if (currentState == PlayerState.Dead)
         {
             // 플레이어가 죽었을 때 실행하는 함수
-            if (currentObjectPrefab != null)
+            if (currentObjectPrefab == null)
             {
-                ExitObject();
-                ExplosionRb();
                 if(!isDead)
                 {
                     HandleInput();
@@ -466,6 +466,10 @@ public class PlayerKMS : MonoBehaviour
 
     public void ExitObject()
     {
+        if (currentObjectPrefab != null)
+        {
+            Instantiate(BoomGo, transform.position, Quaternion.identity);
+        }
         transform.SetParent(null);
         UpdatePlayerState(PlayerState.Idle);
 
