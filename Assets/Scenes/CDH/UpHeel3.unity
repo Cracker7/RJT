@@ -206,8 +206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8307302}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.25662705, y: -0.24822256, z: 0.06839108, w: -0.93158513}
-  m_LocalPosition: {x: -27.491327, y: 1920.3027, z: 2180.182}
+  m_LocalRotation: {x: -0.09661089, y: -0.7137257, z: 0.100428246, w: -0.6864228}
+  m_LocalPosition: {x: -27.26368, y: 1918.9546, z: 2183.1519}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4910,6 +4910,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &212166665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1b4071a97efbfb4418141e0cbf0480ee, type: 3}
+  m_PrefabInstance: {fileID: 645836059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &244310383
 GameObject:
   m_ObjectHideFlags: 0
@@ -17409,7 +17414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b4071a97efbfb4418141e0cbf0480ee, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25062,6 +25067,7 @@ GameObject:
   - component: {fileID: 940492749}
   - component: {fileID: 940492751}
   - component: {fileID: 940492750}
+  - component: {fileID: 940492752}
   m_Layer: 5
   m_Name: RawImage
   m_TagString: Untagged
@@ -25123,6 +25129,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940492748}
   m_CullTransparentMesh: 1
+--- !u!114 &940492752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940492748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08013661062fca48ab59eaa4768eefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 212166665}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!43 &944349931
 Mesh:
   m_ObjectHideFlags: 0
