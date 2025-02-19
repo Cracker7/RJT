@@ -338,7 +338,7 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
-    private void StartTransition(InteractableObject target)
+    public void StartTransition(InteractableObject target)
     {
         hasHandledRiding = false;
 
