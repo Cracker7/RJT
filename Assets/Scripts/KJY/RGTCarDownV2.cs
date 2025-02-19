@@ -18,12 +18,13 @@ public class RGTCarDownV2 : ICarDown
 
     public void Sink(Transform _body)
     {
+        Debug.Log("Rising" + isRising.ToString());
         if (hasStart)
         {
             startPosition = _body.localPosition;
             targetY = startPosition.y - sinkDepth;
             hasStart = false;
-            Debug.Log("Start Position set: " + startPosition);
+            //Debug.Log("Start Position set: " + startPosition);
         }
 
         // 만약에 현재의 맵은 사막맵이고 속도가 60아래 떨어지면 isSinking = true; 나중에 조건을 추가해야됨
@@ -32,6 +33,7 @@ public class RGTCarDownV2 : ICarDown
         {
             SinkSand(_body);
         }
+
 
         // 연타 검사
         KeepTheKey();
@@ -49,7 +51,7 @@ public class RGTCarDownV2 : ICarDown
         _body.localPosition = new Vector3(_body.localPosition.x, newY, _body.localPosition.z);
 
         // 디버깅용 로그
-        Debug.Log("Sinking - Current Height: " + _body.localPosition.y + " Target: " + targetY);
+        //Debug.Log("Sinking - Current Height: " + _body.localPosition.y + " Target: " + targetY);
     }
 
     private void SandUp(Transform _body)
@@ -60,15 +62,15 @@ public class RGTCarDownV2 : ICarDown
         _body.localPosition = new Vector3(_body.localPosition.x, newY, _body.localPosition.z);
 
         // 디버깅용 로그
-        Debug.Log("Rising - Current Height: " + _body.localPosition.y + " Target: " + startPosition.y);
+        //Debug.Log("Rising - Current Height: " + _body.localPosition.y + " Target: " + startPosition.y);
 
-        //// 목표 위치에 도달하면 멈춤
-        //if (Mathf.Abs(_body.position.y - startPosition.y) < 0.01f)
-        //{
-        //    isRising = false;
-        //    isSinking = true; // 다시 가라앉기 시작
-        //    Debug.Log("Reached original height, resuming sink");
-        //}
+        // 목표 위치에 도달하면 멈춤
+        if (Mathf.Abs(_body.position.y - startPosition.y) < 0.01f)
+        {
+            isRising = false;
+            isSinking = true; // 다시 가라앉기 시작
+            Debug.Log("Reached original height, resuming sink");
+        }
     }
 
     private void KeepTheKey()

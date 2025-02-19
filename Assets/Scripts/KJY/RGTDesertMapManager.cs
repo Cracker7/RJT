@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RGTDesertMapManager : MonoBehaviour
 {
-    //[SerializeField] private GameObject DesertMap;
-    //[SerializeField] private GameObject ForestMap;
+    [SerializeField] private GameObject DesertMap;
+    [SerializeField] private GameObject ForestMap;
     //[SerializeField] private GameObject SnowMap;
 
     [SerializeField] private Color fogColor = new Color(0.6f, 0.4f, 0.2f, 1f); // 갈색 안개
@@ -102,9 +102,9 @@ public class RGTDesertMapManager : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("carbody"))
         {
-            //DesertMap.SetActive(true);
+            DesertMap.SetActive(true);
             isInFogZone = true;
-            //ForestMap.SetActive(false);
+            ForestMap.SetActive(false);
             //SnowMap.SetActive(false);
 
             //SkyBox

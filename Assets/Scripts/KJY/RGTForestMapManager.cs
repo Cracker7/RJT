@@ -1,19 +1,17 @@
 using UnityEngine;
 
-public class RGTSnowMapManager : MonoBehaviour
+public class RGTForestMapManager : MonoBehaviour
 {
-    [SerializeField] private GameObject ForestMap;
-    [SerializeField] private GameObject DesertMap;
-    //[SerializeField] private GameObject SnowMap;
+    public PlayerKMS player;
 
 
 
     //SkyBox
     [SerializeField] private Material newSkybox;
     [SerializeField] private Light directionalLight;
-    [SerializeField] private Color NightColor = new Color(0.6f, 0.45f, 0.8f);
-    [SerializeField] private float NightIntensity = 1.2f;
-    [SerializeField] private Vector3 NightRotation = new Vector3(30f, 200f, 0f);
+    [SerializeField] private Color MorningColor = new Color(1.0f, 0.93f, 0.8f);
+    [SerializeField] private float MorningIntensity = 1.5f;
+    [SerializeField] private Vector3 MorningRotation = new Vector3(30f, 200f, 0f);
     [SerializeField] private float transitionSpeed = 1.5f; // 부드러운 전환 속도
 
     private Material defaultSkybox;
@@ -22,6 +20,8 @@ public class RGTSnowMapManager : MonoBehaviour
     private Quaternion defaultLightRotation;
     private bool isInZone = false;
     private float blendFactor = 0f;
+
+
 
 
     private void Start()
@@ -40,7 +40,11 @@ public class RGTSnowMapManager : MonoBehaviour
 
     private void Update()
     {
-        //SkyBox
+        if (player.currentState == PlayerKMS.PlayerState.Dead)
+        {
+            ChangeTheSkyBox();
+        }
+
         if (isInZone)
         {
             blendFactor = Mathf.Lerp(blendFactor, 1f, Time.deltaTime * transitionSpeed);
@@ -50,38 +54,22 @@ public class RGTSnowMapManager : MonoBehaviour
             blendFactor = Mathf.Lerp(blendFactor, 0f, Time.deltaTime * transitionSpeed);
         }
 
-        // Skybox 전환
-        //RenderSettings.skybox.Lerp(defaultSkybox, newSkybox, blendFactor);
-        //DynamicGI.UpdateEnvironment();
-
         // 조명 전환
         if (directionalLight)
         {
-            directionalLight.color = Color.Lerp(defaultLightColor, NightColor, blendFactor);
-            directionalLight.intensity = Mathf.Lerp(defaultLightIntensity, NightIntensity, blendFactor);
+            directionalLight.color = Color.Lerp(defaultLightColor, MorningColor, blendFactor);
+            directionalLight.intensity = Mathf.Lerp(defaultLightIntensity, MorningIntensity, blendFactor);
 
-            Quaternion targetRotation = Quaternion.Euler(NightRotation);
+            Quaternion targetRotation = Quaternion.Euler(MorningRotation);
             directionalLight.transform.rotation = Quaternion.Lerp(defaultLightRotation, targetRotation, blendFactor);
         }
     }
 
 
-
-    private void OnTriggerEnter(Collider other)
+    private void ChangeTheSkyBox()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("carbody"))
-        {
-            ForestMap.SetActive(false);
-            DesertMap.SetActive(false);
-            //SnowMap.SetActive(true);
-
-            //SkyBox
-            RenderSettings.skybox = newSkybox;
-            DynamicGI.UpdateEnvironment();
-            isInZone = true;
-        }
+        RenderSettings.skybox = newSkybox;
+        DynamicGI.UpdateEnvironment();
+        isInZone = true;
     }
-
-
-
 }
