@@ -38,7 +38,7 @@ public class InteractableObject : MonoBehaviour
     private float collisionAngle = 45f;
 
     public GameObject star;
-    private Collider col;
+    protected Collider col;
     private GameObject newStar;
 
     public virtual void Awake()
