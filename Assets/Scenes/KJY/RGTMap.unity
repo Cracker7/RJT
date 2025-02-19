@@ -23,10 +23,10 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5519fe434eaa6614d8a0252f23fa5db6, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a52323ce3189548837f28c58831d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  Target: {fileID: 1712715484}
   offsetX: 0
   offsetY: 10
   offsetZ: -10
@@ -830,6 +830,7 @@ GameObject:
   - component: {fileID: 1692640802}
   - component: {fileID: 1692640804}
   - component: {fileID: 1692640803}
+  - component: {fileID: 1692640805}
   m_Layer: 0
   m_Name: OriginPos
   m_TagString: Untagged
@@ -859,17 +860,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692640801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c1e3c81cb16e3f4f88e6dbbaa58eaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DesertMap: {fileID: 0}
-  ForestMap: {fileID: 0}
-  SnowMap: {fileID: 0}
   fogColor: {r: 0.6, g: 0.4, b: 0.2, a: 1}
   targetFogDensity: 0.02
   transitionSpeed: 1.5
+  newSkybox: {fileID: 2100000, guid: 9b7ca251e8646c54db0a77ae2021bf9b, type: 2}
+  directionalLight: {fileID: 1731404158}
+  afternoonLightColor: {r: 1, g: 0.66, b: 0.4, a: 1}
+  afternoonLightIntensity: 1.8
+  afternoonLightRotation: {x: 30, y: 200, z: 0}
 --- !u!65 &1692640804
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -891,6 +894,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 19.159143, y: 2.7790136, z: 1.8157043}
   m_Center: {x: 0.30481815, y: 0.8895068, z: 4.41008}
+--- !u!114 &1692640805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692640801}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea19a73764b15c54fbc315bae7907776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSkybox: {fileID: 2100000, guid: 62bd40ea7d8e1424aa1b97e9865f2c2f, type: 2}
+  directionalLight: {fileID: 1731404158}
+  NightColor: {r: 0.6, g: 0.45, b: 0.8, a: 1}
+  NightIntensity: 1.2
+  NightRotation: {x: 30, y: 200, z: 0}
+  transitionSpeed: 1.5
+--- !u!1 &1712715484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4264980800788272180, guid: de530ed152395e749a57d9b6d70123c2, type: 3}
+  m_PrefabInstance: {fileID: 1837145759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1731404157
 GameObject:
   m_ObjectHideFlags: 0

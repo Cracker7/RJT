@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using Unity.VisualScripting;
-using Kamgam.PowerPivot;
 
 public class InteractableObject : MonoBehaviour
 {
