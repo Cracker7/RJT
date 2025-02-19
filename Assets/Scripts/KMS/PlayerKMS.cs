@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerKMS : MonoBehaviour
 {
+    public CinemachineCamera JumpCam;
     // 상태 머신
     public enum PlayerState { Idle, Transitioning, Riding, Dead }
     public PlayerState currentState = PlayerState.Idle;
@@ -354,6 +356,7 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
+        JumpCam.Priority = 15;
     }
 
     private void UpdateTransition()
@@ -417,6 +420,7 @@ public class PlayerKMS : MonoBehaviour
         }
 
         targetObject = null;
+        JumpCam.Priority = 5;
     }
 
     private void EnterObject(InteractableObject interactableObject)

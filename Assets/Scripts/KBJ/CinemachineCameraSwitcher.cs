@@ -22,15 +22,15 @@ public class CinemachineCameraSwitcher : MonoBehaviour
         isSwitching = true;
 
         // 보조 카메라 우선순위 증가
-        subVCam.Priority = 15;
-        mainVCam.Priority = 10;
+        subVCam.Priority = 10;
+        mainVCam.Priority = 5;
 
         // 일정 시간 대기
         yield return new WaitForSeconds(switchDuration);
 
         // 다시 원래 카메라로 복귀
-        subVCam.Priority = 5;
-        mainVCam.Priority = 10;
+        subVCam.Priority = 0;
+        mainVCam.Priority = 5;
 
         isSwitching = false;
     }
