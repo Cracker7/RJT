@@ -162,6 +162,7 @@ public class InteractableObject : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player")) return;
         if (other.gameObject.layer == LayerMask.NameToLayer("Ignore"))
         {
             if (!collisionTriggered && other.CompareTag("Platform"))
