@@ -23,6 +23,5 @@ public class UIM : MonoBehaviour
     private void Update()
     {
         player2 = star.anchoredPosition;
-        Debug.Log(player2);
     }
 }
