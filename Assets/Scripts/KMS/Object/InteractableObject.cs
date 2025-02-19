@@ -35,7 +35,7 @@ public class InteractableObject : MonoBehaviour
     private float bounceForce = 200f;  // 날아가는 힘의 크기
     private float upwardForce = 10f;   // 위로 뜨는 힘의 크기
 
-    private float collisionAngle = 45f;
+    private float collisionAngle = 30f;
 
     public GameObject star;
     protected Collider col;
