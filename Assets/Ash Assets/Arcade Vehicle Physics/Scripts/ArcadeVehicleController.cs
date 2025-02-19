@@ -194,7 +194,7 @@ namespace ArcadeVP
                 }
 
                 // 트리거가 작동할 경우 carDown을 실행시키는 코드
-                if (inDesert)
+                if (inDesert && carBody.linearVelocity.magnitude <= 60)
                 {
                     Debug.Log("빠지기 실행됨 : " + bodyTr);
                     carDown.Sink(bodyTr);
