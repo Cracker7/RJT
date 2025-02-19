@@ -39,11 +39,17 @@ public class InteractableObject : MonoBehaviour
 
     private float collisionAngle = 45f;
 
+    public GameObject star;
+    private Collider col;
+    private GameObject newStar;
+
     public virtual void Awake()
     {
         Init();
         currentDurability = objectData.durability;
         maxDurability = objectData.durability;
+        col = GetComponent<Collider>();
+        star = Resources.Load<GameObject>("Star");
 
         if (hpBar != null)
         {
@@ -203,11 +209,11 @@ public class InteractableObject : MonoBehaviour
             {
                 Debug.Log("EEE 측면 충돌");
 
-                // 이름이 "Mesh"인 게임 오브젝트를 찾습니다.
+                // 이름이 "Mesh"인 게임 오브젝트를 찾기
                 Transform meshTransform = transform.Find("Mesh");
                 if (meshTransform == null)
                 {
-                    // 직접적인 자식으로 찾지 못한 경우, 전체 하위 계층에서 검색합니다.
+                    // 직접적인 자식으로 찾지 못한 경우, 전체 하위 계층에서 검색
                     foreach (Transform child in transform.GetComponentsInChildren<Transform>())
                     {
                         if (child.name.Equals("Mesh"))
@@ -221,8 +227,32 @@ public class InteractableObject : MonoBehaviour
                 if (meshTransform != null)
                 {
                     Debug.Log("Mesh 오브젝트 찾음: " + meshTransform.gameObject.name);
-                    // 예시: 전역 기준으로 Y축을 중심으로 90도 회전시킵니다.
+
+                    if (newStar == null) 
+                    {
+                        // 부모 콜라이더의 최상단 위치 계산
+                        float topY = col.bounds.max.y;
+                        float spawnOffset = 2f; // 살짝 위로 띄우는 거리
+
+                        Vector3 spawnPosition = new Vector3(
+                            transform.position.x,
+                            topY + spawnOffset,
+                            transform.position.z
+                        );
+
+                        // Star 생성 및 부모 설정
+                        newStar = Instantiate(star, spawnPosition, Quaternion.identity, transform);
+
+                        newStar.transform.localPosition = transform.InverseTransformPoint(spawnPosition);
+                    }
+                    else
+                    {
+                        newStar.SetActive(true);
+                    }
+
+                    // 회전 시키는 코루틴
                     StartCoroutine(RotateCoroutine(meshTransform));
+                    
                 }
                 else
                 {
@@ -290,6 +320,7 @@ public class InteractableObject : MonoBehaviour
         // 회전이 끝난 후 원래의 회전 상태(0,0,0)로 되돌리기
         //meshTransform.localRotation = meshTransform.InverseTransformRotation(Quaternion.identity);
         meshTransform.localRotation = Quaternion.identity;
+        newStar.SetActive(false);
     }
 
     private IEnumerator BounceBackCoroutine(Vector3 collisionPoint)
