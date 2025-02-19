@@ -106,7 +106,10 @@ namespace ArcadeVP
         {
             steeringInput = input.x;
             brakeInput = input.y;
-            accelerationInput = input.z;
+            //accelerationInput = input.z;
+            // 자동으로 계속해서 이동
+            accelerationInput = 1f;
+
 
             carVelocity = carBody.transform.InverseTransformDirection(carBody.linearVelocity);
 
