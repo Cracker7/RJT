@@ -1,27 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class UIM : MonoBehaviour
 {
-    RawImage star2;
-    RectTransform star;
+    public Transform player;      // 플레이어 위치
+    public Vector3 offset;        // 플레이어와의 거리 조정
+    public TextMeshProUGUI text;  // 대사 표시
 
-    public Transform player;
-    Vector2 player2;
-
-    private void Awake()
+    void Update()
     {
-        star2 = GetComponent<RawImage>();
-        star = GetComponent<RectTransform>();
+        if (player != null)
+        {
+            transform.position = player.position + offset;  // 플레이어 옆에 위치
+            transform.LookAt(Camera.main.transform);       // 카메라를 향하도록 회전
+        }
     }
 
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        player2 = star.anchoredPosition;
-    }
+   
 }
