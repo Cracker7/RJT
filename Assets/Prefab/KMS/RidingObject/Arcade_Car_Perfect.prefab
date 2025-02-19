@@ -5796,7 +5796,7 @@ MonoBehaviour:
   SkidSound: {fileID: 5899208111343513600}
   skidWidth: 0.1051774
   parallelMovement: 0
-  inDesert: 1
+  inDesert: 0
   bodyTr: {fileID: 6191264652382129598}
 --- !u!54 &4522297514277781518
 Rigidbody:
@@ -6049,6 +6049,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 091c05bdb6aa4674980113e2a89d0b2b, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!1 &4282939568845089731
 GameObject:
   m_ObjectHideFlags: 0
@@ -11276,6 +11277,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 6a911135919be894986bffa796e2a55f, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!114 &7260880580406559966
 MonoBehaviour:
   m_ObjectHideFlags: 0
