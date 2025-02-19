@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 0
+  movementMode: 1
   GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
@@ -196,7 +196,7 @@ MonoBehaviour:
   turn: 5
   gravity: 7
   downforce: 100
-  AirControl: 0
+  AirControl: 1
   airControlTranslationForce: 50
   kartLike: 0
   driftMultiplier: 1.5
