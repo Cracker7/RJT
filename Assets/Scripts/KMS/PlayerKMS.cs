@@ -19,7 +19,7 @@ public class PlayerKMS : MonoBehaviour
     public IInputHandler currentInput;
     public IMovement currentMovement;
     public IBoxCastFinder boxCastFinder;
-    public ICarDown carDown;
+    public RGTCarDownV2 carDown;
 
     // 래그돌 물리 컴포넌트 캐싱
     private List<Rigidbody> ragdollRigidbodies;
@@ -844,6 +844,8 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.onRideUpdate.Invoke();
         currentInteractable.onRideCol += currentInteractable.HandleCollisionDamage;
         currentInteractable.OnFrontalCollision += SetDeadState;
+        carDown = new RGTCarDownV2();
+        carDown.Die += SetDeadState;
     }
 
     private void ExitEvent()
@@ -853,6 +855,8 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.OnDestroyCalled -= durabilityZero;
         currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
         currentInteractable.OnFrontalCollision -= SetDeadState;
+        carDown = null;
+        carDown.Die -= SetDeadState;
     }
 
     private void OnTriggerEnter(Collider other)
