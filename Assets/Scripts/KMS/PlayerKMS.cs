@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerKMS : MonoBehaviour
 {
@@ -337,7 +335,18 @@ public class PlayerKMS : MonoBehaviour
 
             case PlayerState.Transitioning:
                 // 전환 상태: 모든 물리 비활성화, 키네마틱 활성화
-                SetPhysicsState(true, false, false);
+                SetPhysicsState(false, true, false);
+
+                // 카메라 떨리는걸 방지하기 위해서 속도를 0으로 만들어줌
+                foreach (Rigidbody rb in ragdollRigidbodies)
+                {
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
+                }
+
                 break;
 
             case PlayerState.Dead:
@@ -443,7 +452,7 @@ public class PlayerKMS : MonoBehaviour
         }
 
         // 전환 진행 시간 업데이트 및 진행 비율 계산
-        transitionTime += Time.deltaTime;
+        transitionTime += Time.fixedDeltaTime;
         float normalizedTime = transitionTime / transitionDuration;
 
         // 목표 위치 (mountPoint) 가져오기
@@ -461,7 +470,7 @@ public class PlayerKMS : MonoBehaviour
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 10f);
         }
 
         // 목표 위치와의 거리 계산
@@ -821,8 +830,7 @@ public class PlayerKMS : MonoBehaviour
                 if (hasTransition)
                 {
                     Debug.Log("갈아탔을때 가속");
-                    float zAccelVelocity = savedVelocity.z * 5;
-                    rb.linearVelocity= new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
+                    AccelVelocity(rb);
                     rb.angularVelocity = savedAngularVelocity;
 
                     // 트랜지션을 거친 상태를 다시 초기화
@@ -836,6 +844,12 @@ public class PlayerKMS : MonoBehaviour
             }
             hasSavedVelocity = false;
         }
+    }
+
+    private void AccelVelocity(Rigidbody rb)
+    {
+        float zAccelVelocity = savedVelocity.z * 5;
+        rb.linearVelocity = new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
     }
 
     private void EnterEvent()
@@ -855,8 +869,8 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.OnDestroyCalled -= durabilityZero;
         currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
         currentInteractable.OnFrontalCollision -= SetDeadState;
-        carDown = null;
         carDown.Die -= SetDeadState;
+        carDown = null;
     }
 
     private void OnTriggerEnter(Collider other)
