@@ -191,12 +191,22 @@ namespace ArcadeVP
                     }
                 }
 
-                // 트리거가 작동할 경우 carDown을 실행시키는 코드
-                if (inDesert && carBody.linearVelocity.magnitude <= 60)
+                //// 트리거가 작동할 경우 carDown을 실행시키는 코드
+                //if (inDesert && carBody.linearVelocity.magnitude <= 60)
+                //{
+                //    Debug.Log("빠지기 실행됨 : " + bodyTr);
+                //    carDown.Sink(bodyTr);
+                //}
+
+                if(inDesert)
                 {
-                    Debug.Log("빠지기 실행됨 : " + bodyTr);
-                    carDown.Sink(bodyTr);
+                    if(carBody.linearVelocity.magnitude <= 60)
+                    {
+                        carDown.Sink(bodyTr);
+                    }
+                    carDown.Rising(bodyTr);
                 }
+
 
                 // down froce
                 rb.AddForce(-transform.up * downforce * rb.mass);

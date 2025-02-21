@@ -4,7 +4,7 @@ public class RGTSnowMapManager : MonoBehaviour
 {
     [SerializeField] private GameObject ForestMap;
     [SerializeField] private GameObject DesertMap;
-    //[SerializeField] private GameObject SnowMap;
+    [SerializeField] private GameObject SnowMap;
 
 
 

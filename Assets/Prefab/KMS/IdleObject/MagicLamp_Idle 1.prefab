@@ -85,6 +85,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: deec6f2860b358b4b8377f86aee75a96, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &2014794796382257640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -141,10 +142,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3838211081872785368}
     m_Modifications:
-    - target: {fileID: -2424310191516013741, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1146620611421028037, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -189,9 +186,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicLamp_Idle
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2007671882804809231, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
-    - {fileID: 1690961557832823605, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

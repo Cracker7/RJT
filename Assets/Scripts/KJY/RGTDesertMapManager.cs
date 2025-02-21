@@ -4,7 +4,7 @@ public class RGTDesertMapManager : MonoBehaviour
 {
     [SerializeField] private GameObject DesertMap;
     [SerializeField] private GameObject ForestMap;
-    //[SerializeField] private GameObject SnowMap;
+    [SerializeField] private GameObject SnowMap;
 
     [SerializeField] private Color fogColor = new Color(0.6f, 0.4f, 0.2f, 1f); // 갈색 안개
     [SerializeField] private float targetFogDensity = 0.03f; // 목표 안개 농도
