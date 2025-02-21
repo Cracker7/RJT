@@ -821,7 +821,8 @@ public class PlayerKMS : MonoBehaviour
                 if (hasTransition)
                 {
                     Debug.Log("갈아탔을때 가속");
-                    rb.linearVelocity = savedVelocity * 5;
+                    float zAccelVelocity = savedVelocity.z * 5;
+                    rb.linearVelocity= new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
                     rb.angularVelocity = savedAngularVelocity;
 
                     // 트랜지션을 거친 상태를 다시 초기화
@@ -842,6 +843,7 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.onRideUpdate += currentInteractable.StartHpDecrease;
         currentInteractable.onRideUpdate.Invoke();
         currentInteractable.onRideCol += currentInteractable.HandleCollisionDamage;
+        currentInteractable.OnFrontalCollision += SetDeadState;
     }
 
     private void ExitEvent()
@@ -850,6 +852,7 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.onRideUpdate -= currentInteractableObject.StartHpDecrease;
         currentInteractable.OnDestroyCalled -= durabilityZero;
         currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
+        currentInteractable.OnFrontalCollision -= SetDeadState;
     }
 
     private void OnTriggerEnter(Collider other)

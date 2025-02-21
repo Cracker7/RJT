@@ -15062,7 +15062,7 @@ Transform:
   m_GameObject: {fileID: 5030813309104689050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.096191, y: -16.548418, z: -191.36304}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15282,8 +15282,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7483667209783904544}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 803.23, y: 1487.6266, z: 1364.74}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15342,11 +15342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementMode: 0
-  GroundCheck: 1
+  GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 120
   accelaration: 20
   turn: 10
   gravity: 7
