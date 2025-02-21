@@ -6308,13 +6308,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
-  GroundCheck: 0
+  movementMode: 0
+  GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 300
-  accelaration: 50
+  MaxSpeed: 100
+  accelaration: 20
   turn: 10
   gravity: 7
   downforce: 5
@@ -6407,6 +6407,8 @@ MonoBehaviour:
   SkidSound: {fileID: 3312592811028125542}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &3527780999971896497
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6658,6 +6660,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 06e98e4282e16ce4492146d536176c6b, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!1 &2206731005176117144
 GameObject:
   m_ObjectHideFlags: 0

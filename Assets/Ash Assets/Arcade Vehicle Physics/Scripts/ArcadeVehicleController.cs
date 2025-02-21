@@ -225,7 +225,7 @@ namespace ArcadeVP
                     carBody.AddTorque(Vector3.up * steeringInput * turn * airControlTranslationForce * TurnMultiplyer);
 
                     // 새롭게 공중 이동 힘 추가 (전진/후진 및 약간의 측면 이동)
-                    Vector3 airTranslationForce = (carBody.transform.forward * accelerationInput + carBody.transform.right * steeringInput) * airControlTranslationForce;
+                    Vector3 airTranslationForce = (carBody.transform.right * steeringInput) * airControlTranslationForce;
                     carBody.AddForce(airTranslationForce, ForceMode.Acceleration);
 
                     //if (!grounded())
@@ -299,7 +299,7 @@ namespace ArcadeVP
             //origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
             origin = rb.position + transform.up * (rb.GetComponent<SphereCollider>().radius + 0.1f);
             var direction = -transform.up;
-            var maxdistance = rb.GetComponent<SphereCollider>().radius + 0.5f;
+            var maxdistance = rb.GetComponent<SphereCollider>().radius + 5f;
 
             if (GroundCheck == groundCheck.rayCast)
             {

@@ -5549,14 +5549,14 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 50
-  accelaration: 15
+  MaxSpeed: 100
+  accelaration: 20
   turn: 4
   gravity: 5
   downforce: 100
   AirControl: 1
   airControlTranslationForce: 50
-  kartLike: 1
+  kartLike: 0
   driftMultiplier: 1.5
   decelerationFactor: 2
   rb: {fileID: 7921828433891736874}
@@ -5643,6 +5643,8 @@ MonoBehaviour:
   SkidSound: {fileID: 7054008297025554486}
   skidWidth: 0.13985014
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &7812791654954326343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5894,6 +5896,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!1 &633978248215892116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6990,6 +6993,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 25e927160456eee4199c5737d769d599, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!114 &7052848534876654273
 MonoBehaviour:
   m_ObjectHideFlags: 0

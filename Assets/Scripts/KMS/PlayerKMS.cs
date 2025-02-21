@@ -229,7 +229,7 @@ public class PlayerKMS : MonoBehaviour
         if (mainCollider != null)
         {
             //mainCollider.isTrigger = isTrigger;
-            mainCollider.enabled = true;
+            Invoke("TriggerOn", 0.5f);
         }
 
         // 모든 래그돌 리지드바디 설정
@@ -669,7 +669,12 @@ public class PlayerKMS : MonoBehaviour
 
     public void SetDeadState()
     {
-        UpdatePlayerState(PlayerState.Dead);
+        ExitObject();
+        //LaunchProjectileMotion(); // 발사체 모션 시작
+        ExplosionRb();
+        //UpdatePlayerState(PlayerState.Dead);
+        currentState = PlayerState.Dead;
+        Invoke("TriggerOn",0.5f);
     }
 
     private void LaunchProjectileMotion()
@@ -782,6 +787,11 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("플레이어가 죽음");
             isDead = true;
         }
+    }
+
+    private void TriggerOn()
+    {
+        mainCollider.enabled = true;
     }
 
     void OnDrawGizmos()
