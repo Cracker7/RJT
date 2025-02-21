@@ -6309,11 +6309,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementMode: 0
-  GroundCheck: 1
+  GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 240
   accelaration: 20
   turn: 10
   gravity: 7
@@ -23091,7 +23091,7 @@ Transform:
   m_GameObject: {fileID: 6573889794289162563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.287537, y: 1.0830518, z: -88.378174}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

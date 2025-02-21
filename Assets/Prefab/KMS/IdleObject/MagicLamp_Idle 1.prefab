@@ -85,6 +85,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: deec6f2860b358b4b8377f86aee75a96, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &2014794796382257640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -192,6 +193,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2007671882804809231, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
     - {fileID: 1690961557832823605, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
+    - {fileID: -2424310191516013741, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
+    - {fileID: 6574867328938953033, guid: 2c62784e2f0980d47ab33e64c3b1d492, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
