@@ -138324,6 +138324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerKMS: {fileID: 1650847408}
   target: {fileID: 1467021738}
+  followCam: {fileID: 0}
 --- !u!4 &811888825
 Transform:
   m_ObjectHideFlags: 0
@@ -153271,6 +153272,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 6995ac8bf7b602446bfe8509d3723284, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!4 &2001977466
 Transform:
   m_ObjectHideFlags: 0
@@ -155793,7 +155795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1696250043190866052, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

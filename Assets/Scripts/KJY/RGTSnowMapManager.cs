@@ -73,7 +73,9 @@ public class RGTSnowMapManager : MonoBehaviour
         {
             ForestMap.SetActive(false);
             DesertMap.SetActive(false);
-            //SnowMap.SetActive(true);
+            SnowMap.SetActive(true);
+            RenderSettings.fog = false;
+
 
             //SkyBox
             RenderSettings.skybox = newSkybox;

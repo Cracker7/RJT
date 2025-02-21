@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -981,20 +981,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3590908882017937518, guid: 5007ca5783951d44f88a40725b64aa7c, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590908882017937518, guid: 5007ca5783951d44f88a40725b64aa7c, type: 3}
       propertyPath: directionalLight
       value: 
       objectReference: {fileID: 1731404158}
+    - target: {fileID: 3590908882017937518, guid: 5007ca5783951d44f88a40725b64aa7c, type: 3}
+      propertyPath: targetFogDensity
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8777339224288346108, guid: 5007ca5783951d44f88a40725b64aa7c, type: 3}
       propertyPath: m_Name
       value: ToDesert
-      objectReference: {fileID: 0}
-    - target: {fileID: 8777339224288346108, guid: 5007ca5783951d44f88a40725b64aa7c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1009,10 +1005,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1274983630244073086, guid: bcbc39f76bf4f3e46b6f5b8bb6f86c5e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1274983630244073086, guid: bcbc39f76bf4f3e46b6f5b8bb6f86c5e, type: 3}
       propertyPath: directionalLight
       value: 
@@ -1060,10 +1052,6 @@ PrefabInstance:
     - target: {fileID: 8476637617869217493, guid: bcbc39f76bf4f3e46b6f5b8bb6f86c5e, type: 3}
       propertyPath: m_Name
       value: ToSnow
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476637617869217493, guid: bcbc39f76bf4f3e46b6f5b8bb6f86c5e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
