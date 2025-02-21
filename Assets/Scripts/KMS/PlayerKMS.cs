@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -356,7 +357,10 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
-        JumpCam.Priority = 15;
+
+        //StartCoroutine(SwitchCameraWithDelay());
+        //JumpCam.Priority = 15;
+        Time.timeScale = 0.5f;
     }
 
     private void UpdateTransition()
@@ -421,6 +425,7 @@ public class PlayerKMS : MonoBehaviour
 
         targetObject = null;
         JumpCam.Priority = 5;
+        Time.timeScale = 1f;
     }
 
     private void EnterObject(InteractableObject interactableObject)
@@ -840,4 +845,13 @@ public class PlayerKMS : MonoBehaviour
     //         Ride(interactable);
     //     }
     // }
+
+    private IEnumerator SwitchCameraWithDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        JumpCam.Priority = 15;
+        Time.timeScale = 1;
+    }
 }
+
