@@ -5276,6 +5276,7 @@ GameObject:
   - component: {fileID: 7467764287100276961}
   - component: {fileID: 2662370438590749762}
   - component: {fileID: 3260739605401622260}
+  - component: {fileID: 2530375231118916603}
   m_Layer: 7
   m_Name: Arcade_JackDanniel_Perfect
   m_TagString: Untagged
@@ -5318,7 +5319,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 2.1263008, z: 1.8375244}
   m_Center: {x: 0, y: 0.22896385, z: -0.082458496}
@@ -5703,6 +5704,29 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   timeDamage: 0
   star: {fileID: 0}
+--- !u!136 &2530375231118916603
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456369328323944727}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3725891
+  m_Height: 2.5263672
+  m_Direction: 1
+  m_Center: {x: -0.009796143, y: 0.06738281, z: 0}
 --- !u!1 &4471405242356217888
 GameObject:
   m_ObjectHideFlags: 0

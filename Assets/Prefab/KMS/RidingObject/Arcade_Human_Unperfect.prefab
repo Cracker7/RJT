@@ -15266,6 +15266,7 @@ GameObject:
   - component: {fileID: 2260667480176347173}
   - component: {fileID: 7925361160692910908}
   - component: {fileID: 6373536978897424470}
+  - component: {fileID: 2170983330115533950}
   m_Layer: 7
   m_Name: Arcade_Human_Unperfect
   m_TagString: Untagged
@@ -15308,7 +15309,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.946167, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0.05609131, y: 0, z: 0}
@@ -15693,6 +15694,29 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   timeDamage: 0
   star: {fileID: 0}
+--- !u!136 &2170983330115533950
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7090767509517313826}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.480835
+  m_Height: 4.216797
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.46032715, z: -0.14038086}
 --- !u!1 &7223304559210402197
 GameObject:
   m_ObjectHideFlags: 0
