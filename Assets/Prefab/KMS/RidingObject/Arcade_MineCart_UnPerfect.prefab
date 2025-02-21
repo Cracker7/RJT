@@ -5347,6 +5347,7 @@ GameObject:
   - component: {fileID: 7671375012959726393}
   - component: {fileID: 2966823518528761372}
   - component: {fileID: 3933005933023568262}
+  - component: {fileID: 4191842098677642407}
   m_Layer: 7
   m_Name: Arcade_MineCart_UnPerfect
   m_TagString: Untagged
@@ -5389,7 +5390,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.217102, y: 1.2064209, z: 1.6478271}
   m_Center: {x: -0.0031433105, y: 0.14361572, z: -0.0064086914}
@@ -5400,7 +5401,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4699618404520607757}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da3f11c6be0a9a45836cbfe050297fc, type: 3}
   m_Name: 
@@ -5520,6 +5521,8 @@ MonoBehaviour:
   SkidSound: {fileID: 7671375012959726393}
   skidWidth: 0.17504606
   parallelMovement: 1
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &4100553396994068285
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5759,6 +5762,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: ccbe081a272124c4d9fa6565ee319d32, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!114 &3933005933023568262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5771,6 +5775,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &4191842098677642407
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699618404520607757}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7388916
+  m_Height: 1.9559326
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.29333496, z: 0.0060424805}
 --- !u!1 &4814134626203434211
 GameObject:
   m_ObjectHideFlags: 0

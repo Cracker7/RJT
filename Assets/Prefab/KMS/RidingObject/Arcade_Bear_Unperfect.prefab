@@ -5470,8 +5470,9 @@ GameObject:
   - component: {fileID: 7054008297025554486}
   - component: {fileID: 6750597323139863232}
   - component: {fileID: -4822872701110996297}
+  - component: {fileID: 5385457226379958482}
   m_Layer: 7
-  m_Name: Arcade_unperfect_With_Bear
+  m_Name: Arcade_Bear_Unperfect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5512,7 +5513,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.265721, y: 1.6533816, z: 4.09}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5897,6 +5898,29 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   timeDamage: 0
   star: {fileID: 0}
+--- !u!136 &5385457226379958482
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548203549623453847}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.79024255
+  m_Height: 4.8614864
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.54262733, z: 0.40381527}
 --- !u!1 &633978248215892116
 GameObject:
   m_ObjectHideFlags: 0

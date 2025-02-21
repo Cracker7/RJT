@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 16140415309382518}
   - component: {fileID: 7481755821317061190}
   - component: {fileID: 4872685117897632506}
+  - component: {fileID: 721320640345567834}
   m_Layer: 7
   m_Name: Arcade_Cactus
   m_TagString: Untagged
@@ -451,7 +452,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0, y: 0, z: 0}
@@ -836,6 +837,29 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   timeDamage: 0
   star: {fileID: 0}
+--- !u!136 &721320640345567834
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903439757993196196}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9286194
+  m_Height: 5.041504
+  m_Direction: 1
+  m_Center: {x: 0.02041626, y: 1.673706, z: 0}
 --- !u!1 &2251523238942818079
 GameObject:
   m_ObjectHideFlags: 0
