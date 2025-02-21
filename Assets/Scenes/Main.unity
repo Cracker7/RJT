@@ -142191,6 +142191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerKMS: {fileID: 1650847408}
   target: {fileID: 1467021738}
+  followCam: {fileID: 0}
 --- !u!4 &811888825
 Transform:
   m_ObjectHideFlags: 0
@@ -158927,7 +158928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1708507065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158935,7 +158936,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708507064}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a0df1be364dcff48b5a576e26de5729, type: 3}
   m_Name: 
@@ -159026,7 +159027,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711078543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -159119,11 +159120,11 @@ Transform:
   m_GameObject: {fileID: 1711078543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36106098, y: -0.0034251928, z: 0.0013261739, w: 0.932535}
-  m_LocalPosition: {x: -47.140892, y: 3907.4695, z: -7129.142}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.014839172, y: 3.8789062, z: -1.9775391}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1650847404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1711352005
 Mesh:
@@ -165610,6 +165611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerKMS: {fileID: 1650847408}
   target: {fileID: 2099931454}
+  followCam: {fileID: 0}
 --- !u!4 &2062928484
 Transform:
   m_ObjectHideFlags: 0
@@ -166144,6 +166146,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1477466782430868644, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477466782430868644, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1677911351881079089, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       propertyPath: m_Name
       value: Remy Ragdoll
@@ -166206,6 +166216,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2018443660240601995, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 564724379}
+    - targetCorrespondingSourceObject: {fileID: 2018443660240601995, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1711078548}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
 --- !u!1 &2081852903
@@ -168986,7 +168999,6 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1711078548}
   - {fileID: 1585446309}
   - {fileID: 1120594075}
   - {fileID: 281308153}

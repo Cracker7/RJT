@@ -164,6 +164,7 @@ public class InteractableObject : MonoBehaviour
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
             // 정면충돌을 없애버리고 콜리전을 캡슐로 바꿔봄
+
             //{
             //    // 모든 접촉 지점을 순회하면서 정면 충돌 여부를 판단
             //    bool isFrontalCollision = false;
