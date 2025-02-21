@@ -104,6 +104,7 @@ public class RGTCarDownV2 : ICarDown
         if(KeyTimer >= 2f)
         {
             //터진다.
+            Die();
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
