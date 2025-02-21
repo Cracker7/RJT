@@ -1675,6 +1675,7 @@ GameObject:
   - component: {fileID: 9046972852545037790}
   - component: {fileID: 2703652890444848305}
   - component: {fileID: 2673419923853543017}
+  - component: {fileID: 3594388732395443993}
   m_Layer: 7
   m_Name: Arcade_Car_Unperfect
   m_TagString: Untagged
@@ -1691,7 +1692,7 @@ Transform:
   m_GameObject: {fileID: 1784051865549866021}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.11, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1717,7 +1718,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2102,6 +2103,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &3594388732395443993
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784051865549866021}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.1755726
+  m_Height: 3.244072
+  m_Direction: 2
+  m_Center: {x: -0.010795514, y: 0.042884193, z: 0.079045616}
 --- !u!1 &1799097427271206955
 GameObject:
   m_ObjectHideFlags: 0

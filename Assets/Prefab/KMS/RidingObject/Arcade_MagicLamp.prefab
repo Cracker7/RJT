@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 7957223424958569833}
   - component: {fileID: 708577090513118253}
   - component: {fileID: 1407879843871188367}
+  - component: {fileID: 6320594755280094528}
   m_Layer: 7
   m_Name: Arcade_MagicLamp
   m_TagString: Untagged
@@ -162,7 +163,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0, y: 0, z: 0}
@@ -547,6 +548,29 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   timeDamage: 0
   star: {fileID: 0}
+--- !u!136 &6320594755280094528
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206819811850480655}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.8890381
+  m_Height: 7.506592
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.8590088, z: 0.47521973}
 --- !u!1 &363205213252241909
 GameObject:
   m_ObjectHideFlags: 0
