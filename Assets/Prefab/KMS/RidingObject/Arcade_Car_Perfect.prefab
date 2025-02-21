@@ -5667,8 +5667,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5023037, y: 1.3703878, z: 3.1733184}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.5023038, y: 1.1966915, z: 3.1733184}
+  m_Center: {x: 0, y: 0.08684836, z: 0}
 --- !u!114 &6768048014766859522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5697,12 +5697,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
+  movementMode: 0
   GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 65
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  MaxSpeed: 240
   accelaration: 20
   turn: 10
   gravity: 5
@@ -5846,7 +5849,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.91537666
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5943,7 +5946,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.9232514
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

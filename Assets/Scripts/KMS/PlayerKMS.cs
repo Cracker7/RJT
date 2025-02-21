@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -136,8 +137,81 @@ public class PlayerKMS : MonoBehaviour
         sliderM.OnShutdown -= ResetTimeScale;
     }
 
-    private void Update()
+    //private void Update()
+    //{
+    //    // Transitioning 상태일 때는 입력을 무시한다.
+    //    if (currentState == PlayerState.Transitioning)
+    //    {
+    //        UpdateTransition();
+    //    }
+    //    else if (currentState == PlayerState.Dead)
+    //    {
+    //        // 플레이어가 죽었을 때 실행하는 함수
+    //        if (currentObjectPrefab == null)
+    //        {
+    //            if(!isDead)
+    //            {
+    //                HandleInput();
+    //            }
+    //        }
+
+    //        // // 부모 관계 해제
+    //        // if (currentObjectPrefab != null)
+    //        //     transform.SetParent(null);
+
+    //        // // 메시 렌더러 활성화
+    //        // foreach (SkinnedMeshRenderer skin in skinRenderer)
+    //        // {
+    //        //     skin.enabled = true;
+    //        // }
+
+    //        // 죽었을 때의 추가 로직 (미니게임 실패, 내구도 소진 등)
+    //    }
+    //    else
+    //    {
+    //        //// Idle 상태에서 발사체 모션 진행 중이면 업데이트
+    //        //if (currentState == PlayerState.Idle && isProjectileLaunched)
+    //        //{
+    //        //    UpdateProjectileMotion();
+    //        //    // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
+    //        //    GameObject findcar =
+    //        //        boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
+
+    //        //    if(projectileElapsedTime == projectileDuration)
+    //        //    {
+    //        //        currentState = PlayerState.Dead;
+    //        //    }
+    //        //    else if (findcar != null && Input.GetKeyDown(interactKeyCode))
+    //        //    {
+    //        //        StartTransition(findcar.GetComponent<InteractableObject>());
+    //        //    }
+
+    //        //}
+    //        //else
+    //        //{
+    //        //    // 평상시 입력 처리
+    //        //    HandleInput();
+    //        //}
+
+    //        HandleInput();
+
+    //        // Riding 상태라면 Riding 관련 추가 로직도 처리
+    //        if (currentState == PlayerState.Riding)
+    //        {
+    //            if (!hasHandledRiding && currentInteractable.currentDurability <= currentInteractable.maxDurability / 2)
+    //            {
+    //                HandleRiding();
+    //                hasHandledRiding = true;
+    //            }
+    //        }
+    //    }
+    //    Debug.Log("라이딩 상태 : " + currentState);
+    //    Debug.Log("선택된 프리팹 : " + currentObjectPrefab);
+    //}
+
+    private void FixedUpdate()
     {
+
         // Transitioning 상태일 때는 입력을 무시한다.
         if (currentState == PlayerState.Transitioning)
         {
@@ -148,7 +222,7 @@ public class PlayerKMS : MonoBehaviour
             // 플레이어가 죽었을 때 실행하는 함수
             if (currentObjectPrefab == null)
             {
-                if(!isDead)
+                if (!isDead)
                 {
                     HandleInput();
                 }
@@ -206,10 +280,7 @@ public class PlayerKMS : MonoBehaviour
         }
         Debug.Log("라이딩 상태 : " + currentState);
         Debug.Log("선택된 프리팹 : " + currentObjectPrefab);
-    }
 
-    private void FixedUpdate()
-    {
         if (currentState == PlayerState.Riding && currentObjectPrefab != null)
         {
             HandleRidingMovement();
@@ -356,7 +427,10 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
-        JumpCam.Priority = 15;
+
+        StartCoroutine(SwitchCameraWithDelay());
+        //JumpCam.Priority = 15;
+        Time.timeScale = 0.5f;
     }
 
     private void UpdateTransition()
@@ -421,6 +495,7 @@ public class PlayerKMS : MonoBehaviour
 
         targetObject = null;
         JumpCam.Priority = 5;
+        Time.timeScale = 1f;
     }
 
     private void EnterObject(InteractableObject interactableObject)
@@ -746,7 +821,8 @@ public class PlayerKMS : MonoBehaviour
                 if (hasTransition)
                 {
                     Debug.Log("갈아탔을때 가속");
-                    rb.linearVelocity = savedVelocity * 5;
+                    float zAccelVelocity = savedVelocity.z * 5;
+                    rb.linearVelocity= new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
                     rb.angularVelocity = savedAngularVelocity;
 
                     // 트랜지션을 거친 상태를 다시 초기화
@@ -767,6 +843,7 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.onRideUpdate += currentInteractable.StartHpDecrease;
         currentInteractable.onRideUpdate.Invoke();
         currentInteractable.onRideCol += currentInteractable.HandleCollisionDamage;
+        currentInteractable.OnFrontalCollision += SetDeadState;
     }
 
     private void ExitEvent()
@@ -775,6 +852,7 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.onRideUpdate -= currentInteractableObject.StartHpDecrease;
         currentInteractable.OnDestroyCalled -= durabilityZero;
         currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
+        currentInteractable.OnFrontalCollision -= SetDeadState;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -840,4 +918,13 @@ public class PlayerKMS : MonoBehaviour
     //         Ride(interactable);
     //     }
     // }
+
+    private IEnumerator SwitchCameraWithDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        JumpCam.Priority = 15;
+        Time.timeScale = 1;
+    }
 }
+
