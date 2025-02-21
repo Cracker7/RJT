@@ -15,6 +15,6 @@ public class StartTransitiion : MonoBehaviour
             playerKMS.StartTransition(target);
         }
 
-        followCam.FollowOffset -= new Vector3(0, 4, 0);
+        followCam.FollowOffset -= new Vector3(0, 5, 2);
     }
 }
