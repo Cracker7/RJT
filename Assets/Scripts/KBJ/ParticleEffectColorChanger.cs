@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ParticleEffectColorChanger : MonoBehaviour
 {
-    public float detectionRadius = 5f;
-    public Color highlightColor = Color.red;
+    public float detectionRadius = 30f;
+    public Color highlightColor = Color.green;
     public LayerMask particleLayer;
 
     private GameObject closestParticlePrefab = null;
@@ -77,9 +77,31 @@ public class ParticleEffectColorChanger : MonoBehaviour
         }
     }
 
+    //void SetParticleColor(ParticleSystem ps, Color color)
+    //{
+    //    var main = ps.main;
+    //    main.startColor = color;
+    //}
+
     void SetParticleColor(ParticleSystem ps, Color color)
     {
         var main = ps.main;
         main.startColor = color;
+
+        // 기존 파티클들의 색상을 즉시 변경
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        int count = ps.GetParticles(particles);
+
+        for (int i = 0; i < count; i++)
+        {
+            particles[i].startColor = color;
+        }
+
+        ps.SetParticles(particles, count); // 변경 사항 적용
+
+        // 기존 파티클 초기화 후 새로 방출 (필요한 경우)
+        ps.Clear();
+        ps.Play();
     }
+
 }
