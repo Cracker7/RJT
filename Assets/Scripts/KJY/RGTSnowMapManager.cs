@@ -4,7 +4,7 @@ public class RGTSnowMapManager : MonoBehaviour
 {
     [SerializeField] private GameObject ForestMap;
     [SerializeField] private GameObject DesertMap;
-    //[SerializeField] private GameObject SnowMap;
+    [SerializeField] private GameObject SnowMap;
 
 
 
@@ -73,7 +73,9 @@ public class RGTSnowMapManager : MonoBehaviour
         {
             ForestMap.SetActive(false);
             DesertMap.SetActive(false);
-            //SnowMap.SetActive(true);
+            SnowMap.SetActive(true);
+            RenderSettings.fog = false;
+
 
             //SkyBox
             RenderSettings.skybox = newSkybox;

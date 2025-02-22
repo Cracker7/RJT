@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 public class RGTCarDownV2 : ICarDown
 {
     // 빠지는 만큼
@@ -13,12 +14,15 @@ public class RGTCarDownV2 : ICarDown
     private bool isRising = false;
     private float lastTapTime = 0f;
     private float riseTimer = 0f;
+    private float KeyTimer = 0f;
     private bool hasStart = true;
     float targetY;
 
+    public event Action Die;
+
     public void Sink(Transform _body)
     {
-        Debug.Log("Rising" + isRising.ToString());
+        Debug.Log("AAA Sink" + isRising.ToString());
         if (hasStart)
         {
             startPosition = _body.localPosition;
@@ -27,7 +31,7 @@ public class RGTCarDownV2 : ICarDown
             //Debug.Log("Start Position set: " + startPosition);
         }
 
-        // 만약에 현재의 맵은 사막맵이고 속도가 60아래 떨어지면 isSinking = true; 나중에 조건을 추가해야됨
+        //// 만약에 현재의 맵은 사막맵이고 속도가 60아래 떨어지면 isSinking = true; 나중에 조건을 추가해야됨
 
         if (isSinking)
         {
@@ -35,6 +39,25 @@ public class RGTCarDownV2 : ICarDown
         }
 
 
+        //// 연타 검사
+        //KeepTheKey();
+
+        //if (isRising)
+        //{
+        //    SandUp(_body);
+        //}
+    }
+
+    public void Rising(Transform _body)
+    {
+        if (hasStart)
+        {
+            startPosition = _body.localPosition;
+            targetY = startPosition.y - sinkDepth;
+            hasStart = false;
+            //Debug.Log("Start Position set: " + startPosition);
+            Debug.Log("AAA Risging : " + isRising);
+        }
         // 연타 검사
         KeepTheKey();
 
@@ -43,6 +66,8 @@ public class RGTCarDownV2 : ICarDown
             SandUp(_body);
         }
     }
+
+
 
     private void SinkSand(Transform _body)
     {
@@ -75,11 +100,18 @@ public class RGTCarDownV2 : ICarDown
 
     private void KeepTheKey()
     {
+        KeyTimer += Time.deltaTime;
+        if(KeyTimer >= 2f)
+        {
+            //터진다.
+            Die();
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             // 속도 체크
             if (Time.time - lastTapTime < requiredTapSpeed)
             {
+                KeyTimer = 0f;
                 isRising = true;
                 isSinking = false;
                 riseTimer = 1f;

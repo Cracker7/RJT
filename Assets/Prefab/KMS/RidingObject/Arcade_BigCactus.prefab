@@ -15062,7 +15062,7 @@ Transform:
   m_GameObject: {fileID: 5030813309104689050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.096191, y: -16.548418, z: -191.36304}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15267,6 +15267,7 @@ GameObject:
   - component: {fileID: 5178937490469347875}
   - component: {fileID: 4398268003362417209}
   - component: {fileID: 1351450424920430721}
+  - component: {fileID: 3871541886016921735}
   m_Layer: 7
   m_Name: Arcade_BigCactus
   m_TagString: Untagged
@@ -15282,8 +15283,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7483667209783904544}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 803.23, y: 1487.6266, z: 1364.74}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15309,7 +15310,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0, y: 0, z: 0}
@@ -15341,12 +15342,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
+  movementMode: 0
   GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 120
   accelaration: 20
   turn: 10
   gravity: 7
@@ -15440,6 +15441,8 @@ MonoBehaviour:
   SkidSound: {fileID: 5178937490469347875}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &3345423128493450110
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15691,6 +15694,30 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 0be605296bc1aab48b6952118e8ac9bf, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
+--- !u!136 &3871541886016921735
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7483667209783904544}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.0077822
+  m_Height: 10.493441
+  m_Direction: 1
+  m_Center: {x: -0.027921915, y: 3.936986, z: -0.00000023841858}
 --- !u!1 &7594277711886464185
 GameObject:
   m_ObjectHideFlags: 0

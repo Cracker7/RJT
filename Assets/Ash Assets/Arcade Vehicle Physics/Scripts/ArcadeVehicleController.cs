@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ArcadeVP
@@ -172,31 +170,41 @@ namespace ArcadeVP
                 {
                     if (Mathf.Abs(accelerationInput) > 0.1f && brakeInput < 0.1f && !kartLike)
                     {
-                        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, carBody.transform.right * accelerationInput * MaxSpeed / radius, accelaration * Time.deltaTime);
+                        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, carBody.transform.right * accelerationInput * MaxSpeed / radius, accelaration * Time.fixedDeltaTime);
                     }
                     else if (Mathf.Abs(accelerationInput) > 0.1f && kartLike)
                     {
-                        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, carBody.transform.right * accelerationInput * MaxSpeed / radius, accelaration * Time.deltaTime);
+                        rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, carBody.transform.right * accelerationInput * MaxSpeed / radius, accelaration * Time.fixedDeltaTime);
                     }
                 }
                 else if (movementMode == MovementMode.Velocity)
                 {
                     if (Mathf.Abs(accelerationInput) > 0.1f && brakeInput < 0.1f && !kartLike)
                     {
-                        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, carBody.transform.forward * accelerationInput * MaxSpeed, accelaration / 10 * Time.deltaTime);
+                        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, carBody.transform.forward * accelerationInput * MaxSpeed, accelaration / 10 * Time.fixedDeltaTime);
                     }
                     else if (Mathf.Abs(accelerationInput) > 0.1f && kartLike)
                     {
-                        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, carBody.transform.forward * accelerationInput * MaxSpeed, accelaration / 10 * Time.deltaTime);
+                        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, carBody.transform.forward * accelerationInput * MaxSpeed, accelaration / 10 * Time.fixedDeltaTime);
                     }
                 }
 
-                // 트리거가 작동할 경우 carDown을 실행시키는 코드
-                if (inDesert && carBody.linearVelocity.magnitude <= 60)
+                //// 트리거가 작동할 경우 carDown을 실행시키는 코드
+                //if (inDesert && carBody.linearVelocity.magnitude <= 60)
+                //{
+                //    Debug.Log("빠지기 실행됨 : " + bodyTr);
+                //    carDown.Sink(bodyTr);
+                //}
+
+                if(inDesert)
                 {
-                    Debug.Log("빠지기 실행됨 : " + bodyTr);
-                    carDown.Sink(bodyTr);
+                    if(carBody.linearVelocity.magnitude <= 60)
+                    {
+                        carDown.Sink(bodyTr);
+                    }
+                    carDown.Rising(bodyTr);
                 }
+
 
                 // down froce
                 rb.AddForce(-transform.up * downforce * rb.mass);
@@ -217,7 +225,7 @@ namespace ArcadeVP
                 // carBody.MoveRotation(Quaternion.Slerp(carBody.rotation, Quaternion.FromToRotation(carBody.transform.up, Vector3.up) * carBody.transform.rotation, 0.02f));
                 // rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.deltaTime * gravity);
 
-                 // 공중일 때 (AirControl 활성화 시 좌우 회전 + 이동 제어)
+                // 공중일 때 (AirControl 활성화 시 좌우 회전 + 이동 제어)
                 if (AirControl)
                 {
                     // 기존 좌우 회전 토크 적용
@@ -241,12 +249,12 @@ namespace ArcadeVP
                     0.02f));
 
                 // 중력 적용
-                rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.deltaTime * gravity);
+                rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity + Vector3.down * gravity, Time.fixedDeltaTime * gravity);
 
                 // **속도가 너무 빠르면 최대속도에 맞춰 서서히 감속**
-                if (movementMode == MovementMode.AngularVelocity && rb.linearVelocity.magnitude > MaxSpeed)
+                if (rb.linearVelocity.magnitude > MaxSpeed)
                 {
-                    rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity.normalized * MaxSpeed, decelerationFactor * Time.deltaTime);
+                    rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, rb.linearVelocity.normalized * MaxSpeed, decelerationFactor * Time.fixedDeltaTime);
                 }
             }
 
@@ -299,7 +307,7 @@ namespace ArcadeVP
             //origin = rb.position + rb.GetComponent<SphereCollider>().radius * Vector3.up;
             origin = rb.position + transform.up * (rb.GetComponent<SphereCollider>().radius + 0.1f);
             var direction = -transform.up;
-            var maxdistance = rb.GetComponent<SphereCollider>().radius + 0.5f;
+            var maxdistance = rb.GetComponent<SphereCollider>().radius + 5f;
 
             if (GroundCheck == groundCheck.rayCast)
             {

@@ -15633,7 +15633,7 @@ Transform:
   m_GameObject: {fileID: 6190161357173378045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.25, y: 0.74130553, z: -11.336212}
+  m_LocalPosition: {x: 0, y: 0.74130553, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16663,6 +16663,7 @@ GameObject:
   - component: {fileID: 1653692202636694719}
   - component: {fileID: 4358539993718410607}
   - component: {fileID: 3374384113913744048}
+  - component: {fileID: 1065511148424199116}
   m_Layer: 7
   m_Name: Arcade_Human_Perfect
   m_TagString: Untagged
@@ -16705,7 +16706,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.4137084, y: 2.26, z: 4.43}
   m_Center: {x: 0, y: 0, z: 0}
@@ -16738,12 +16739,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementMode: 1
-  GroundCheck: 0
+  GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 60
-  accelaration: 15
+  MaxSpeed: 100
+  accelaration: 20
   turn: 10
   gravity: 7
   downforce: 5
@@ -16836,6 +16837,8 @@ MonoBehaviour:
   SkidSound: {fileID: 1653692202636694719}
   skidWidth: 0.13985014
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &3890264399814509598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17087,6 +17090,30 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 168e71e1d83e0584b819a4848a86590f, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
+--- !u!136 &1065511148424199116
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7031174482344955398}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.64624214
+  m_Height: 5.4838424
+  m_Direction: 1
+  m_Center: {x: -0.018283844, y: 1.3278906, z: 0.12}
 --- !u!1 &7082337247273000615
 GameObject:
   m_ObjectHideFlags: 0
@@ -28492,6 +28519,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: e7b62c35a97b8df4bbb25eb2156dc1d0, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!114 &3189352218762009991
 MonoBehaviour:
   m_ObjectHideFlags: 0

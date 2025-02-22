@@ -4,10 +4,10 @@ public class RGTDesertMapManager : MonoBehaviour
 {
     [SerializeField] private GameObject DesertMap;
     [SerializeField] private GameObject ForestMap;
-    //[SerializeField] private GameObject SnowMap;
+    [SerializeField] private GameObject SnowMap;
 
     [SerializeField] private Color fogColor = new Color(0.6f, 0.4f, 0.2f, 1f); // 갈색 안개
-    [SerializeField] private float targetFogDensity = 0.03f; // 목표 안개 농도
+    [SerializeField] private float targetFogDensity = 0.01f; // 목표 안개 농도
     [SerializeField] private float transitionSpeed = 1.5f; // 부드러운 전환 속도
 
     private Color defaultFogColor;
@@ -105,7 +105,7 @@ public class RGTDesertMapManager : MonoBehaviour
             DesertMap.SetActive(true);
             isInFogZone = true;
             ForestMap.SetActive(false);
-            //SnowMap.SetActive(false);
+            SnowMap.SetActive(false);
 
             //SkyBox
             RenderSettings.skybox = newSkybox; 

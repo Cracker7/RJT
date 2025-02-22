@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2362175469077078555}
   - component: {fileID: 7497736032542707248}
   - component: {fileID: 496425631193643334}
+  - component: {fileID: 390176411454821022}
   m_Layer: 7
   m_Name: Arcade_MineCart_Perfect
   m_TagString: Untagged
@@ -154,7 +155,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.2215576, y: 1.2161865, z: 1.6137695}
   m_Center: {x: 0.0040283203, y: 0.1453247, z: 0.0040283203}
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementMode: 1
-  GroundCheck: 0
+  GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
@@ -285,6 +286,8 @@ MonoBehaviour:
   SkidSound: {fileID: 2362175469077078555}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &4734324692198052964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -536,6 +539,30 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: ccbe081a272124c4d9fa6565ee319d32, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
+--- !u!136 &390176411454821022
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948511454474471882}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.83184814
+  m_Height: 2.0440674
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.3607788, z: -0.01953125}
 --- !u!1 &2245790101595106113
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,7 +716,7 @@ Transform:
   m_GameObject: {fileID: 3148206934990387642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.63224614, z: 0.003540039}
+  m_LocalPosition: {x: 0, y: 0.63224614, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

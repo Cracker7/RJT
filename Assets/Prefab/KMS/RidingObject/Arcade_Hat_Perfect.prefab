@@ -6234,6 +6234,7 @@ GameObject:
   - component: {fileID: 3312592811028125542}
   - component: {fileID: 1678072752438749217}
   - component: {fileID: 7260801400378676414}
+  - component: {fileID: 7473124611991848601}
   m_Layer: 7
   m_Name: Arcade_Hat_Perfect
   m_TagString: Untagged
@@ -6276,7 +6277,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 3.5534668}
   m_Center: {x: 0, y: 0, z: 0}
@@ -6308,13 +6309,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
+  movementMode: 0
   GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 300
-  accelaration: 50
+  MaxSpeed: 240
+  accelaration: 20
   turn: 10
   gravity: 7
   downforce: 5
@@ -6407,6 +6408,8 @@ MonoBehaviour:
   SkidSound: {fileID: 3312592811028125542}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &3527780999971896497
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6658,6 +6661,30 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 06e98e4282e16ce4492146d536176c6b, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
+--- !u!136 &7473124611991848601
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104564940140572396}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.1818848
+  m_Height: 3.4957275
+  m_Direction: 0
+  m_Center: {x: 0.017822266, y: 0.08000004, z: 0.008911133}
 --- !u!1 &2206731005176117144
 GameObject:
   m_ObjectHideFlags: 0
@@ -23088,7 +23115,7 @@ Transform:
   m_GameObject: {fileID: 6573889794289162563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.287537, y: 1.0830518, z: -88.378174}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -30,16 +30,21 @@ public class InteractableObject : MonoBehaviour
     public event Action OnDestroyCalled;
     public event Action OnHpBarTr;
 
+    // 정면 충돌 시 발생할 이벤트
+    public event Action OnFrontalCollision;
+
     Rigidbody rb;
 
     private float bounceForce = 200f;  // 날아가는 힘의 크기
     private float upwardForce = 10f;   // 위로 뜨는 힘의 크기
 
-    private float collisionAngle = 45f;
+    private float collisionAngle = 30f;
 
     public GameObject star;
     protected Collider col;
     private GameObject newStar;
+
+    private float frontCollisionAngleThreshold = 45f;
 
     public virtual void Awake()
     {
@@ -157,11 +162,49 @@ public class InteractableObject : MonoBehaviour
         {
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+
+            // 정면충돌을 없애버리고 콜리전을 캡슐로 바꿔봄
+
+            //{
+            //    // 모든 접촉 지점을 순회하면서 정면 충돌 여부를 판단
+            //    bool isFrontalCollision = false;
+            //    foreach (ContactPoint contact in collision.contacts)
+            //    {
+            //        Vector3 normal = contact.normal; // 충돌 지점의 법선 벡터
+            //        Vector3 forwardDirection = transform.forward; // 차량의 전진 방향
+
+            //        // 두 벡터 사이의 각도 계산 (도 단위)
+            //        float angle = Vector3.Angle(forwardDirection, -normal);
+
+            //        // 각도가 임계값 이하면 정면 충돌로 간주
+            //        if (angle <= frontCollisionAngleThreshold)
+            //        {
+            //            isFrontalCollision = true;
+            //            break; // 정면 충돌이 하나라도 있으면 더 이상 확인할 필요 없음
+            //        }
+            //    }
+
+            //    if (isFrontalCollision)
+            //    {
+            //        Debug.Log("정면 충돌 발생!");
+
+            //        if (OnFrontalCollision != null)
+            //        {
+            //            OnFrontalCollision();
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("정면 충돌 아님");
+            //    }
+            //}
         }
     }
 
     public virtual void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player")) return;
         if (other.gameObject.layer == LayerMask.NameToLayer("Ignore"))
         {
             if (!collisionTriggered && other.CompareTag("Platform"))
@@ -196,14 +239,15 @@ public class InteractableObject : MonoBehaviour
             float angle = Vector3.Angle(vehicleVelocityDirection, collisionDirection);
             Debug.Log("차량 진행 방향과 충돌 방향 사이의 각도: " + angle);
 
-            // 45도 이하이면 정면 충돌, 그 이상이면 측면 충돌로 판단합니다.
-            if (angle < collisionAngle)
-            {
-                Debug.Log("EEE 정면 충돌");
-                // 정면 충돌이면 충돌된 곳을 기준으로 반대 방향으로 튕기게 함
-                StartCoroutine(BounceBackCoroutine(collisionPoint));
-            }
-            else
+
+            // 정면 충돌을 삭제하고 부딪히면 빙빙 돌게 변경
+            //if (angle < collisionAngle)
+            //{
+            //    Debug.Log("EEE 정면 충돌");
+            //    // 정면 충돌이면 충돌된 곳을 기준으로 반대 방향으로 튕기게 함
+            //    StartCoroutine(BounceBackCoroutine(collisionPoint));
+            //}
+            //else
             {
                 Debug.Log("EEE 측면 충돌");
 
@@ -300,10 +344,10 @@ public class InteractableObject : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        if (rb != null)
-        {
-            rb.linearVelocity *= 0.7f;
-        }
+        //if (rb != null)
+        //{
+        //    rb.linearVelocity *= 0.7f;
+        //}
 
         while (elapsedTime < 1f)
         {

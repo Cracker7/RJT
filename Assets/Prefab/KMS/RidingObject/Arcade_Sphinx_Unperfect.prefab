@@ -22118,7 +22118,7 @@ Transform:
   m_GameObject: {fileID: 6369078913766934428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.786072, y: 1.0830518, z: -83.76062}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23233,6 +23233,7 @@ GameObject:
   - component: {fileID: 2471146040308053512}
   - component: {fileID: 1893756223579843703}
   - component: {fileID: 948999926794321212}
+  - component: {fileID: 1106416845791633335}
   m_Layer: 7
   m_Name: Arcade_Sphinx_Unperfect
   m_TagString: Untagged
@@ -23275,7 +23276,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.634387, y: 1.668373, z: 4.5767164}
   m_Center: {x: 0, y: 0, z: 0}
@@ -23307,8 +23308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
-  GroundCheck: 0
+  movementMode: 0
+  GroundCheck: 1
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
@@ -23406,6 +23407,8 @@ MonoBehaviour:
   SkidSound: {fileID: 2471146040308053512}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &4796237588361533947
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23645,6 +23648,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: a2c1950062837a84da54ffb09865ecb6, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!114 &948999926794321212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23657,6 +23661,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &1106416845791633335
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040081909652649738}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.9073486
+  m_Height: 10.006592
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.78808594, z: 0.07507324}
 --- !u!1 &9112043442890357277
 GameObject:
   m_ObjectHideFlags: 0
