@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1318935079978438864}
   - component: {fileID: 1318935079978438870}
   - component: {fileID: 1318935079978438871}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Runes small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4851,7 +4851,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cbb6f419bbe7c6e4d9ce7e0322aa267d, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4915,7 +4914,7 @@ GameObject:
   - component: {fileID: 3531368748785038516}
   - component: {fileID: 6679182840704168355}
   - component: {fileID: 7893921968227561089}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Runes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9755,7 +9754,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cbb6f419bbe7c6e4d9ce7e0322aa267d, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9819,7 +9817,7 @@ GameObject:
   - component: {fileID: 3280519133223516630}
   - component: {fileID: 3280519133223516628}
   - component: {fileID: 3280519133223516629}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10414,7 +10412,7 @@ ParticleSystem:
     gravitySource: 0
     maxNumParticles: 150
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 0
+    size3D: 1
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -14601,7 +14599,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 935ab430b9a17de4caf00054e74116f4, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14666,8 +14663,9 @@ GameObject:
   - component: {fileID: 3280519133390621043}
   - component: {fileID: 3280519133390621004}
   - component: {fileID: 3280519133390621041}
-  m_Layer: 0
-  m_Name: CFXR3 Magic Aura A (Runic)
+  - component: {fileID: 5468313157965865617}
+  m_Layer: 11
+  m_Name: effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14717,7 +14715,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 41e018a6cf0c896418fc0b89dda748c6, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19641,6 +19638,27 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 3280519133390621004}
+--- !u!65 &5468313157965865617
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3280519133390621005}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 10, z: 2}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!1 &3280519133430969738
 GameObject:
   m_ObjectHideFlags: 0
@@ -19651,7 +19669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3280519133430969736}
   - component: {fileID: 3280519133430969737}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
