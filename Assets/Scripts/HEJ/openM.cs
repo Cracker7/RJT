@@ -17,6 +17,17 @@ public class OpenM : MonoBehaviour
     public GameObject door;
 
 
+    public RawImage bubble;
+    public RawImage poo;
+
+    public GameObject particle;
+    public GameObject toilet;
+
+    public AudioSource audioSource;
+    public AudioClip bubbleSound;
+
+    bool isCheck1 = false;
+
     private void Awake()
     {
 
@@ -34,7 +45,12 @@ public class OpenM : MonoBehaviour
             {
                 //Debug.Log("애니메이션이 끝");
                 StartCoroutine(SmoothCameraRotation(new Vector3(0f, -62.932f, 0f), 1.5f)); // 목표 회전값과 시간 설정
-                StartCoroutine(DestroyObj());
+                if (!isCheck1)
+                {
+                    StartCoroutine(DestroyObj());
+                    
+                }
+                
             }
 
         }
@@ -60,16 +76,37 @@ public class OpenM : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         isDestroy = true;
+        isCheck1 = true;
         Destroy(firstRemy);
         Destroy(img1);
         Destroy(img2);
-        walkingRm.SetActive(true);
-        Invoke("OpenDoor", 1f);
+        Invoke("Bubble", 0.1f);
+        Destroy(toilet, 0.7f);
+        Invoke("playParticle",0.7f);
+        Invoke("playParticle",0.7f);
+        Invoke("SoundMn", 0.6f);
     }
 
-    private void OpenDoor()
+    private void Bubble()
     {
-        door.transform.localRotation *= Quaternion.Euler(0f, 13.5f, 0f);
-        //door.transform.rotation = Quaternion.Euler(0f, -9.8f, 0f);
+        walkingRm.SetActive(true);
+
+        bubble.gameObject.SetActive(true);
+        poo.gameObject.SetActive(true);
     }
+
+    private void playParticle()
+    {
+        particle.SetActive(true);
+    }
+
+    private void SoundMn()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(bubbleSound);
+        }
+    }
+
+
 }
