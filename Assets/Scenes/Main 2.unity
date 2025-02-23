@@ -148791,15 +148791,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44.57536
+      value: -47.31
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3901.81
+      value: 3892.35
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7124.633
+      value: -7122.31
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -157693,31 +157693,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1157069637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52fc709bbe4befd489ef7a1faf439775, type: 3}
+  m_Script: {fileID: 11500000, guid: ff79fbd8bcf99924d9e2d530e4d4a36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleEffectPrefab: {fileID: 3280519133390621005, guid: fa438ce0a57bef345adf00343b0eb247, type: 3}
+  selectRadius: 50
   detectionRadius: 300
-  drivableLayer:
+  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  particleEffectPrefab: {fileID: 3280519133390621005, guid: fa438ce0a57bef345adf00343b0eb247, type: 3}
+  targetLayer:
     serializedVersion: 2
     m_Bits: 4096
---- !u!114 &1650847410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157069637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95722d18447261345a19140bb0b4d2d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRadius: 50
-  highlightColor: {r: 0, g: 1, b: 0, a: 1}
-  particleLayer:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!1 &1661613466
 GameObject:
   m_ObjectHideFlags: 0
@@ -166256,9 +166241,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 564724379}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1677911351881079089, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1650847410}
     - targetCorrespondingSourceObject: {fileID: 1677911351881079089, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1650847409}
