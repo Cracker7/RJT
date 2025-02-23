@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ParticleEffectColorChanger : MonoBehaviour
 {
-    public float detectionRadius = 30f;
+    public float SelectRadius = 30f;
     public Color highlightColor = Color.green;
     public LayerMask particleLayer;
 
@@ -17,9 +17,9 @@ public class ParticleEffectColorChanger : MonoBehaviour
 
     void FindAndHighlightClosestParticle()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, particleLayer);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, SelectRadius, particleLayer);
         GameObject nearestPrefab = null;
-        float minDistance = detectionRadius;
+        float minDistance = SelectRadius;
 
         foreach (var col in colliders)
         {
@@ -77,12 +77,6 @@ public class ParticleEffectColorChanger : MonoBehaviour
         }
     }
 
-    //void SetParticleColor(ParticleSystem ps, Color color)
-    //{
-    //    var main = ps.main;
-    //    main.startColor = color;
-    //}
-
     void SetParticleColor(ParticleSystem ps, Color color)
     {
         var main = ps.main;
@@ -99,7 +93,6 @@ public class ParticleEffectColorChanger : MonoBehaviour
 
         ps.SetParticles(particles, count); // 변경 사항 적용
 
-        // 기존 파티클 초기화 후 새로 방출 (필요한 경우)
         ps.Clear();
         ps.Play();
     }
