@@ -228,6 +228,11 @@ public class PlayerKMS : MonoBehaviour
                 {
                     HandleInput();
                 }
+                else
+                { 
+                    // 죽으면 UI가 뜸 로비 돌아가기 재시작하기
+                    // 이때 다른 UI들은 꺼져야함
+                }
             }
 
             // // 부모 관계 해제
