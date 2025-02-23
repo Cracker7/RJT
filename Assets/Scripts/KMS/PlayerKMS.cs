@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerKMS : MonoBehaviour
 {
+    public static int DeadCnt = 0;
     public CinemachineCamera JumpCam;
     // 상태 머신
     public enum PlayerState { Idle, Transitioning, Riding, Dead }
@@ -873,6 +874,7 @@ public class PlayerKMS : MonoBehaviour
         carDown = null;
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("플레이어와 부딪힌 것 이름" + other.name);
@@ -882,8 +884,11 @@ public class PlayerKMS : MonoBehaviour
         {
             Debug.Log("플레이어가 죽음");
             isDead = true;
+            ++DeadCnt;
         }
     }
+
+
 
     private void TriggerOn()
     {
