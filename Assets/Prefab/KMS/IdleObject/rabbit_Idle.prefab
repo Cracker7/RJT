@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6263480598278755960}
   - component: {fileID: 5082678859760196423}
   - component: {fileID: 7173380258732691991}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: rabbit_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,6 +74,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 76f107170c555f341a68d45520b503ec, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!54 &7173380258732691991
 Rigidbody:
   m_ObjectHideFlags: 0

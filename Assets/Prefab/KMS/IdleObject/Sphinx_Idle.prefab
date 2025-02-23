@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7950765427892391590}
   - component: {fileID: 3685734888545712596}
   - component: {fileID: -5183196869922657659}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphinx_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: a833ff25f40e3784e87162f5ea74b151, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &3685734888545712596
 BoxCollider:
   m_ObjectHideFlags: 0
