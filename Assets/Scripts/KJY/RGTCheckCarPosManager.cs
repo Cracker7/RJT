@@ -27,7 +27,6 @@ public class RGTCheckCarPosManager : MonoBehaviour
 
     private void Update()
     {
-
         FollowPos();
         //인간하고 차 연결되어 있는 상태 하에 함수 실행 조건 추가
         CheckThePos();

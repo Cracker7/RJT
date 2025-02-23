@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WASDInputHandler : MonoBehaviour, IInputHandler
 {
+    public InputType Type => InputType.AD;
     public Vector3 HandleInput()
     {
         Debug.Log("WASD Input");

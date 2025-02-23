@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1678309166464833808}
   - component: {fileID: 9123863374132009984}
   - component: {fileID: 8323705991425084555}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hat_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 8db3fa6995ff4524f98eb65445e29436, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &9123863374132009984
 BoxCollider:
   m_ObjectHideFlags: 0

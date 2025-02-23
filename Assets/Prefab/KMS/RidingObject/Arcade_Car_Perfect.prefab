@@ -5621,9 +5621,9 @@ GameObject:
   - component: {fileID: 4522297514277781518}
   - component: {fileID: 3144237680647006154}
   - component: {fileID: 5899208111343513600}
-  - component: {fileID: 3800449467234688837}
   - component: {fileID: 8529571395559393564}
   - component: {fileID: 1919837481063619522}
+  - component: {fileID: -3644336535918897198}
   m_Layer: 7
   m_Name: Arcade_Car_Perfect
   m_TagString: Untagged
@@ -5699,14 +5699,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementMode: 0
-  GroundCheck: 1
+  GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 240
+  MaxSpeed: 180
   accelaration: 20
   turn: 10
-  gravity: 5
+  gravity: 7
   downforce: 5
   AirControl: 1
   airControlTranslationForce: 50
@@ -6020,18 +6020,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3800449467234688837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4264980800788272180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8529571395559393564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6074,6 +6062,18 @@ CapsuleCollider:
   m_Height: 3.3
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3644336535918897198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264980800788272180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4282939568845089731
 GameObject:
   m_ObjectHideFlags: 0
