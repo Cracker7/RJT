@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerKMS : MonoBehaviour
 {
@@ -68,8 +70,8 @@ public class PlayerKMS : MonoBehaviour
     public GameObject BoomGo;
     public RectTransform AD;
     public RectTransform Arrow;
-    public RectTransform ADWithArrow;
-    public RectTransform Ball;
+    public RectTransform ADObjection;
+    public RectTransform ArrowObjection;
 
     [Space(10)]
     public GameObject currentObjectPrefab;
@@ -180,45 +182,9 @@ public class PlayerKMS : MonoBehaviour
                     // 이때 다른 UI들은 꺼져야함
                 }
             }
-
-            // // 부모 관계 해제
-            // if (currentObjectPrefab != null)
-            //     transform.SetParent(null);
-
-            // // 메시 렌더러 활성화
-            // foreach (SkinnedMeshRenderer skin in skinRenderer)
-            // {
-            //     skin.enabled = true;
-            // }
-
-            // 죽었을 때의 추가 로직 (미니게임 실패, 내구도 소진 등)
         }
         else
         {
-            //// Idle 상태에서 발사체 모션 진행 중이면 업데이트
-            //if (currentState == PlayerState.Idle && isProjectileLaunched)
-            //{
-            //    UpdateProjectileMotion();
-            //    // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
-            //    GameObject findcar =
-            //        boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
-
-            //    if(projectileElapsedTime == projectileDuration)
-            //    {
-            //        currentState = PlayerState.Dead;
-            //    }
-            //    else if (findcar != null && Input.GetKeyDown(interactKeyCode))
-            //    {
-            //        StartTransition(findcar.GetComponent<InteractableObject>());
-            //    }
-
-            //}
-            //else
-            //{
-            //    // 평상시 입력 처리
-            //    HandleInput();
-            //}
-
             HandleInput();
 
             // Riding 상태라면 Riding 관련 추가 로직도 처리
@@ -874,6 +840,7 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("플레이어가 죽음");
             isDead = true;
             ++DeadCnt;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -893,32 +860,6 @@ public class PlayerKMS : MonoBehaviour
             Gizmos.DrawLine(transform.position, targetObject.mountPoint.position);
             Gizmos.DrawWireSphere(targetObject.mountPoint.position, mountThreshold);
         }
-
-
-
-        //// 메인 카메라가 없는 경우 반환
-        //if (Camera.main == null)
-        //    return;
-
-        //// 카메라의 위치와 forward 방향
-        //Vector3 origin = Camera.main.transform.position + Vector3.zero;
-        //Vector3 direction = Camera.main.transform.forward;
-        //Quaternion rotation = Camera.main.transform.rotation;
-
-
-        //// 스윕 볼륨의 중심: 시작점부터 maxDistance의 중간
-        //Vector3 center = origin + direction * (50 * 0.5f);
-
-        //// 스윕 볼륨의 크기:
-        //// - X, Y: 원래 박스의 크기 (halfExtents * 2)
-        //// - Z: 이동 거리(maxDistance) + 시작 박스의 깊이(halfExtents.z * 2)
-        //Vector3 size = new Vector3(5 * 2,
-        //                           5 * 2,
-        //                           50 + 1 * 2);
-
-        //// 회전과 중심을 적용한 행렬로 설정
-        //Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
-        //Gizmos.DrawWireCube(Vector3.zero, size);
     }
 
     private IEnumerator SwitchCameraWithDelay()
@@ -957,6 +898,12 @@ public class PlayerKMS : MonoBehaviour
                 break;
             case InputType.Arrow:
                 Arrow.gameObject.SetActive(true);
+                break;
+            case InputType.ArrowObjection:
+                ArrowObjection.gameObject.SetActive(true);
+                break;
+            case InputType.ADObjection:
+                ADObjection.gameObject.SetActive(true);
                 break;
         }
     }
