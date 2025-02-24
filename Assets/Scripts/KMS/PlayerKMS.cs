@@ -845,6 +845,7 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("플레이어가 죽음");
             isDead = true;
             ++DeadCnt;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
