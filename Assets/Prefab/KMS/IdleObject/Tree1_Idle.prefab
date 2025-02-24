@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4517724704579157216}
   - component: {fileID: 2888477645332173545}
   - component: {fileID: -126624568100281919}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree1_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   objectData: {fileID: 0}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &2888477645332173545
 BoxCollider:
   m_ObjectHideFlags: 0

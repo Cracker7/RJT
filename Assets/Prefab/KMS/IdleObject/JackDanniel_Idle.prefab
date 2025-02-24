@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4101711759277796189}
   - component: {fileID: 8756691181091026844}
   - component: {fileID: -5834655948555913075}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: JackDanniel_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 64916dfbdaa585342b3654a8b0cd035a, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &8756691181091026844
 BoxCollider:
   m_ObjectHideFlags: 0

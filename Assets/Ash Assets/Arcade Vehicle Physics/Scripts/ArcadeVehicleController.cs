@@ -22,7 +22,7 @@ namespace ArcadeVP
 
         [Header("Speed Limit Settings")]
         [Tooltip("최대속도를 초과했을 때, 서서히 최대속도로 감속하는 정도를 결정합니다.")]
-        public float decelerationFactor = 2f;
+        public float decelerationFactor = 10f;
 
         public Rigidbody rb, carBody;
 
@@ -129,22 +129,22 @@ namespace ArcadeVP
 
                 if (!parallelMovement)
                 {
-                    if (accelerationInput > 0.1f || carVelocity.z > 1)
-                    {
-                        carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
-                    }
-                    else if (accelerationInput < -0.1f || carVelocity.z < -1)
-                    {
-                        carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
-                    }
+                    //if (accelerationInput > 0.1f || carVelocity.z > 1)
+                    //{
+                    //    carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    //}
+                    //else if (accelerationInput < -0.1f || carVelocity.z < -1)
+                    //{
+                    //    carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
+                    //}
+                    // 항상 회전력을 가하도록 수정
+                    carBody.AddTorque(Vector3.up * steeringInput * sign * turn * 100 * TurnMultiplyer);
                 }
                 else
                 {
                     if (accelerationInput > 0.1f || carVelocity.z > 1 || accelerationInput < -0.1f || carVelocity.z < -1)
                     {
-                        // transform.right는 차량의 오른쪽 방향입니다.
                         Vector3 lateralMovement = transform.right * steeringInput * turn * 100;
-                        //carBody.MovePosition(carBody.position + lateralMovement);
                         carBody.AddForce(lateralMovement, ForceMode.Acceleration);
                     }
                 }
@@ -334,6 +334,48 @@ namespace ArcadeVP
                 }
             }
             else { return false; }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            // 벽으로 태그된 오브젝트와 충돌 시
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                Vector3 averageNormal = Vector3.zero;
+                foreach (ContactPoint contact in collision.contacts)
+                {
+                    averageNormal += contact.normal;
+                }
+                averageNormal.Normalize();
+
+                // 충돌 법선 방향으로 반동 힘을 적용합니다.
+                float reboundForce = 100f; // 이 값을 조절하여 반동 강도를 결정합니다.
+                rb.AddForce(averageNormal * reboundForce, ForceMode.Impulse);
+
+                // 벽의 로컬 Z방향(즉, wall.transform.forward)으로 회전 토크를 추가합니다.
+                Vector3 wallZDirection = collision.gameObject.transform.forward;
+                carBody.transform.rotation = Quaternion.Euler(wallZDirection);
+            }
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                Vector3 averageNormal = Vector3.zero;
+                foreach (ContactPoint contact in collision.contacts)
+                {
+                    averageNormal += contact.normal;
+                }
+                averageNormal.Normalize();
+
+                // 차량의 진행 방향과 벽의 반대 방향(-법선) 사이의 각도를 계산합니다.
+                float angleDiff = Vector3.SignedAngle(carBody.transform.forward, -averageNormal, Vector3.up);
+
+                // 이 각도에 비례하는 회전 토크를 추가하여 좌우 회전을 유도합니다.
+                float rotationTorque = angleDiff * 5f; // 계수를 조절하여 회전 강도를 결정합니다.
+                carBody.AddTorque(Vector3.up * rotationTorque, ForceMode.Acceleration);
+            }
         }
 
         private void OnDrawGizmos()
