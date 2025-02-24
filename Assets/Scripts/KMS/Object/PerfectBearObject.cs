@@ -6,7 +6,7 @@ public class PerfectBearObject : InteractableObject
     private void Start()
     {
         // 부모 콜라이더의 최상단 위치 계산
-        float topY = col.bounds.max.y;
+        float topY = col.bounds.max.y;                
         //float spawnOffset = 2f; // 살짝 위로 띄우는 거리
 
         Vector3 spawnPosition = new Vector3(
@@ -23,6 +23,17 @@ public class PerfectBearObject : InteractableObject
         heart.transform.localPosition = transform.InverseTransformPoint(spawnPosition);
     }
 
-    
+    public override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
+        AudioManager.instance.PlaySfx(AudioManager.sfx.bear);
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        AudioManager.instance.PlaySfx(AudioManager.sfx.bear);
+    }
+
 
 }

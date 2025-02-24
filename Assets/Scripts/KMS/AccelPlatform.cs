@@ -21,6 +21,7 @@ public class AccelPlatform : MonoBehaviour
             //rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
             rb.linearVelocity *= speed;
             //rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 100);
+            AudioManager.instance.PlaySfx(AudioManager.sfx.manscream);
         }
 
     }

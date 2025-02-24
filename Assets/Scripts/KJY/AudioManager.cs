@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     int channelIndex;
 
     //들어갈 효과음들 인스펙터 순서대로 이름정리
-    public enum sfx {bear, cactus, car, carpet, hat, human, jack, rabbit, tire, sphinx, playerOh, tonado }
+    public enum sfx {bear, cactus, car, carpet, hat, human, jack, rabbit, tire, sphinx, playerOh, tonado, manscream, funscream }
 
 
     void Awake()

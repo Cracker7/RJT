@@ -5,7 +5,12 @@ public class CarObject : InteractableObject
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
-        // 오브젝트에 맞는 소리 나는것 적용
+        AudioManager.instance.PlaySfx(AudioManager.sfx.car);
+    }
 
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        AudioManager.instance.PlaySfx(AudioManager.sfx.car);
     }
 }

@@ -22,6 +22,7 @@ public class JumpPlatform : MonoBehaviour
             rb.transform.position += new Vector3(0, 1f, 0);
             rb.linearVelocity /= deceleration;
             rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            AudioManager.instance.PlaySfx(AudioManager.sfx.funscream);
         }
 
     }
