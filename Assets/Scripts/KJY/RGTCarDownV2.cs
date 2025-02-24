@@ -22,7 +22,7 @@ public class RGTCarDownV2 : ICarDown
 
     public void Sink(Transform _body)
     {
-        Debug.Log("AAA Sink" + isRising.ToString());
+        //Debug.Log("AAA Sink" + isRising.ToString());
         if (hasStart)
         {
             startPosition = _body.localPosition;
@@ -56,7 +56,7 @@ public class RGTCarDownV2 : ICarDown
             targetY = startPosition.y - sinkDepth;
             hasStart = false;
             //Debug.Log("Start Position set: " + startPosition);
-            Debug.Log("AAA Risging : " + isRising);
+            //Debug.Log("AAA Risging : " + isRising);
         }
         // 연타 검사
         KeepTheKey();
@@ -94,7 +94,7 @@ public class RGTCarDownV2 : ICarDown
         {
             isRising = false;
             isSinking = true; // 다시 가라앉기 시작
-            Debug.Log("Reached original height, resuming sink");
+            //Debug.Log("Reached original height, resuming sink");
         }
     }
 
@@ -106,7 +106,7 @@ public class RGTCarDownV2 : ICarDown
             //터진다.
             Die();
         }
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             // 속도 체크
             if (Time.time - lastTapTime < requiredTapSpeed)
@@ -115,7 +115,7 @@ public class RGTCarDownV2 : ICarDown
                 isRising = true;
                 isSinking = false;
                 riseTimer = 1f;
-                Debug.Log("Z key rapid tap detected! Starting rise");
+                //Debug.Log("M key rapid tap detected! Starting rise");
             }
             lastTapTime = Time.time;
         }
@@ -127,7 +127,7 @@ public class RGTCarDownV2 : ICarDown
             {
                 isRising = false;
                 isSinking = true;
-                Debug.Log("Rise timer expired, resuming sink");
+                //Debug.Log("Rise timer expired, resuming sink");
             }
         }
     }
