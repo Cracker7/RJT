@@ -16738,12 +16738,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d69c44041501f4aab1c355410d67b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMode: 1
-  GroundCheck: 1
+  movementMode: 0
+  GroundCheck: 0
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 100
+  MaxSpeed: 180
   accelaration: 20
   turn: 10
   gravity: 7
@@ -17098,7 +17098,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7031174482344955398}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bad847496dced214296d7e92c6d55d02, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

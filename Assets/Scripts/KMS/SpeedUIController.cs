@@ -21,33 +21,33 @@ public class SpeedUIController : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindWithTag("Player");
-        Debug.Log("Player : " + player);
+        //Debug.Log("Player : " + player);
         if (player != null)
         {
-            Debug.Log("플레이어 찾음");
+            //Debug.Log("플레이어 찾음");
             playerKMS = player.GetComponent<PlayerKMS>();
             if(playerKMS != null)
             {
-                Debug.Log("플레이어스크립트 찾음");
+                //Debug.Log("플레이어스크립트 찾음");
             }
         }
-        else
-        {
-            Debug.LogError("Player 태그를 가진 오브젝트를 찾을 수 없습니다!");
-        }
+        //else
+        //{
+        //    Debug.LogError("Player 태그를 가진 오브젝트를 찾을 수 없습니다!");
+        //}
     }
 
     private void Update()
     {
-        Debug.Log("스피드 UI 업데이트 되고 있음");
+        //Debug.Log("스피드 UI 업데이트 되고 있음");
         // PlayerKMS가 정상적으로 할당되었는지 확인
         if (playerKMS == null)
         {
-            Debug.Log("플레이어를 못찾음");
+            //Debug.Log("플레이어를 못찾음");
             return;
         }
 
-        Debug.Log("스피드 UI에서 player를 찾음");
+        //Debug.Log("스피드 UI에서 player를 찾음");
 
         // ActiveRigidbody가 탑승 오브젝트의 리지드바디가 있으면 그걸, 없으면 플레이어 자신의 리지드바디(mainRigidbody)를 사용
         float speed = playerKMS.ActiveRigidbody.linearVelocity.magnitude;
@@ -60,7 +60,7 @@ public class SpeedUIController : MonoBehaviour
             tmp.color = newColor;
             currentColor = newColor;
         }
-        Debug.Log("스피드 텍스트 업데이트 완료");
+        //Debug.Log("스피드 텍스트 업데이트 완료");
 
         // 속도가 dangerSpeed 이하이면 카운트다운 시작
         if (speed <= dangerSpeed)

@@ -8,11 +8,13 @@ public class RGTCharacterBalanceController : MonoBehaviour
     [SerializeField] Transform TheBall;
     [SerializeField] Rigidbody CharacterRigidbody;
 
+
     // 공 위에서 중심을 잡는 높이
     public float balanceHeight = 3.5f;
 
     [SerializeField] private GameObject hpBarPrefab = null;
     [SerializeField] private RGTHpBar hpBar = null;
+
 
     private void Start()
     {

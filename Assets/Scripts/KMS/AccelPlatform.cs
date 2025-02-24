@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class AccelPlatform : MonoBehaviour
 {
-
-    public float speed = 500f;
+    private float speed = 4.5f;
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -19,8 +18,8 @@ public class AccelPlatform : MonoBehaviour
                 return;
             }
             // Rigidbody ÄÄÆ÷³ÍÆ®¿¡ ÈûÀ» °¡ÇÔ
-            rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
-            //rb.linearVelocity *= speed;
+            //rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
+            rb.linearVelocity *= speed;
             //rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 100);
         }
 

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerKMS : MonoBehaviour
 {
+    public static int DeadCnt = 0;
     public CinemachineCamera JumpCam;
     // 상태 머신
     public enum PlayerState { Idle, Transitioning, Riding, Dead }
@@ -65,6 +64,10 @@ public class PlayerKMS : MonoBehaviour
     private Vector3 projectileForward;          // 발사 시의 진행 방향
 
     public GameObject BoomGo;
+    public RectTransform AD;
+    public RectTransform Arrow;
+    public RectTransform ADWithArrow;
+    public RectTransform Ball;
 
     [Space(10)]
     public GameObject currentObjectPrefab;
@@ -211,7 +214,6 @@ public class PlayerKMS : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         // Transitioning 상태일 때는 입력을 무시한다.
         if (currentState == PlayerState.Transitioning)
         {
@@ -225,6 +227,11 @@ public class PlayerKMS : MonoBehaviour
                 if (!isDead)
                 {
                     HandleInput();
+                }
+                else
+                { 
+                    // 죽으면 UI가 뜸 로비 돌아가기 재시작하기
+                    // 이때 다른 UI들은 꺼져야함
                 }
             }
 
@@ -337,7 +344,25 @@ public class PlayerKMS : MonoBehaviour
 
             case PlayerState.Transitioning:
                 // 전환 상태: 모든 물리 비활성화, 키네마틱 활성화
-                SetPhysicsState(true, false, false);
+                // 카메라 떨림 방지 메인 리지드바디 속도 0;
+                if (mainRigidbody != null)
+                {
+                    mainRigidbody.linearVelocity = Vector3.zero;
+                    mainRigidbody.angularVelocity = Vector3.zero;
+                }
+
+                // 카메라 떨리는걸 방지하기 위해서 속도를 0으로 만들어줌
+                foreach (Rigidbody rb in ragdollRigidbodies)
+                {
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
+                }
+                SetPhysicsState(false, true, false);
+
+
                 break;
 
             case PlayerState.Dead:
@@ -350,6 +375,8 @@ public class PlayerKMS : MonoBehaviour
                 DisableAllPhysics();
                 break;
         }
+        // 캐릭터 상태가 변한 뒤 UI 업데이트
+        UpdateUI();
     }
 
     // 모든 물리 컴포넌트 비활성화
@@ -418,11 +445,15 @@ public class PlayerKMS : MonoBehaviour
         ExitObject(); // 기존 오브젝트에서 내리기
 
         UpdatePlayerState(PlayerState.Transitioning);
+
         hasTransition = true;
         targetObject = target;
         startPosition = transform.position;
         transitionTime = 0f;
-        //lastKnownMountPoint = target.mountPoint.position;
+
+        // 목표 위치 (mountPoint) 가져오기
+        //Vector3 targetPosition = targetObject.mountPoint.position;
+        lastKnownMountPoint = targetObject.mountPoint.position;
 
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
@@ -443,15 +474,14 @@ public class PlayerKMS : MonoBehaviour
         }
 
         // 전환 진행 시간 업데이트 및 진행 비율 계산
-        transitionTime += Time.deltaTime;
+        transitionTime += Time.fixedDeltaTime;
         float normalizedTime = transitionTime / transitionDuration;
 
-        // 목표 위치 (mountPoint) 가져오기
-        //Vector3 targetPosition = targetObject.mountPoint.position;
-        lastKnownMountPoint = targetObject.mountPoint.position;
+        // SmoothStep을 사용하여 더 부드러운 보간
+        float smoothTime = Mathf.SmoothStep(0f, 1f, normalizedTime);
 
         // 진행 비율에 따라 점프 높이 계산 (사인 함수를 이용해 부드러운 상승/하강 효과)
-        float height = Mathf.Sin(normalizedTime * Mathf.PI) * jumpHeight;
+        float height = Mathf.Sin(smoothTime * Mathf.PI) * jumpHeight;
         // 시작 위치에서 목표 위치로 선형 보간하고, 위쪽(height) 오프셋을 더하여 현재 위치 계산
         Vector3 currentPosition = Vector3.Lerp(startPosition, lastKnownMountPoint, normalizedTime) + Vector3.up * height;
         transform.position = currentPosition;
@@ -461,7 +491,7 @@ public class PlayerKMS : MonoBehaviour
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 10f);
         }
 
         // 목표 위치와의 거리 계산
@@ -545,7 +575,7 @@ public class PlayerKMS : MonoBehaviour
         {
             Instantiate(BoomGo, transform.position, Quaternion.identity);
         }
-        transform.SetParent(null);
+        transform.SetParent(null, true);
         UpdatePlayerState(PlayerState.Idle);
 
         foreach (SkinnedMeshRenderer skin in skinRenderer)
@@ -593,7 +623,6 @@ public class PlayerKMS : MonoBehaviour
             // 플레이어의 기본 이동 및 입력 컨트롤러로 복구
             currentMovement = GetComponent<IMovement>();
             currentInput = GetComponent<IInputHandler>();
-
         }
     }
 
@@ -631,6 +660,12 @@ public class PlayerKMS : MonoBehaviour
 
         foreach (var hitCollider in hitColliders)
         {
+            // 플레이어와 오브젝트 사이의 방향 계산
+            Vector3 directionToObject = (hitCollider.transform.position - transform.position).normalized;
+            // 플레이어의 forward 벡터와의 내적값이 음수이면 플레이어 뒤쪽에 있는 것으로 간주하여 무시합니다.
+            if (Vector3.Dot(transform.forward, directionToObject) < 0)
+                continue;
+
             InteractableObject interactable = hitCollider.GetComponent<InteractableObject>();
 
             if (interactable != null && interactable != currentInteractableObject &&
@@ -740,6 +775,8 @@ public class PlayerKMS : MonoBehaviour
         //LaunchProjectileMotion(); // 발사체 모션 시작
         ExplosionRb();
         currentState = PlayerState.Dead;
+        UpdateUI();
+        Invoke("TriggerOn", 0.5f);
     }
 
     public void SetDeadState()
@@ -749,6 +786,7 @@ public class PlayerKMS : MonoBehaviour
         ExplosionRb();
         //UpdatePlayerState(PlayerState.Dead);
         currentState = PlayerState.Dead;
+        UpdateUI();
         Invoke("TriggerOn",0.5f);
     }
 
@@ -821,8 +859,7 @@ public class PlayerKMS : MonoBehaviour
                 if (hasTransition)
                 {
                     Debug.Log("갈아탔을때 가속");
-                    float zAccelVelocity = savedVelocity.z * 5;
-                    rb.linearVelocity= new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
+                    AccelVelocity(rb);
                     rb.angularVelocity = savedAngularVelocity;
 
                     // 트랜지션을 거친 상태를 다시 초기화
@@ -838,6 +875,27 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
+    private void AccelVelocity(Rigidbody rb)
+    {
+        // 속도가 무제한으로 늘어날 수 있기 때문에 가속할 수 있는 최대 속도는 지정
+        rb.linearVelocity = Vector3.ClampMagnitude(savedVelocity * 4.5f, 300f);
+        if (rb.linearVelocity.magnitude <= 100f)
+            rb.linearVelocity = savedVelocity.normalized * 70f;
+        // Z 방향으로만 가속할 경우 아래로 내려갈때 또는 위로 올라갔을때 갈아탈경우
+        // 값이 너무 차이나서 평면으로 이동하게 되어버림
+        //float zAccelVelocity = savedVelocity.z * 5;
+        //rb.linearVelocity = new Vector3(savedVelocity.x, savedVelocity.y, zAccelVelocity);
+
+        // 힘을 가하여 가속
+        //float accelerationForce = 50f; // 힘의 크기 조정
+        //rb.AddForce(savedVelocity.normalized * accelerationForce, ForceMode.Acceleration);
+
+        // 현재 속도 방향으로 가속
+        //Vector3 currentVelocityDirection = savedVelocity.normalized;
+        //float accelerationMagnitude = 250f; // 가속 크기 조정
+
+        //rb.AddForce(currentVelocityDirection * accelerationMagnitude, ForceMode.VelocityChange); // VelocityChange 모드 사용
+    }
     private void EnterEvent()
     {
         currentInteractable.onRideUpdate += currentInteractable.StartHpDecrease;
@@ -855,9 +913,10 @@ public class PlayerKMS : MonoBehaviour
         currentInteractable.OnDestroyCalled -= durabilityZero;
         currentInteractable.onRideCol -= currentInteractable.HandleCollisionDamage;
         currentInteractable.OnFrontalCollision -= SetDeadState;
-        carDown = null;
         carDown.Die -= SetDeadState;
+        carDown = null;
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -868,8 +927,11 @@ public class PlayerKMS : MonoBehaviour
         {
             Debug.Log("플레이어가 죽음");
             isDead = true;
+            ++DeadCnt;
         }
     }
+
+
 
     private void TriggerOn()
     {
@@ -915,20 +977,44 @@ public class PlayerKMS : MonoBehaviour
         //Gizmos.DrawWireCube(Vector3.zero, size);
     }
 
-    // private void OnTriggerEnter(Collider other) {
-    //     InteractableObject interactable = other.GetComponent<InteractableObject>();
-    //     if(interactable != null && currentInteractable == null)
-    //     {
-    //         Ride(interactable);
-    //     }
-    // }
-
     private IEnumerator SwitchCameraWithDelay()
     {
         yield return new WaitForSeconds(0.5f);
 
         JumpCam.Priority = 15;
         Time.timeScale = 1;
+    }
+
+    private void HideAllUI()
+    {
+        AD.gameObject.SetActive(false);
+        Arrow.gameObject.SetActive(false);
+    }
+
+    private void UpdateUI()
+    {
+        // Riding 상태가 아니거나 현재 IInputHandler가 없다면 모든 UI를 끕니다.
+        if (currentState != PlayerState.Riding || currentInput == null)
+        {
+            HideAllUI();
+            return;
+        }
+
+        InputType inputType = currentInput.Type; // InputType은 enum
+
+        // 우선 모든 UI를 비활성화
+        HideAllUI();
+
+        // inputType에 따른 UI 활성화 (예시는 상황에 맞게 수정)
+        switch (inputType)
+        {
+            case InputType.AD:
+                AD.gameObject.SetActive(true);
+                break;
+            case InputType.Arrow:
+                Arrow.gameObject.SetActive(true);
+                break;
+        }
     }
 }
 
