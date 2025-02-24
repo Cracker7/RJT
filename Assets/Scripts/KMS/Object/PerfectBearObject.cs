@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PerfectBearObject : InteractableObject
 {
@@ -23,5 +22,7 @@ public class PerfectBearObject : InteractableObject
 
         heart.transform.localPosition = transform.InverseTransformPoint(spawnPosition);
     }
+
+    
 
 }
