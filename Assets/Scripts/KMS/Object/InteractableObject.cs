@@ -13,7 +13,7 @@ public class InteractableObject : MonoBehaviour
     public IMovement movementController;
     public IInputHandler inputHandler;
     public RGTHpBar hpBar;
-    private float damagePerSecond = 1f;
+    private float damagePerSecond = 10f;
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
