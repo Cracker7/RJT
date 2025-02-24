@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4517724704579157216}
   - component: {fileID: 2888477645332173545}
   - component: {fileID: -126624568100281919}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tree1_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   objectData: {fileID: 0}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!65 &2888477645332173545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -149,9 +150,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3580465925470714987, guid: b9c14b320122db54f928119ed33feac8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -936903577684458530, guid: b9c14b320122db54f928119ed33feac8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b9c14b320122db54f928119ed33feac8, type: 3}
       propertyPath: m_Name
       value: Cypress_Forest_Desktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b9c14b320122db54f928119ed33feac8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141547191763125355, guid: b9c14b320122db54f928119ed33feac8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206238006672037004, guid: b9c14b320122db54f928119ed33feac8, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

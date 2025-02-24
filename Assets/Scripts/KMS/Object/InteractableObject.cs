@@ -4,6 +4,10 @@ using System;
 
 public class InteractableObject : MonoBehaviour
 {
+    [SerializeField]
+    [Range(0f, 30f)]
+    private float collisionDamage = 2f;
+    
     public float maxDurability;
     public float currentDurability;
 
@@ -13,7 +17,7 @@ public class InteractableObject : MonoBehaviour
     public IMovement movementController;
     public IInputHandler inputHandler;
     public RGTHpBar hpBar;
-    private float damagePerSecond = 1f;
+    private float damagePerSecond = 10f;
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
@@ -124,7 +128,9 @@ public class InteractableObject : MonoBehaviour
     // 충돌이나 트리거 발생 시 호출될 onRideUpdate에 등록된 함수입니다.
     public void HandleCollisionDamage()
     {
-        currentDurability -= maxDurability/10;
+
+        //currentDurability -= maxDurability;
+        currentDurability -= collisionDamage;
         Debug.Log("충돌/트리거로 인한 체력 감소. 남은 체력: " + currentDurability);
 
         hpBar.UpdateHpBar(maxDurability, currentDurability);
@@ -155,7 +161,7 @@ public class InteractableObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         Debug.Log("장애물에 부딪힘");
         if (!collisionTriggered /*&& collision.gameObject.CompareTag("Obstacle")*/)
@@ -163,42 +169,8 @@ public class InteractableObject : MonoBehaviour
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
-            // 정면충돌을 없애버리고 콜리전을 캡슐로 바꿔봄
-
-            //{
-            //    // 모든 접촉 지점을 순회하면서 정면 충돌 여부를 판단
-            //    bool isFrontalCollision = false;
-            //    foreach (ContactPoint contact in collision.contacts)
-            //    {
-            //        Vector3 normal = contact.normal; // 충돌 지점의 법선 벡터
-            //        Vector3 forwardDirection = transform.forward; // 차량의 전진 방향
-
-            //        // 두 벡터 사이의 각도 계산 (도 단위)
-            //        float angle = Vector3.Angle(forwardDirection, -normal);
-
-            //        // 각도가 임계값 이하면 정면 충돌로 간주
-            //        if (angle <= frontCollisionAngleThreshold)
-            //        {
-            //            isFrontalCollision = true;
-            //            break; // 정면 충돌이 하나라도 있으면 더 이상 확인할 필요 없음
-            //        }
-            //    }
-
-            //    if (isFrontalCollision)
-            //    {
-            //        Debug.Log("정면 충돌 발생!");
-
-            //        if (OnFrontalCollision != null)
-            //        {
-            //            OnFrontalCollision();
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("정면 충돌 아님");
-            //    }
-            //}
+            // 소리 나오게 하는 코드
+            AudioManager.instance.PlaySfx(AudioManager.sfx.ough);
         }
     }
 
@@ -211,14 +183,16 @@ public class InteractableObject : MonoBehaviour
             {
                 onRideCol?.Invoke();
                 collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+                // ********************************************************************************
+                // 발판 밟았을때 나는 소리
                 return;
             }
             return;
         }
-        Debug.Log("발판을 밟음");
         if (!collisionTriggered /* && other.CompareTag("Platform") */)
         {
-            Debug.Log("Trigger 발판 밟음");
+            // *******************************************
+            // 다른 오브젝트와 부딪혔을 때 나는 소리
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
@@ -237,7 +211,6 @@ public class InteractableObject : MonoBehaviour
 
             // 차량 진행 방향과 충돌 방향 사이의 각도를 구합니다.
             float angle = Vector3.Angle(vehicleVelocityDirection, collisionDirection);
-            Debug.Log("차량 진행 방향과 충돌 방향 사이의 각도: " + angle);
 
 
             // 정면 충돌을 삭제하고 부딪히면 빙빙 돌게 변경

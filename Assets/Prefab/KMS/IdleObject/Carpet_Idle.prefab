@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2643067786395473445}
   - component: {fileID: 2730083119496023237}
   - component: {fileID: -3550633474095237680}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Carpet_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,6 +129,7 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: deec6f2860b358b4b8377f86aee75a96, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
+  star: {fileID: 0}
 --- !u!54 &-3550633474095237680
 Rigidbody:
   m_ObjectHideFlags: 0
