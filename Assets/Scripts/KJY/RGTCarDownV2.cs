@@ -16,7 +16,7 @@ public class RGTCarDownV2 : ICarDown
     private float riseTimer = 0f;
     private float KeyTimer = 0f;
     private bool hasStart = true;
-    float targetY;
+    public float targetY;
 
     public event Action Die;
 
@@ -74,6 +74,11 @@ public class RGTCarDownV2 : ICarDown
         // 현재 위치에서 목표 위치로 서서히 내려가도록 Lerp 사용
         float newY = Mathf.Lerp(_body.localPosition.y, targetY, Time.deltaTime * sinkSpeed);
         _body.localPosition = new Vector3(_body.localPosition.x, newY, _body.localPosition.z);
+
+        if(targetY > 0.1f)
+        {
+            Die?.Invoke();
+        }
 
         // 디버깅용 로그
         //Debug.Log("Sinking - Current Height: " + _body.localPosition.y + " Target: " + targetY);

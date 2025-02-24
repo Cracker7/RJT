@@ -12,7 +12,7 @@ public class InteractableObject : MonoBehaviour
     public float currentDurability;
 
     public Transform mountPoint;
-    public ObjectSpecificData objectData;
+    public RidingObjectData objectData;
 
     public IMovement movementController;
     public IInputHandler inputHandler;
