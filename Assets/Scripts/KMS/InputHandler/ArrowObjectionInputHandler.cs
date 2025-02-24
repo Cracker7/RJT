@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ArrowObjectionInputHandler : MonoBehaviour, IInputHandler
 {
-    public InputType Type => InputType.Arrow;
+    public InputType Type => InputType.ArrowObjection;
     public Vector3 HandleInput()
     {
         Debug.Log("Arrow Objection Input");

@@ -2,7 +2,9 @@ using UnityEngine;
 public enum InputType
 {
     AD,
-    Arrow
+    Arrow,
+    ADObjection,
+    ArrowObjection
 }
 
 public interface IInputHandler
