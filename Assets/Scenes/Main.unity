@@ -1252,6 +1252,11 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0069493502, y: 0.44385672, z: 0.14951776}
     m_Extent: {x: 0.10604413, y: 0.022297382, z: 0.01727748}
   m_DirtyAABB: 0
+--- !u!224 &42162433 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4567328408305181291, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+  m_PrefabInstance: {fileID: 5058506937170520162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &42993299
 GameObject:
   m_ObjectHideFlags: 0
@@ -5272,6 +5277,11 @@ Transform:
   - {fileID: 94827555}
   m_Father: {fileID: 601872181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &279103050 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 77761534555472222, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+  m_PrefabInstance: {fileID: 5058506937170520162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &279923552
 GameObject:
   m_ObjectHideFlags: 0
@@ -166053,6 +166063,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: AD
+      value: 
+      objectReference: {fileID: 42162433}
+    - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: Arrow
+      value: 
+      objectReference: {fileID: 279103050}
     - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       propertyPath: followCam
       value: 

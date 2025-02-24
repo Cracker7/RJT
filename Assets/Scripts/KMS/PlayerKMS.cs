@@ -1023,6 +1023,7 @@ public class PlayerKMS : MonoBehaviour
                 Arrow.gameObject.SetActive(true);
                 break;
         }
+    }
 
     IEnumerator SmoothZoomIn(float zoomFOV, float duration)
     {

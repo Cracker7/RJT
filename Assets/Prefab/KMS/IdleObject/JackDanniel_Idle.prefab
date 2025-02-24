@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4101711759277796189}
   - component: {fileID: 8756691181091026844}
   - component: {fileID: -5834655948555913075}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: JackDanniel_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,9 +110,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4744773402956200517}
     m_Modifications:
+    - target: {fileID: 2454360787730167436, guid: d323944715ae90342a134f8cb2699e2b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961572070814029752, guid: d323944715ae90342a134f8cb2699e2b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5129937108719361690, guid: d323944715ae90342a134f8cb2699e2b, type: 3}
       propertyPath: m_Name
       value: JackDaniel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5129937108719361690, guid: d323944715ae90342a134f8cb2699e2b, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5510965800430699552, guid: d323944715ae90342a134f8cb2699e2b, type: 3}
       propertyPath: m_LocalPosition.x
