@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ADObjectionInputHandler : MonoBehaviour, IInputHandler
 {
-    public InputType Type => InputType.AD;
+    public InputType Type => InputType.ADObjection;
     public Vector3 HandleInput()
     {
         Debug.Log("반대 AD키 입력 받는중");
