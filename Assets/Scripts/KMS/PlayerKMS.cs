@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -9,8 +9,6 @@ public class PlayerKMS : MonoBehaviour
 {
     public static int DeadCnt = 0;
     public CinemachineCamera JumpCam;
-    public CinemachineCamera followCam;
-    public Transform followPlayer;
     // 상태 머신
     public enum PlayerState { Idle, Transitioning, Riding, Dead }
     public PlayerState currentState = PlayerState.Idle;
@@ -113,7 +111,6 @@ public class PlayerKMS : MonoBehaviour
         // 초기 물리 상태 설정
         SetPhysicsState(true, false, false);
 
-
         // IInputHandler를 구현하는 모든 타입을 찾습니다.
         handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -178,7 +175,7 @@ public class PlayerKMS : MonoBehaviour
                     HandleInput();
                 }
                 else
-                { 
+                {
                     // 죽으면 UI가 뜸 로비 돌아가기 재시작하기
                     // 이때 다른 UI들은 꺼져야함
                 }
@@ -407,9 +404,7 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
-        followCam.Follow = null;
-        //StartCoroutine(SmoothZoomIn(20f, 0.1f));
-        StartCoroutine(CameraZoomEffect());
+
         StartCoroutine(SwitchCameraWithDelay());
         //JumpCam.Priority = 15;
         Time.timeScale = 0.5f;
@@ -737,7 +732,7 @@ public class PlayerKMS : MonoBehaviour
         //UpdatePlayerState(PlayerState.Dead);
         currentState = PlayerState.Dead;
         UpdateUI();
-        Invoke("TriggerOn",0.5f);
+        Invoke("TriggerOn", 0.5f);
     }
 
     private void LaunchProjectileMotion()
@@ -815,7 +810,8 @@ public class PlayerKMS : MonoBehaviour
                     // 트랜지션을 거친 상태를 다시 초기화
                     hasTransition = false;
                 }
-                else {
+                else
+                {
                     rb.linearVelocity = savedVelocity;
                     rb.angularVelocity = savedAngularVelocity;
                     Debug.Log($"Applied velocity: {savedVelocity}, Angular velocity: {savedAngularVelocity}");
@@ -930,8 +926,6 @@ public class PlayerKMS : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         JumpCam.Priority = 15;
-        followCam.Lens.FieldOfView = 60;
-        //followCam.Follow = followPlayer;
         Time.timeScale = 1;
     }
 
@@ -966,30 +960,9 @@ public class PlayerKMS : MonoBehaviour
                 break;
         }
     }
-    IEnumerator SmoothZoomIn(float zoomFOV, float duration)
-    {
-        float startFOV = followCam.Lens.FieldOfView;
-        float time = 0f;
 
-        while (time < duration)
-        {
-            followCam.Lens.FieldOfView = Mathf.Lerp(startFOV, zoomFOV, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        followCam.Lens.FieldOfView = zoomFOV;
-    }
-
-    IEnumerator CameraZoomEffect()
-    {
-        yield return StartCoroutine(SmoothZoomIn(20f, 0.2f)); // 0.5초 동안 줌인
-        //yield return new WaitForSeconds(0.2f); // 폭발 장면 유지
-        followCam.Follow = followPlayer;
-        yield return StartCoroutine(SmoothZoomIn(60f, 0.2f)); // 다시 원래대로
-    }
     private IInputHandler AddRandomInputHandler(GameObject target)
-    { 
+    {
 
         if (handlerTypes.Length == 0)
         {

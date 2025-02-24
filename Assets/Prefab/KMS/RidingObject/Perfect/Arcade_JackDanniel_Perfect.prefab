@@ -5274,9 +5274,9 @@ GameObject:
   - component: {fileID: 3620610797972964910}
   - component: {fileID: 4310012652918886976}
   - component: {fileID: 7467764287100276961}
-  - component: {fileID: 2662370438590749762}
   - component: {fileID: 3260739605401622260}
   - component: {fileID: 2530375231118916603}
+  - component: {fileID: 8445242944419506059}
   m_Layer: 7
   m_Name: Arcade_JackDanniel_Perfect
   m_TagString: Untagged
@@ -5673,18 +5673,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2662370438590749762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4456369328323944727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3260739605401622260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5727,6 +5715,18 @@ CapsuleCollider:
   m_Height: 2.5263672
   m_Direction: 1
   m_Center: {x: -0.009796143, y: 0.06738281, z: 0}
+--- !u!114 &8445242944419506059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456369328323944727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4471405242356217888
 GameObject:
   m_ObjectHideFlags: 0

@@ -11623,9 +11623,9 @@ GameObject:
   - component: {fileID: 8126264873315480640}
   - component: {fileID: 4651033349181493096}
   - component: {fileID: 1920607344868491028}
-  - component: {fileID: 5881954628678778305}
   - component: {fileID: 228084205762548430}
   - component: {fileID: 7740846142150842536}
+  - component: {fileID: 5396378136213081270}
   m_Layer: 7
   m_Name: Arcade_Sphinx_Perfect
   m_TagString: Untagged
@@ -12022,18 +12022,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5881954628678778305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4380606313496674031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &228084205762548430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12076,6 +12064,18 @@ CapsuleCollider:
   m_Height: 9.977783
   m_Direction: 2
   m_Center: {x: 0, y: 0.8216553, z: 0.020019531}
+--- !u!114 &5396378136213081270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4380606313496674031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4588649662256922968
 GameObject:
   m_ObjectHideFlags: 0

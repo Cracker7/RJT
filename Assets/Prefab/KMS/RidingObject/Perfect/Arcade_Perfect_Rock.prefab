@@ -6332,7 +6332,7 @@ GameObject:
   - component: {fileID: 2430336514408611217}
   - component: {fileID: 4172358110251932342}
   - component: {fileID: 7129709555420327065}
-  - component: {fileID: 3253281023079002387}
+  - component: {fileID: 2531227366422559151}
   m_Layer: 7
   m_Name: Arcade_Perfect_Rock
   m_TagString: Untagged
@@ -6506,6 +6506,8 @@ MonoBehaviour:
   SkidSound: {fileID: 4172358110251932342}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &2133221020410779172
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6745,7 +6747,8 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: 25b9082d5bf654c46bb124078a6bfbf1, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
---- !u!114 &3253281023079002387
+  star: {fileID: 0}
+--- !u!114 &2531227366422559151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6754,7 +6757,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2736285043195956624}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2753773196894765730
