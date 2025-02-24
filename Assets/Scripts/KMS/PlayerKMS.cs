@@ -180,6 +180,7 @@ public class PlayerKMS : MonoBehaviour
                 {
                     // 죽으면 UI가 뜸 로비 돌아가기 재시작하기
                     // 이때 다른 UI들은 꺼져야함
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
         }
@@ -840,7 +841,6 @@ public class PlayerKMS : MonoBehaviour
             Debug.Log("플레이어가 죽음");
             isDead = true;
             ++DeadCnt;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -874,6 +874,8 @@ public class PlayerKMS : MonoBehaviour
     {
         AD.gameObject.SetActive(false);
         Arrow.gameObject.SetActive(false);
+        ADObjection.gameObject.SetActive(false);
+        ArrowObjection.gameObject.SetActive(false);
     }
 
     private void UpdateUI()
