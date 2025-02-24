@@ -431,14 +431,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8376534222428790258}
   - component: {fileID: 490454151841192215}
-  - component: {fileID: 6109075272816862768}
   - component: {fileID: 1436532150181618090}
   - component: {fileID: 4823650206606216326}
   - component: {fileID: 3653270084070260612}
   - component: {fileID: 6325396955643466119}
-  - component: {fileID: 3459663170197135912}
   - component: {fileID: 1068523550306573166}
   - component: {fileID: 1138399363538523424}
+  - component: {fileID: 2462696845272885792}
   m_Layer: 7
   m_Name: Arcade_CarpetV2
   m_TagString: Untagged
@@ -485,22 +484,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2534556, y: 2.0555816, z: 4.7599773}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6109075272816862768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981780321950345034}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da3f11c6be0a9a45836cbfe050297fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arcadeVehicleController: {fileID: 1436532150181618090}
-  Horizontal: 0
-  Vertical: 0
-  Jump: 0
 --- !u!114 &1436532150181618090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,18 +818,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3459663170197135912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981780321950345034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1068523550306573166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,6 +860,18 @@ CapsuleCollider:
   m_Height: 5.272583
   m_Direction: 2
   m_Center: {x: -0.1366272, y: 0.8600068, z: 0.21575928}
+--- !u!114 &2462696845272885792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981780321950345034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1986008598996464344
 GameObject:
   m_ObjectHideFlags: 0

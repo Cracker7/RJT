@@ -16661,9 +16661,9 @@ GameObject:
   - component: {fileID: 3890264399814509598}
   - component: {fileID: 2218692044403708956}
   - component: {fileID: 1653692202636694719}
-  - component: {fileID: 4358539993718410607}
   - component: {fileID: 3374384113913744048}
   - component: {fileID: 1065511148424199116}
+  - component: {fileID: 1994576109675192955}
   m_Layer: 7
   m_Name: Arcade_Human_Perfect
   m_TagString: Untagged
@@ -17060,18 +17060,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4358539993718410607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7031174482344955398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3374384113913744048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17114,6 +17102,18 @@ CapsuleCollider:
   m_Height: 5.4838424
   m_Direction: 1
   m_Center: {x: -0.018283844, y: 1.3278906, z: 0.12}
+--- !u!114 &1994576109675192955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7031174482344955398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7082337247273000615
 GameObject:
   m_ObjectHideFlags: 0
@@ -28450,7 +28450,6 @@ GameObject:
   - component: {fileID: 6872108320081429397}
   - component: {fileID: 1385416764571446868}
   - component: {fileID: 3189352218762009991}
-  - component: {fileID: 3667413587032299900}
   - component: {fileID: 4120686661099747816}
   m_Layer: 0
   m_Name: perfect_With_Human
@@ -28530,18 +28529,6 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 238ee5403e6045f4e9e220ce3abb7ca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3667413587032299900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8220741148139641479}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4120686661099747816
