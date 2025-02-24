@@ -5781,6 +5781,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: testForest
       objectReference: {fileID: 0}
+    - target: {fileID: 3657040828179959478, guid: bb31f01735e3c0041bf198af73df1173, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7192754616130298819, guid: bb31f01735e3c0041bf198af73df1173, type: 3}
       propertyPath: m_LocalPosition.x
       value: -56.04
@@ -164548,6 +164552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1acbae8005de3e43870cb1347652540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 0}
