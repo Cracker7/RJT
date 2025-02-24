@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -7,6 +9,8 @@ public class PlayerKMS : MonoBehaviour
 {
     public static int DeadCnt = 0;
     public CinemachineCamera JumpCam;
+    public CinemachineCamera followCam;
+    public Transform followPlayer;
     // 상태 머신
     public enum PlayerState { Idle, Transitioning, Riding, Dead }
     public PlayerState currentState = PlayerState.Idle;
@@ -93,6 +97,8 @@ public class PlayerKMS : MonoBehaviour
     private bool isDead = false;
     private bool hasTransition = false;
 
+    private Type[] handlerTypes;
+
     private void Awake()
     {
         // 기본 컴포넌트 캐싱
@@ -106,6 +112,16 @@ public class PlayerKMS : MonoBehaviour
 
         // 초기 물리 상태 설정
         SetPhysicsState(true, false, false);
+
+
+        // IInputHandler를 구현하는 모든 타입을 찾습니다.
+        handlerTypes = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => typeof(IInputHandler).IsAssignableFrom(type)
+                           && type.IsClass
+                           && !type.IsAbstract
+                           && typeof(MonoBehaviour).IsAssignableFrom(type))
+            .ToArray();
     }
 
     // 래그돌 컴포넌트들을 캐시하는 메서드
@@ -140,77 +156,10 @@ public class PlayerKMS : MonoBehaviour
         sliderM.OnShutdown -= ResetTimeScale;
     }
 
-    //private void Update()
-    //{
-    //    // Transitioning 상태일 때는 입력을 무시한다.
-    //    if (currentState == PlayerState.Transitioning)
-    //    {
-    //        UpdateTransition();
-    //    }
-    //    else if (currentState == PlayerState.Dead)
-    //    {
-    //        // 플레이어가 죽었을 때 실행하는 함수
-    //        if (currentObjectPrefab == null)
-    //        {
-    //            if(!isDead)
-    //            {
-    //                HandleInput();
-    //            }
-    //        }
-
-    //        // // 부모 관계 해제
-    //        // if (currentObjectPrefab != null)
-    //        //     transform.SetParent(null);
-
-    //        // // 메시 렌더러 활성화
-    //        // foreach (SkinnedMeshRenderer skin in skinRenderer)
-    //        // {
-    //        //     skin.enabled = true;
-    //        // }
-
-    //        // 죽었을 때의 추가 로직 (미니게임 실패, 내구도 소진 등)
-    //    }
-    //    else
-    //    {
-    //        //// Idle 상태에서 발사체 모션 진행 중이면 업데이트
-    //        //if (currentState == PlayerState.Idle && isProjectileLaunched)
-    //        //{
-    //        //    UpdateProjectileMotion();
-    //        //    // 내구도가 0이되고 날아가는 도중에 카메라 회전을 통해 박스 캐스트로 갈아탈 물체를 지정 가능
-    //        //    GameObject findcar =
-    //        //        boxCastFinder.GetCenterBoxCastHit(Camera.main, Vector3.zero, new Vector3(5, 5, 1), 50, LayerMask.NameToLayer("carbody"));
-
-    //        //    if(projectileElapsedTime == projectileDuration)
-    //        //    {
-    //        //        currentState = PlayerState.Dead;
-    //        //    }
-    //        //    else if (findcar != null && Input.GetKeyDown(interactKeyCode))
-    //        //    {
-    //        //        StartTransition(findcar.GetComponent<InteractableObject>());
-    //        //    }
-
-    //        //}
-    //        //else
-    //        //{
-    //        //    // 평상시 입력 처리
-    //        //    HandleInput();
-    //        //}
-
-    //        HandleInput();
-
-    //        // Riding 상태라면 Riding 관련 추가 로직도 처리
-    //        if (currentState == PlayerState.Riding)
-    //        {
-    //            if (!hasHandledRiding && currentInteractable.currentDurability <= currentInteractable.maxDurability / 2)
-    //            {
-    //                HandleRiding();
-    //                hasHandledRiding = true;
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("라이딩 상태 : " + currentState);
-    //    Debug.Log("선택된 프리팹 : " + currentObjectPrefab);
-    //}
+    private void Start()
+    {
+        StartTransition(CheckForInteractableObjects());
+    }
 
     private void FixedUpdate()
     {
@@ -458,7 +407,9 @@ public class PlayerKMS : MonoBehaviour
         // 이동 중에는 입력과 이동을 비활성화
         currentInput = null;
         currentMovement = null;
-
+        followCam.Follow = null;
+        //StartCoroutine(SmoothZoomIn(20f, 0.1f));
+        StartCoroutine(CameraZoomEffect());
         StartCoroutine(SwitchCameraWithDelay());
         //JumpCam.Priority = 15;
         Time.timeScale = 0.5f;
@@ -528,6 +479,7 @@ public class PlayerKMS : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    // 탈것에 탑승하는 처리 함수
     private void EnterObject(InteractableObject interactableObject)
     {
         // 1. 기존 프리팹 제거
@@ -662,7 +614,8 @@ public class PlayerKMS : MonoBehaviour
         {
             // 플레이어와 오브젝트 사이의 방향 계산
             Vector3 directionToObject = (hitCollider.transform.position - transform.position).normalized;
-            // 플레이어의 forward 벡터와의 내적값이 음수이면 플레이어 뒤쪽에 있는 것으로 간주하여 무시합니다.
+            // 플레이어의 forward 벡터와의 내적값이 음수이면 플레이어 뒤쪽에 있는 것
+            // 그 오브젝트는 무시
             if (Vector3.Dot(transform.forward, directionToObject) < 0)
                 continue;
 
@@ -682,6 +635,8 @@ public class PlayerKMS : MonoBehaviour
         return closestObject;
     }
 
+    // 타고 있는 상태에서 내구도가 깍였을 경우
+    // 애매한 탈것으로 변경하는 함수
     private void HandleRiding()
     {
         //// Riding 상태일때 내구도가 일정 이하로 내려가면 애매한것으로 변경되도록 함
@@ -690,12 +645,12 @@ public class PlayerKMS : MonoBehaviour
         // 현재 타고 있는 오브젝트가 존재할 때만 실행
         if (currentInteractable != null)
         {
-            // ExitObject() 호출 시 currentInteractableObject가 null로 초기화되므로 미리 저장합니다.
+            // ExitObject() 호출 시 currentInteractableObject가 null로 초기화되므로 미리 저장
             InteractableObject target = currentInteractable;
             float durability = currentInteractable.currentDurability;
             float maxDurability = currentInteractable.maxDurability;
 
-            // 만약 속도 전달이 필요하다면 속도 저장 (옵션)
+            // 만약 속도 전달이 필요하다면 속도 저장
             SaveCurrentVelocity();
 
             // 기존 오브젝트에서 내리기 (이 과정에서 currentInteractableObject가 null로 초기화됨)
@@ -709,9 +664,13 @@ public class PlayerKMS : MonoBehaviour
             currentInteractable.currentDurability = durability;
             currentInteractable.hpBar.UpdateHpBar(maxDurability, durability);
 
-            //// 프리팹 생성 후 저장했던 속도를 적용 (옵션)
-            //ApplySavedVelocity();
-
+            // 탈것의 입력 스크립트가 없을 경우 랜덤적으로 추가하도록 만듬
+            if (currentInput == null)
+            {
+                Debug.Log("랜덤 실행됨");
+                currentInput = AddRandomInputHandler(currentObjectPrefab);
+                UpdateUI();
+            }
         }
     }
 
@@ -724,15 +683,6 @@ public class PlayerKMS : MonoBehaviour
             currentMovement.Move(moveDirection);
         }
     }
-
-    //private void HandlePlayerMovement()
-    //{
-    //    if (currentInput != null && currentMovement != null)
-    //    {
-    //        Vector3 moveDirection = currentInput.HandleInput();
-    //        currentMovement.Move(moveDirection);
-    //    }
-    //}
 
     // 이벤트가 호출될 때 실행될 메서드
     private void ResetTimeScale()
@@ -931,8 +881,6 @@ public class PlayerKMS : MonoBehaviour
         }
     }
 
-
-
     private void TriggerOn()
     {
         mainCollider.enabled = true;
@@ -982,6 +930,8 @@ public class PlayerKMS : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         JumpCam.Priority = 15;
+        followCam.Lens.FieldOfView = 60;
+        //followCam.Follow = followPlayer;
         Time.timeScale = 1;
     }
 
@@ -1015,6 +965,46 @@ public class PlayerKMS : MonoBehaviour
                 Arrow.gameObject.SetActive(true);
                 break;
         }
+    }
+    IEnumerator SmoothZoomIn(float zoomFOV, float duration)
+    {
+        float startFOV = followCam.Lens.FieldOfView;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            followCam.Lens.FieldOfView = Mathf.Lerp(startFOV, zoomFOV, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        followCam.Lens.FieldOfView = zoomFOV;
+    }
+
+    IEnumerator CameraZoomEffect()
+    {
+        yield return StartCoroutine(SmoothZoomIn(20f, 0.2f)); // 0.5초 동안 줌인
+        //yield return new WaitForSeconds(0.2f); // 폭발 장면 유지
+        followCam.Follow = followPlayer;
+        yield return StartCoroutine(SmoothZoomIn(60f, 0.2f)); // 다시 원래대로
+    }
+    private IInputHandler AddRandomInputHandler(GameObject target)
+    { 
+
+        if (handlerTypes.Length == 0)
+        {
+            Debug.LogWarning("구현된 IInputHandler 스크립트가 없습니다.");
+            return null;
+        }
+
+        // 랜덤하게 하나의 타입을 선택합니다.
+        var randomType = handlerTypes[UnityEngine.Random.Range(0, handlerTypes.Length)];
+
+        // 선택된 타입을 컴포넌트로 추가합니다.
+        IInputHandler inputHandler = (IInputHandler)target.AddComponent(randomType);
+        Debug.Log($"추가된 입력 핸들러: {randomType.Name}");
+
+        return inputHandler;
     }
 }
 

@@ -142243,7 +142243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerKMS: {fileID: 1650847408}
   target: {fileID: 1467021738}
-  followCam: {fileID: 0}
+  followCam: {fileID: 1585446310}
 --- !u!4 &811888825
 Transform:
   m_ObjectHideFlags: 0
@@ -148899,15 +148899,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -44.57536
+      value: -47.3
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3901.81
+      value: 3892.21
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7124.633
+      value: -7122.67
       objectReference: {fileID: 0}
     - target: {fileID: 653717959537971401, guid: 756b89a4974a1c6498edbb2857dde2b7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -157758,14 +157758,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 45084360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c993946fe21f43458a4db5da58acb26, type: 3}
+  m_Script: {fileID: 11500000, guid: ff79fbd8bcf99924d9e2d530e4d4a36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  detectionRadius: 40
-  layer:
+  selectRadius: 40
+  detectionRadius: 300
+  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  particleEffectPrefab: {fileID: 3280519133390621005, guid: fa438ce0a57bef345adf00343b0eb247, type: 3}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
 --- !u!1 &1661613466
 GameObject:
   m_ObjectHideFlags: 0
@@ -159186,7 +159188,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6133
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -165708,7 +165710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerKMS: {fileID: 1650847408}
   target: {fileID: 2099931454}
-  followCam: {fileID: 0}
+  followCam: {fileID: 1585446310}
 --- !u!4 &2062928484
 Transform:
   m_ObjectHideFlags: 0
@@ -166319,12 +166321,21 @@ PrefabInstance:
       propertyPath: JumpCam
       value: 
       objectReference: {fileID: 564724375}
+    - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: followCam
+      value: 
+      objectReference: {fileID: 1585446308}
+    - target: {fileID: 3105840967296092228, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
+      propertyPath: followPlayer
+      value: 
+      objectReference: {fileID: 1135166940}
     - target: {fileID: 8291172429997770610, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       propertyPath: m_Interpolate
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7675048202497475505, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2018443660240601995, guid: b8292308abd979d4ab8c261889c3f43e, type: 3}
       insertIndex: -1
