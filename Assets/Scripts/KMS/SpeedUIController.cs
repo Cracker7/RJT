@@ -4,6 +4,7 @@ using System.Collections;
 
 public class SpeedUIController : MonoBehaviour
 {
+    [SerializeField] private RGTPoopGaugeManager poo;
     private GameObject player = null;
     private PlayerKMS playerKMS = null;
 
@@ -51,6 +52,7 @@ public class SpeedUIController : MonoBehaviour
 
         // ActiveRigidbody가 탑승 오브젝트의 리지드바디가 있으면 그걸, 없으면 플레이어 자신의 리지드바디(mainRigidbody)를 사용
         float speed = playerKMS.ActiveRigidbody.linearVelocity.magnitude;
+        poo.UpdatePoopGauge(speed);
         tmp.text = speed.ToString("F2");
 
         // 속도에 따라 색상을 변경 (불필요한 업데이트 방지)

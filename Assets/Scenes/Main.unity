@@ -156776,6 +156776,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1566252216 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5570923898886771886, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+  m_PrefabInstance: {fileID: 5058506937170520162}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68df73a2b0327fa4eb10e7782ee2da1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1576333463
 GameObject:
   m_ObjectHideFlags: 0
@@ -168749,6 +168760,22 @@ PrefabInstance:
     - target: {fileID: 1696250043190866052, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
       propertyPath: m_Name
       value: SpeedCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2194356180844215213, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+      propertyPath: poo
+      value: 
+      objectReference: {fileID: 1566252216}
+    - target: {fileID: 3337324474057401060, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -790
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337324474057401060, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 418
+      objectReference: {fileID: 0}
+    - target: {fileID: 5911283394373317611, guid: 9e73553f3b2a0d14dbadc69e2924fb96, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
