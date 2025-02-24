@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
     // 첫 번째 버튼 클릭 시 메인 씬으로 이동
     public void StartGame()
     {
-        SceneManager.LoadScene("MainScene"); // MainScene은 메인 씬 이름
+        SceneManager.LoadScene("Opening"); // MainScene은 메인 씬 이름
     }
 
     // 두 번째 버튼 클릭 시 게임 종료
