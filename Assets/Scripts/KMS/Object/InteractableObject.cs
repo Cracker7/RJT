@@ -164,6 +164,7 @@ public class InteractableObject : MonoBehaviour
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
             // 소리 나오게 하는 코드
+            AudioManager.instance.PlaySfx(AudioManager.sfx.ough);
         }
     }
 
