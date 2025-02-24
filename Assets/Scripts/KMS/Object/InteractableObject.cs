@@ -13,7 +13,7 @@ public class InteractableObject : MonoBehaviour
     public IMovement movementController;
     public IInputHandler inputHandler;
     public RGTHpBar hpBar;
-    private float damagePerSecond = 1f;
+    private float damagePerSecond = 10f;
     public bool timeDamage = false;
 
     private bool collisionTriggered = false;      // 충돌이 발생했는지 여부 플래그
@@ -183,10 +183,10 @@ public class InteractableObject : MonoBehaviour
             }
             return;
         }
-        Debug.Log("발판을 밟음");
         if (!collisionTriggered /* && other.CompareTag("Platform") */)
         {
-            Debug.Log("Trigger 발판 밟음");
+            // *******************************************
+            // 다른 오브젝트와 부딪혔을 때 나는 소리
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
@@ -205,7 +205,6 @@ public class InteractableObject : MonoBehaviour
 
             // 차량 진행 방향과 충돌 방향 사이의 각도를 구합니다.
             float angle = Vector3.Angle(vehicleVelocityDirection, collisionDirection);
-            Debug.Log("차량 진행 방향과 충돌 방향 사이의 각도: " + angle);
 
 
             // 정면 충돌을 삭제하고 부딪히면 빙빙 돌게 변경
