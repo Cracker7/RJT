@@ -124,7 +124,7 @@ public class InteractableObject : MonoBehaviour
     // 충돌이나 트리거 발생 시 호출될 onRideUpdate에 등록된 함수입니다.
     public void HandleCollisionDamage()
     {
-        currentDurability -= maxDurability/10;
+        currentDurability -= maxDurability/4;
         Debug.Log("충돌/트리거로 인한 체력 감소. 남은 체력: " + currentDurability);
 
         hpBar.UpdateHpBar(maxDurability, currentDurability);
