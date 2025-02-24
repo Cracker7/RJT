@@ -96,16 +96,8 @@ public class SpeedUIController : MonoBehaviour
         countdownTMP.text = "";
 
         // 3초가 지나면 플레이어 상태를 Dead로 변경
-        // PlayerKMS에 public 메서드 SetDeadState() 또는 Die()가 있어야 합니다.
         playerKMS.SetDeadState();
 
         isCountdownActive = false;
     }
-
-
-    // 속도 받아와서 UI에 업데이트
-
-    // 속도가 일정 이하로 내려가면 글씨가 빨간색으로 바뀜
-
-    // 카운트 다운?( 소리로 째깍째깍 소리를 낸다던지해서 속도가 느려지면 위험하다는걸 표시)
 }

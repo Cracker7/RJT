@@ -23,7 +23,7 @@ public class PlayerKMS : MonoBehaviour
     public IInputHandler currentInput;
     public IMovement currentMovement;
     public IBoxCastFinder boxCastFinder;
-    public RGTCarDownV2 carDown;
+    public ICarDown carDown;
 
     // 래그돌 물리 컴포넌트 캐싱
     private List<Rigidbody> ragdollRigidbodies;

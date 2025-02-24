@@ -16889,6 +16889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa00bdb1b0c0eee4c84317cd8d06e8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 8422271532540562484}
@@ -23372,7 +23373,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8058735803287975041}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f55d1abc9d92ca4ba7a1aeb916fe3e7, type: 3}
   m_Name: 
