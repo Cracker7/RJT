@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class OpenM : MonoBehaviour
 {
@@ -24,7 +26,7 @@ public class OpenM : MonoBehaviour
     public GameObject toilet;
 
     public AudioSource audioSource;
-    public AudioClip bubbleSound;
+    public AudioClip audioClip;
 
     bool isCheck1 = false;
 
@@ -84,6 +86,7 @@ public class OpenM : MonoBehaviour
         Destroy(toilet, 0.7f);
         Invoke("playParticle",0.7f);
         Invoke("playParticle",0.7f);
+        StartCoroutine(PlayAndWait(audioClip));
         Invoke("SoundMn", 0.6f);
     }
 
@@ -104,9 +107,24 @@ public class OpenM : MonoBehaviour
     {
         if (!audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(bubbleSound);
+            audioSource.PlayOneShot(audioClip);
         }
     }
 
+    IEnumerator PlayAndWait(AudioClip audioClip)
+    {
+        yield return new WaitForSeconds(1.3f);
 
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(audioClip);
+        }
+        yield return new WaitForSeconds(0.1f);
+        SceneMn();
+    }
+
+    private void SceneMn()
+    {
+        SceneManager.LoadScene("Main");    
+    }
 }

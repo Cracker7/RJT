@@ -814,7 +814,7 @@ MonoBehaviour:
   particle: {fileID: 1555680356}
   toilet: {fileID: 208014721}
   audioSource: {fileID: 1479678140}
-  bubbleSound: {fileID: 8300000, guid: cc46bc36050614b4495eb6fd59764645, type: 3}
+  audioClip: {fileID: 8300000, guid: cc46bc36050614b4495eb6fd59764645, type: 3}
 --- !u!4 &607047065
 Transform:
   m_ObjectHideFlags: 0
@@ -1920,7 +1920,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.071
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
