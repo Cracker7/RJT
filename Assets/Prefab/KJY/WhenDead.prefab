@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9212963304309820845
 Transform:
   m_ObjectHideFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  ForestMap: {fileID: 3657040828179959478, guid: bb31f01735e3c0041bf198af73df1173, type: 3}
   newSkybox: {fileID: 2100000, guid: 0e8d5603105778b41951e9c315a0b2c4, type: 2}
   directionalLight: {fileID: 0}
   MorningColor: {r: 1, g: 0.93, b: 0.8, a: 1}

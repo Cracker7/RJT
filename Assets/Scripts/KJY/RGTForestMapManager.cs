@@ -4,6 +4,8 @@ public class RGTForestMapManager : MonoBehaviour
 {
     public PlayerKMS player;
 
+    [SerializeField] private GameObject ForestMap;
+
 
 
     //SkyBox
@@ -43,6 +45,7 @@ public class RGTForestMapManager : MonoBehaviour
         if (player.currentState == PlayerKMS.PlayerState.Dead)
         {
             ChangeTheSkyBox();
+            ForestMap.SetActive(true);
         }
 
         if (isInZone)
