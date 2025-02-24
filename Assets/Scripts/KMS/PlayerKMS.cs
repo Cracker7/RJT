@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -182,7 +181,7 @@ public class PlayerKMS : MonoBehaviour
                 {
                     // 죽으면 UI가 뜸 로비 돌아가기 재시작하기
                     // 이때 다른 UI들은 꺼져야함
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    Invoke("Restart", 0.5f);
                 }
             }
         }
@@ -955,6 +954,11 @@ public class PlayerKMS : MonoBehaviour
         Debug.Log($"추가된 입력 핸들러: {randomType.Name}");
 
         return inputHandler;
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
