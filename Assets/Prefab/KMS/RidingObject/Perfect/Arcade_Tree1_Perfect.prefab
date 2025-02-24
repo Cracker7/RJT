@@ -10293,7 +10293,7 @@ GameObject:
   - component: {fileID: 7178118617035495159}
   - component: {fileID: 4489106250403745740}
   - component: {fileID: 4304287685511097398}
-  - component: {fileID: 1440642921984651206}
+  - component: {fileID: 2279391840842106427}
   m_Layer: 7
   m_Name: Arcade_Tree1_Perfect
   m_TagString: Untagged
@@ -10467,6 +10467,8 @@ MonoBehaviour:
   SkidSound: {fileID: 4489106250403745740}
   skidWidth: 0.17504606
   parallelMovement: 0
+  inDesert: 0
+  bodyTr: {fileID: 0}
 --- !u!54 &5567852949882010463
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10706,7 +10708,8 @@ MonoBehaviour:
   objectData: {fileID: 11400000, guid: bfa62d0b6b5806c4da3d3116f10f3dd6, type: 2}
   hpBar: {fileID: 0}
   timeDamage: 0
---- !u!114 &1440642921984651206
+  star: {fileID: 0}
+--- !u!114 &2279391840842106427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10715,7 +10718,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5305970614549826188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5465297262456016891

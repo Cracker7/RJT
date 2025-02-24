@@ -155,7 +155,7 @@ public class InteractableObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         Debug.Log("장애물에 부딪힘");
         if (!collisionTriggered /*&& collision.gameObject.CompareTag("Obstacle")*/)
@@ -163,42 +163,7 @@ public class InteractableObject : MonoBehaviour
             onRideCol?.Invoke();
             collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
 
-            // 정면충돌을 없애버리고 콜리전을 캡슐로 바꿔봄
-
-            //{
-            //    // 모든 접촉 지점을 순회하면서 정면 충돌 여부를 판단
-            //    bool isFrontalCollision = false;
-            //    foreach (ContactPoint contact in collision.contacts)
-            //    {
-            //        Vector3 normal = contact.normal; // 충돌 지점의 법선 벡터
-            //        Vector3 forwardDirection = transform.forward; // 차량의 전진 방향
-
-            //        // 두 벡터 사이의 각도 계산 (도 단위)
-            //        float angle = Vector3.Angle(forwardDirection, -normal);
-
-            //        // 각도가 임계값 이하면 정면 충돌로 간주
-            //        if (angle <= frontCollisionAngleThreshold)
-            //        {
-            //            isFrontalCollision = true;
-            //            break; // 정면 충돌이 하나라도 있으면 더 이상 확인할 필요 없음
-            //        }
-            //    }
-
-            //    if (isFrontalCollision)
-            //    {
-            //        Debug.Log("정면 충돌 발생!");
-
-            //        if (OnFrontalCollision != null)
-            //        {
-            //            OnFrontalCollision();
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("정면 충돌 아님");
-            //    }
-            //}
+            // 소리 나오게 하는 코드
         }
     }
 
@@ -211,6 +176,8 @@ public class InteractableObject : MonoBehaviour
             {
                 onRideCol?.Invoke();
                 collisionCooldownCoroutine = StartCoroutine(CollisionCooldownCoroutine());
+                // ********************************************************************************
+                // 발판 밟았을때 나는 소리
                 return;
             }
             return;

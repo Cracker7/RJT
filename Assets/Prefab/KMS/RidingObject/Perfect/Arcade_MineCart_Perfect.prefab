@@ -110,9 +110,9 @@ GameObject:
   - component: {fileID: 4734324692198052964}
   - component: {fileID: 6132738081968516311}
   - component: {fileID: 2362175469077078555}
-  - component: {fileID: 7497736032542707248}
   - component: {fileID: 496425631193643334}
   - component: {fileID: 390176411454821022}
+  - component: {fileID: 2123365458947132689}
   m_Layer: 7
   m_Name: Arcade_MineCart_Perfect
   m_TagString: Untagged
@@ -509,18 +509,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7497736032542707248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948511454474471882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &496425631193643334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +551,18 @@ CapsuleCollider:
   m_Height: 2.0440674
   m_Direction: 2
   m_Center: {x: 0, y: 0.3607788, z: -0.01953125}
+--- !u!114 &2123365458947132689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948511454474471882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2245790101595106113
 GameObject:
   m_ObjectHideFlags: 0

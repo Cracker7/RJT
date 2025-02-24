@@ -10236,9 +10236,9 @@ GameObject:
   - component: {fileID: 6542343774062530737}
   - component: {fileID: 5777989353367137288}
   - component: {fileID: 3004287363762449199}
-  - component: {fileID: 907246323043700111}
   - component: {fileID: 8909548576847566705}
   - component: {fileID: 4985945178999087896}
+  - component: {fileID: 3525116369566532193}
   m_Layer: 7
   m_Name: Arcade_Rabbit_Perfect
   m_TagString: Untagged
@@ -10320,7 +10320,7 @@ MonoBehaviour:
     m_Bits: 64
   MaxSpeed: 180
   accelaration: 20
-  turn: 10
+  turn: 7
   gravity: 7
   downforce: 5
   AirControl: 1
@@ -10635,18 +10635,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &907246323043700111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6626559227929349104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8909548576847566705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10689,6 +10677,18 @@ CapsuleCollider:
   m_Height: 3.5506287
   m_Direction: 0
   m_Center: {x: 0, y: 0.46000004, z: 0.1620636}
+--- !u!114 &3525116369566532193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6626559227929349104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6658732494379300239
 GameObject:
   m_ObjectHideFlags: 0

@@ -5286,9 +5286,9 @@ GameObject:
   - component: {fileID: 8764933955414779276}
   - component: {fileID: 6742302315690949703}
   - component: {fileID: 4371341456181616760}
-  - component: {fileID: 694129487020405024}
   - component: {fileID: 5854921700887445812}
   - component: {fileID: 4201682273050954342}
+  - component: {fileID: 5039519287064218222}
   m_Layer: 7
   m_Name: Arcade_Remy_Tire
   m_TagString: Untagged
@@ -5370,7 +5370,7 @@ MonoBehaviour:
     m_Bits: 64
   MaxSpeed: 180
   accelaration: 20
-  turn: 10
+  turn: 7
   gravity: 7
   downforce: 5
   AirControl: 1
@@ -5685,18 +5685,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &694129487020405024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033759673872142823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5854921700887445812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,6 +5727,18 @@ CapsuleCollider:
   m_Height: 2.2824707
   m_Direction: 2
   m_Center: {x: 0, y: -0.6300073, z: 0.3206787}
+--- !u!114 &5039519287064218222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033759673872142823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ba9dec023b49498b6b1b81b256c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1044614116145812256
 GameObject:
   m_ObjectHideFlags: 0

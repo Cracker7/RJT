@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PerfectBearObject : InteractableObject
 {
@@ -24,16 +23,6 @@ public class PerfectBearObject : InteractableObject
         heart.transform.localPosition = transform.InverseTransformPoint(spawnPosition);
     }
 
-    //public override void OnCollisionEnter(Collision collision)
-    //{
-    //    base.OnCollisionEnter(collision);
-
-    //}
-    public override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-        AudioManager.instance.PlaySfx(AudioManager.sfx.bear);
-    }
-
+    
 
 }

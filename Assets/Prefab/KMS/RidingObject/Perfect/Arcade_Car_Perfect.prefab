@@ -5616,7 +5616,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6390730116741566889}
   - component: {fileID: 5064136054101915937}
-  - component: {fileID: 6768048014766859522}
   - component: {fileID: 8298568483930273892}
   - component: {fileID: 4522297514277781518}
   - component: {fileID: 3144237680647006154}
@@ -5670,22 +5669,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5023038, y: 1.1966915, z: 3.1733184}
   m_Center: {x: 0, y: 0.08684836, z: 0}
---- !u!114 &6768048014766859522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4264980800788272180}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da3f11c6be0a9a45836cbfe050297fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arcadeVehicleController: {fileID: 8298568483930273892}
-  Horizontal: 0
-  Vertical: 0
-  Jump: 0
 --- !u!114 &8298568483930273892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11198,7 +11181,6 @@ GameObject:
   - component: {fileID: 5689956323839601318}
   - component: {fileID: 6287523780543044832}
   - component: {fileID: 2941334350493929700}
-  - component: {fileID: 6912032475488935467}
   - component: {fileID: 2040096197788880051}
   - component: {fileID: 7260880580406559966}
   - component: {fileID: 7242806439214610274}
@@ -11271,18 +11253,6 @@ MonoBehaviour:
   rightWheel: {fileID: 0}
   maxTiltAngle: 10
   tiltMultiplier: 5
---- !u!114 &6912032475488935467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6851868365796547419}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618f8f1ebe338c34cb4794fbac983130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2040096197788880051
 MonoBehaviour:
   m_ObjectHideFlags: 0
