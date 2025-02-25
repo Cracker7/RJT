@@ -5,7 +5,8 @@ public class RGTForestMapManager : MonoBehaviour
     public PlayerKMS player;
 
     [SerializeField] private GameObject ForestMap;
-
+    [SerializeField] private GameObject DesertMap;
+    [SerializeField] private GameObject SnowMap;
 
 
     //SkyBox
@@ -46,6 +47,7 @@ public class RGTForestMapManager : MonoBehaviour
         {
             ChangeTheSkyBox();
             ForestMap.SetActive(true);
+            RenderSettings.fog = false;
         }
 
         if (isInZone)
