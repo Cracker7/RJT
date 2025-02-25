@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArcadeVP;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,7 @@ public class PlayerKMS : MonoBehaviour
     public RectTransform Arrow;
     public RectTransform ADObjection;
     public RectTransform ArrowObjection;
+    public RectTransform MUI;
 
     [Space(10)]
     public GameObject currentObjectPrefab;
@@ -206,6 +208,7 @@ public class PlayerKMS : MonoBehaviour
         {
             HandleRidingMovement();
         }
+        InDesertUI();
     }
 
     // 물리 상태 설정을 위한 헬퍼 메서드
@@ -959,6 +962,14 @@ public class PlayerKMS : MonoBehaviour
     private void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void InDesertUI()
+    {
+        if (currentState == PlayerState.Riding)
+            MUI.gameObject.SetActive(currentObjectPrefab.GetComponent<ArcadeVehicleController>().inDesert);
+        else
+            MUI.gameObject.SetActive(false);
     }
 }
 
