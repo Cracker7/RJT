@@ -23819,10 +23819,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3960816400836581376}
     m_Modifications:
+    - target: {fileID: 143470700691207943, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: m_Intensity
+      value: 2.9305463
+      objectReference: {fileID: 0}
     - target: {fileID: 1001088577946789950, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
       propertyPath: m_Name
       value: Boost
       objectReference: {fileID: 0}
+    - target: {fileID: 6371514904610225405, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: carController
+      value: 
+      objectReference: {fileID: 701595527466216985}
     - target: {fileID: 6568048056642127904, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.44
@@ -23863,6 +23871,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6831286675939929800, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: m_Intensity
+      value: 2.9305463
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324436256071121743, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: carController
+      value: 
+      objectReference: {fileID: 701595527466216985}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
