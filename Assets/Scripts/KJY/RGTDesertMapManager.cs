@@ -10,6 +10,7 @@ public class RGTDesertMapManager : MonoBehaviour
     [SerializeField] private float targetFogDensity = 0.01f; // 목표 안개 농도
     [SerializeField] private float transitionSpeed = 1.5f; // 부드러운 전환 속도
 
+
     private Color defaultFogColor;
     private float defaultFogDensity;
     private bool isInFogZone = false;

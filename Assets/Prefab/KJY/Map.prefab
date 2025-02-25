@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4992690310266235404
 Transform:
   m_ObjectHideFlags: 0
@@ -540,6 +540,7 @@ Transform:
   - {fileID: 4824860848145793859}
   - {fileID: 167590742858571354}
   - {fileID: 7494221919107955354}
+  - {fileID: 3761484821206087905}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2023914143174112981
@@ -2583,6 +2584,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 167590742858571354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6987274814737545622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3761484821206087905}
+  - component: {fileID: 6512536722544051511}
+  m_Layer: 0
+  m_Name: DesertBGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3761484821206087905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6987274814737545622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4992690310266235404}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &6512536722544051511
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6987274814737545622}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 248671517a537bb478f7e7b4f97938e9, type: 3}
+  m_Resource: {fileID: 8300000, guid: 248671517a537bb478f7e7b4f97938e9, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7083110494991396990
 GameObject:
   m_ObjectHideFlags: 0
@@ -4730,6 +4860,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 0f059e5d480c814408dc615079587fad, type: 3}
       propertyPath: m_Name
       value: Tornado4 (3)
@@ -4861,7 +4995,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 31.962463, y: 30.71421, z: 194.31903}
+  m_Size: {x: 10, y: 10, z: 194.31903}
   m_Center: {x: 0.115753174, y: -3.4599953, z: 56.979156}
 --- !u!1001 &858387207016534380
 PrefabInstance:
@@ -5479,6 +5613,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
       propertyPath: m_Name
       value: Tornado2
@@ -5598,7 +5736,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 22.375319, y: 25.617239, z: 139.53914}
+  m_Size: {x: 10, y: 10, z: 139.53914}
   m_Center: {x: -0.6635847, y: 1.139122, z: 12.878204}
 --- !u!1001 &1355212239688410421
 PrefabInstance:
@@ -7189,6 +7327,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
       propertyPath: m_Name
       value: Tornado1 (1)
@@ -7303,7 +7445,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 25.685837, y: 24.60938, z: 100.53761}
+  m_Size: {x: 10, y: 10, z: 100.53761}
   m_Center: {x: -0.45877838, y: 0.742321, z: 46.29697}
 --- !u!4 &270063172591196237 stripped
 Transform:
@@ -7318,6 +7460,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 787956866, guid: 00269f8a354af4149b97e71280eb8776, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 00269f8a354af4149b97e71280eb8776, type: 3}
       propertyPath: m_Name
       value: Tornado3
@@ -7441,7 +7587,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 21.81982, y: 25.88912, z: 130.52357}
+  m_Size: {x: 10, y: 10, z: 130.52357}
   m_Center: {x: 0.9679737, y: 0.1661396, z: 36.76935}
 --- !u!1001 &1953416251913747033
 PrefabInstance:
@@ -9484,6 +9630,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
     - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
       propertyPath: MaxDistance
       value: 7.1358566
       objectReference: {fileID: 0}
@@ -9613,7 +9763,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 31.962463, y: 30.71421, z: 194.31903}
+  m_Size: {x: 10, y: 10, z: 194.31903}
   m_Center: {x: 0.115753174, y: -3.4599953, z: 56.979156}
 --- !u!4 &3822567243995817391 stripped
 Transform:
@@ -11466,6 +11616,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 0f059e5d480c814408dc615079587fad, type: 3}
       propertyPath: m_Name
       value: Tornado4
@@ -11592,7 +11746,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 31.962463, y: 30.71421, z: 194.31903}
+  m_Size: {x: 10, y: 10, z: 194.31903}
   m_Center: {x: 0.115753174, y: -3.4599953, z: 56.979156}
 --- !u!4 &2465416489282673069 stripped
 Transform:
@@ -14664,6 +14818,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 787956866, guid: 00269f8a354af4149b97e71280eb8776, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 00269f8a354af4149b97e71280eb8776, type: 3}
       propertyPath: m_Name
       value: Tornado3 (1)
@@ -14787,7 +14945,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 23.278538, y: 28.510218, z: 130.72313}
+  m_Size: {x: 10, y: 10, z: 130.72313}
   m_Center: {x: -0.74334145, y: -1.1443701, z: 36.869133}
 --- !u!1001 &6221998594035108431
 PrefabInstance:
@@ -15785,6 +15943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
       propertyPath: m_Name
       value: Tornado2 (1)
@@ -15904,7 +16066,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 30.824448, y: 30.925526, z: 122.90206}
+  m_Size: {x: 10, y: 10, z: 122.90206}
   m_Center: {x: 1.3480911, y: -3.2173805, z: 4.5596733}
 --- !u!1001 &6668103185171179423
 PrefabInstance:
@@ -19198,6 +19360,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
     - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520758548, guid: 0f059e5d480c814408dc615079587fad, type: 3}
       propertyPath: MaxDistance
       value: 12136.431
       objectReference: {fileID: 0}
@@ -19332,7 +19498,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 41.027283, y: 29.106133, z: 196.2646}
+  m_Size: {x: 10, y: 10, z: 196.2646}
   m_Center: {x: -1.932251, y: -2.7318306, z: 57.951942}
 --- !u!1001 &8473731450848084290
 PrefabInstance:
@@ -20681,6 +20847,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7658927441749406575}
     m_Modifications:
+    - target: {fileID: 1520758548, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1865603112017772757, guid: 8e329fe21c043a1459b57cfea18d3f50, type: 3}
       propertyPath: m_Name
       value: Tornado1
@@ -20795,7 +20965,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 18.17917, y: 20.50324, z: 78.431145}
+  m_Size: {x: 10, y: 10, z: 78.431145}
   m_Center: {x: 0.5943327, y: 0.24360657, z: 35.243732}
 --- !u!4 &7352842877715509118 stripped
 Transform:
