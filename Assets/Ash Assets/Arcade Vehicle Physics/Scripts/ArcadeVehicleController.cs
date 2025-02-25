@@ -71,7 +71,7 @@ namespace ArcadeVP
             {
                 Physics.defaultMaxAngularSpeed = MaxSpeed;
             }
-            carDown = new RGTCarDownV2();
+            //carDown = new RGTCarDownV2();
         }
 
         private void Update()
@@ -198,7 +198,13 @@ namespace ArcadeVP
 
                 if(inDesert)
                 {
-                    if(carBody.linearVelocity.magnitude <= 60)
+                    if(carDown == null)
+                    {
+                        carDown = new RGTCarDownV2();
+                        carDown.Die += FindFirstObjectByType<PlayerKMS>().SetDeadState;
+                        Debug.Log("찾은 플레이어 오브젝트"+FindFirstObjectByType<PlayerKMS>().gameObject);
+                    }
+                    if(carBody.linearVelocity.magnitude <= 150)
                     {
                         carDown.Sink(bodyTr);
                     }

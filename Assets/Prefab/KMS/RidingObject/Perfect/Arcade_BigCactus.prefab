@@ -15424,8 +15424,8 @@ MonoBehaviour:
   SkidSound: {fileID: 5178937490469347875}
   skidWidth: 0.17504606
   parallelMovement: 0
-  inDesert: 0
-  bodyTr: {fileID: 0}
+  inDesert: 1
+  bodyTr: {fileID: 8689249823383721710}
 --- !u!54 &3345423128493450110
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15659,6 +15659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7dfc904a91c1b40813ec2eb4303274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 1014919123323940834}
@@ -20712,6 +20713,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8801921129780052974}
     m_Modifications:
+    - target: {fileID: 7754405289725986467, guid: 53c2bff501391624aa69a98350733122, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7754405289725986467, guid: 53c2bff501391624aa69a98350733122, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7754405289725986467, guid: 53c2bff501391624aa69a98350733122, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 7754405289725986467, guid: 53c2bff501391624aa69a98350733122, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
