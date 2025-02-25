@@ -23789,7 +23789,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 143470700691207943, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
       propertyPath: m_Intensity
-      value: 3.0374846
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1001088577946789950, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
       propertyPath: m_Name
@@ -23799,6 +23799,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.88
       objectReference: {fileID: 0}
+    - target: {fileID: 6371514904610225405, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: carController
+      value: 
+      objectReference: {fileID: 2887795879060401074}
     - target: {fileID: 6568048056642127904, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.44
@@ -23847,6 +23851,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1.73
       objectReference: {fileID: 0}
+    - target: {fileID: 8324436256071121743, guid: ff46ca2d3e94ead45a1b34f9f9156fe6, type: 3}
+      propertyPath: carController
+      value: 
+      objectReference: {fileID: 2887795879060401074}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
