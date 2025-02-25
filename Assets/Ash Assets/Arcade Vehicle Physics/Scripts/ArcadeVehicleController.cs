@@ -207,6 +207,7 @@ namespace ArcadeVP
                     if(carBody.linearVelocity.magnitude <= 150)
                     {
                         carDown.Sink(bodyTr);
+
                     }
                     carDown.Rising(bodyTr);
                 }

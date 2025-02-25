@@ -4,8 +4,6 @@ using System;
 
 public class InteractableObject : MonoBehaviour
 {
-    [SerializeField]
-    [Range(0f, 30f)]
     private float collisionDamage = 2f;
     
     public float maxDurability;
