@@ -11799,8 +11799,8 @@ MonoBehaviour:
   SkidSound: {fileID: 1920607344868491028}
   skidWidth: 0.17504606
   parallelMovement: 0
-  inDesert: 0
-  bodyTr: {fileID: 0}
+  inDesert: 1
+  bodyTr: {fileID: 4053061308173301489}
 --- !u!54 &8126264873315480640
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12034,6 +12034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68886efc47680364d99347a308bf18d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 5360622513922002444}

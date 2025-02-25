@@ -53,7 +53,6 @@ public class RGTCarDownV2 : ICarDown
         if (hasStart)
         {
             startPosition = _body.localPosition;
-            targetY = startPosition.y - sinkDepth;
             hasStart = false;
             //Debug.Log("Start Position set: " + startPosition);
             //Debug.Log("AAA Risging : " + isRising);
@@ -71,12 +70,16 @@ public class RGTCarDownV2 : ICarDown
 
     private void SinkSand(Transform _body)
     {
+        targetY = startPosition.y - sinkDepth;
+
         // 현재 위치에서 목표 위치로 서서히 내려가도록 Lerp 사용
         float newY = Mathf.Lerp(_body.localPosition.y, targetY, Time.deltaTime * sinkSpeed);
         _body.localPosition = new Vector3(_body.localPosition.x, newY, _body.localPosition.z);
 
-        if(targetY > 0.1f)
+        //터진다.
+        if (Mathf.Abs(_body.localPosition.y - targetY) < 0.2f)
         {
+            Debug.Log("빠져서 죽음");
             Die?.Invoke();
         }
 
@@ -86,6 +89,8 @@ public class RGTCarDownV2 : ICarDown
 
     private void SandUp(Transform _body)
     {
+        targetY = startPosition.y - sinkDepth;
+
         // 현재 y값에서 목표 y값(startPosition.y)으로 Lerp 보간
         float newY = Mathf.Lerp(_body.localPosition.y, startPosition.y, Time.deltaTime * sinkSpeed);
         // x, z값은 그대로 유지
@@ -108,8 +113,8 @@ public class RGTCarDownV2 : ICarDown
         KeyTimer += Time.deltaTime;
         if(KeyTimer >= 2f)
         {
-            //터진다.
-            Die();
+
+            //Debug.Log("빠져서 죽음");
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
