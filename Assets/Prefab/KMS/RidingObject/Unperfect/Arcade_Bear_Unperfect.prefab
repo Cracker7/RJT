@@ -5532,8 +5532,8 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 180
-  accelaration: 20
+  MaxSpeed: 80
+  accelaration: 10
   turn: 7
   gravity: 5
   downforce: 100
@@ -5861,6 +5861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de84ed3450778c14dae96cf0de18ba87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 0}
@@ -6981,6 +6982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de84ed3450778c14dae96cf0de18ba87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionDamage: 2
   maxDurability: 0
   currentDurability: 0
   mountPoint: {fileID: 354604321440369748}
