@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RidingObjectData", menuName = "ScriptableObjects/RidingObjectData", order = 1)]
+[CreateAssetMenu(fileName = "RidingObjectData", menuName = "ScriptableObjects/RidingObjectData", order = 2)]
 public class RidingObjectData : ScriptableObject
 {
     public GameObject Prefab;
